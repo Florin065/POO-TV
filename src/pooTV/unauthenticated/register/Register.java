@@ -1,4 +1,17 @@
 package pooTV.unauthenticated.register;
 
-public class Register {
+import pooTV.Actions;
+import pooTV.Command;
+
+public class Register implements Command {
+    private Actions actions;
+
+    public Register(Actions actions) {
+        this.actions = actions;
+    }
+
+    @Override
+    public void execute() {
+        actions.login();
+    }
 }

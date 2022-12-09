@@ -3,13 +3,13 @@ package fileio;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Filters {
+public class FiltersInput {
     @Getter @Setter
-    private Sort sort;
+    private SortFilter sort;
     @Getter @Setter
-    private Contains contains;
+    private ContainsFilter contains;
 
-    public Filters() {
+    public FiltersInput() {
 
     }
 

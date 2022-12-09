@@ -1,4 +1,4 @@
 package pooTV;
 
-public class Page {
+public interface Page {
 }

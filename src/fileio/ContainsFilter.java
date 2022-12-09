@@ -5,13 +5,13 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
-public class Contains {
+public class ContainsFilter {
     @Getter @Setter
     private ArrayList<String> actors;
     @Getter @Setter
     private ArrayList<String> genre;
 
-    public Contains() {
+    public ContainsFilter() {
 
     }
 

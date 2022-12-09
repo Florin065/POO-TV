@@ -1,6 +1,17 @@
 package pooTV.authenticated.seeDetails;
 
-import pooTV.authenticated.seeDetails.Purchase;
+import pooTV.Actions;
+import pooTV.Command;
 
-public class Watch extends Purchase {
+public class Watch implements Command {
+    private Actions actions;
+
+    public Watch(Actions actions) {
+        this.actions = actions;
+    }
+
+    @Override
+    public void execute() {
+        actions.login();
+    }
 }

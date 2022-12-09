@@ -1,4 +1,17 @@
 package pooTV.authenticated.seeDetails;
 
-public class Purchase {
+import pooTV.Actions;
+import pooTV.Command;
+
+public class Purchase implements Command {
+    private Actions actions;
+
+    public Purchase(Actions actions) {
+        this.actions = actions;
+    }
+
+    @Override
+    public void execute() {
+        actions.login();
+    }
 }

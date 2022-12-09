@@ -16,7 +16,6 @@ public class UsersInput {
     private int balance;
 
     public UsersInput() {
-
     }
 
     @Override
