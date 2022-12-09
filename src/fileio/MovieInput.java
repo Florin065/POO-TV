@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
-public class MoviesInput {
+public class MovieInput {
     @Getter @Setter
     private String name;
     @Getter @Setter
@@ -19,7 +19,7 @@ public class MoviesInput {
     @Getter @Setter
     private ArrayList<String> countriesBanned;
 
-    public MoviesInput() {
+    public MovieInput() {
 
     }
 

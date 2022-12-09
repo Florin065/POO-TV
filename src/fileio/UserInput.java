@@ -3,7 +3,7 @@ package fileio;
 import lombok.Getter;
 import lombok.Setter;
 
-public class UsersInput {
+public class UserInput {
     @Getter @Setter
     private String name;
     @Getter @Setter
@@ -15,7 +15,7 @@ public class UsersInput {
     @Getter @Setter
     private int balance;
 
-    public UsersInput() {
+    public UserInput() {
     }
 
     @Override

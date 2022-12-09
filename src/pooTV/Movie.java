@@ -1,6 +1,6 @@
 package pooTV;
 
-import fileio.MoviesInput;
+import fileio.MovieInput;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +20,7 @@ public class Movie {
     @Getter @Setter
     private ArrayList<String> countriesBanned;
 
-    public Movie(MoviesInput moviesInput) {
+    public Movie(MovieInput moviesInput) {
         this.name = moviesInput.getName();
         this.year = moviesInput.getYear();
         this.duration = moviesInput.getDuration();

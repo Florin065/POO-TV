@@ -3,13 +3,7 @@ package fileio;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ActionsInput {
-    @Getter @Setter
-    private String type;
-    @Getter @Setter
-    private String page;
-    @Getter @Setter
-    private String movie;
+public class OnPageInput {
     @Getter @Setter
     private String feature;
     @Getter @Setter
@@ -23,16 +17,13 @@ public class ActionsInput {
     @Getter @Setter
     private int rate;
 
-    public ActionsInput() {
+    public OnPageInput() {
     }
 
     @Override
     public String toString() {
-        return "ActionsInput{" +
-                "type='" + type + '\'' +
-                ", page='" + page + '\'' +
-                ", movie='" + movie + '\'' +
-                ", feature='" + feature + '\'' +
+        return "OnPageInput{" +
+                "feature='" + feature + '\'' +
                 ", credentials=" + credentials +
                 ", startsWith='" + startsWith + '\'' +
                 ", filters='" + filters + '\'' +

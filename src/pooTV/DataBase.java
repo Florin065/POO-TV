@@ -1,11 +1,14 @@
 package pooTV;
 
+import fileio.MovieInput;
+import fileio.UserInput;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataBase {
-    private List<User> users = new ArrayList<>();
-    private List<Movie> movies = new ArrayList<>();
+    private List<UserInput> users = new ArrayList<>();
+    private List<MovieInput> movies = new ArrayList<>();
     private static DataBase dataBase = null;
 
     private DataBase() {
@@ -19,11 +22,11 @@ public class DataBase {
         return dataBase;
     }
 
-    public void addUsers(List<User> users) {
-        this.users.addAll(users);
+    public void addUsers(List<UserInput> userInput) {
+        this.users.addAll(userInput);
     }
 
-    public void addMovies(List<Movie> movies) {
-        this.movies.addAll(movies);
+    public void addMovies(List<MovieInput> movieInput) {
+        this.movies.addAll(movieInput);
     }
 }

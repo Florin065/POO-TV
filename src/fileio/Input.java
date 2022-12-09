@@ -3,13 +3,15 @@ package fileio;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 public class Input {
     @Getter @Setter
-    private UsersInput usersInput;
+    private List<UserInput> users;
     @Getter @Setter
-    private MoviesInput moviesInput;
+    private List<MovieInput> movies;
     @Getter @Setter
-    private ActionsInput actionsInput;
+    private List<ActionsInput> actions;
 
     public Input() {
 
@@ -18,9 +20,9 @@ public class Input {
     @Override
     public String toString() {
         return "Input{" +
-                "usersInput=" + usersInput +
-                ", moviesInput=" + moviesInput +
-                ", actionsInput=" + actionsInput +
+                "usersInput=" + users +
+                ", moviesInput=" + movies +
+                ", actionsInput=" + actions +
                 '}';
     }
 }
