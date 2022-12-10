@@ -19,8 +19,16 @@ public class MovieInput {
     @Getter @Setter
     private ArrayList<String> countriesBanned;
 
-    public MovieInput() {
+    public MovieInput(MovieInput moviesInput) {
+        this.name = moviesInput.getName();
+        this.year = moviesInput.getYear();
+        this.duration = moviesInput.getDuration();
+        this.genres = moviesInput.getGenres();
+        this.actors = moviesInput.getActors();
+        this.countriesBanned = moviesInput.getCountriesBanned();
+    }
 
+    public MovieInput() {
     }
 
     @Override

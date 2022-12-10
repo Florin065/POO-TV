@@ -13,11 +13,11 @@ public class ActionsInput {
     @Getter @Setter
     private String feature;
     @Getter @Setter
-    private UserInput credentials;
+    private Credentials credentials;
     @Getter @Setter
     private String startsWith;
     @Getter @Setter
-    private String filters;
+    private Filters filters;
     @Getter @Setter
     private int count;
     @Getter @Setter

@@ -3,18 +3,17 @@ package fileio;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Input {
     @Getter @Setter
-    private List<UserInput> users;
+    private ArrayList<UserInput> users;
     @Getter @Setter
-    private List<MovieInput> movies;
+    private ArrayList<MovieInput> movies;
     @Getter @Setter
-    private List<ActionsInput> actions;
+    private ArrayList<ActionsInput> actions;
 
     public Input() {
-
     }
 
     @Override
