@@ -1,0 +1,25 @@
+[ {
+  "error" : "Error",
+  "currentMovieList" : [ ],
+  "currentUser" : null
+}, {
+  "error" : "Error",
+  "currentMovieList" : [ ],
+  "currentUser" : null
+}, {
+  "error" : "Error",
+  "currentMovieList" : [ ],
+  "currentUser" : null
+}, {
+  "error" : "Error",
+  "currentMovieList" : [ ],
+  "currentUser" : null
+}, {
+  "error" : "Error",
+  "currentMovieList" : [ ],
+  "currentUser" : null
+}, {
+  "error" : "Error",
+  "currentMovieList" : [ ],
+  "currentUser" : null
+} ]

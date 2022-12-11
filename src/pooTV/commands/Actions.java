@@ -5,22 +5,11 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.util.ArrayList;
 
 public class Actions {
-    public void error(ArrayNode output) {
+    public static void error(ArrayNode output) {
         output.addObject().put("error", "Error")
                 .putPOJO("currentMovieList", new ArrayList<>())
                 .putPOJO("currentUser", null);
     }
-
-    public void changePage(/*ArrayNode output, String page*/) {
-//        output.addObject().put("type", "change page")
-//                .put("page", page);
-    }
-
-//    public void changePage(/*ArrayNode output, String page, MoviesInput moviesInput*/) {
-////        output.addObject().put("type", "change page")
-////                .put("page", page)
-////                .put("movie", moviesInput.getName());
-//    }
 
     public void register(/*ArrayNode output, UsersInput usersInput*/) {
 //        output.addObject().put("type", "on page")

@@ -8,10 +8,12 @@ import fileio.MovieInput;
 import fileio.UserInput;
 import lombok.Getter;
 import lombok.Setter;
+import pooTV.commands.Actions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+
+import static pooTV.Page.createPage;
 
 public class Menu {
     @Getter @Setter
@@ -22,12 +24,17 @@ public class Menu {
     private UserInput currentUser;
     @Getter @Setter
     private String currentPage;
+    @Getter @Setter
+    private Actions actions;
+    @Getter @Setter
+    private Map<String, ArrayList<String>> pageList;
 
     public Menu(Input input, ArrayNode output) {
         this.input = input;
         this.output = output;
         this.currentUser = null;
         this.currentPage = "Homepage neautentificat";
+        pageList = createPage();
         ArrayList<UserInput> usersList = new ArrayList<>(input.getUsers());
         ArrayList<MovieInput> moviesList = new ArrayList<>(input.getMovies());
         DataBase dataBase = DataBase.getDataBase();
@@ -35,41 +42,34 @@ public class Menu {
         dataBase.setMovies(moviesList);
     }
 
+    public void changePage(ArrayNode output, String page) {
+        output.addObject().put("type", "change page")
+                .put("page", page);
+    }
+
+    public void changePage(ArrayNode output, MovieInput moviesInput, String page) {
+        output.addObject().put("type", "change page")
+                .put("page", page)
+                .put("movie", moviesInput.getName());
+    }
+
     public void actionsPOOTV() {
-        Map<String, ArrayList<String>> pages = new HashMap<>();
-        pages.put("Homepage neautentificat", new ArrayList<>());
-        pages.put("Login", new ArrayList<>());
-        pages.put("Register", new ArrayList<>());
-        pages.put("Homepage autentificat", new ArrayList<>());
-        pages.put("Movies", new ArrayList<>());
-        pages.put("See details", new ArrayList<>());
-        pages.put("Upgrades", new ArrayList<>());
-        pages.put("Logout", new ArrayList<>());
-
-        pages.get("Homepage neautentificat").add("Login");
-        pages.get("Homepage neautentificat").add("Register");
-
-        pages.get("Homepage autentificat").add("Movies");
-        pages.get("Homepage autentificat").add("Upgrades");
-        pages.get("Homepage autentificat").add("Logout");
-
-        pages.get("Movies").add("");
-        pages.get("Movies").add("");
-        pages.get("Movies").add("");
-
-        pages.get("See details").add("");
-        pages.get("See details").add("");
-        pages.get("See details").add("");
-        pages.get("See details").add("");
-
-        pages.get("Upgrades").add("");
-        pages.get("Upgrades").add("");
-        pages.get("Upgrades").add("");
 
         for (ActionsInput actionsInput : this.input.getActions()) {
+            System.out.println(actionsInput);
             switch (actionsInput.getType()) {
                 case "change page" -> {
-//                    cu hashmap sa verific daca e pe pagina -> error handler in caz contrar
+                    for (Map.Entry<String, ArrayList<String>> page : pageList.entrySet()) {
+                        if (page.getKey().equals(currentPage)) {
+                            for (String pageToGo : page.getValue()) {
+                                if (pageToGo.equals(actionsInput.getPage())) {
+                                    currentPage = pageToGo;
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    Actions.error(output);
                 }
                 case "on page" -> {
                     switch (actionsInput.getFeature()) {
