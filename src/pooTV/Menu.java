@@ -9,6 +9,7 @@ import fileio.UserInput;
 import lombok.Getter;
 import lombok.Setter;
 import pooTV.commands.Actions;
+import pooTV.commands.unauthenticated.login.Login;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -30,17 +31,19 @@ public class Menu {
     private Actions actions;
     @Getter @Setter
     private Map<String, ArrayList<String>> pageList;
+    @Getter @Setter
+    private DataBase dataBase;
 
     public Menu(Input input, ArrayNode output) {
         this.input = input;
         this.output = output;
         this.currentUser = null;
         this.currentPage = "homepage unauth";
-        this.currentMovieList = input.getMovies();
+        this.currentMovieList = new ArrayList<>();
         pageList = createPage();
         ArrayList<UserInput> usersList = new ArrayList<>(input.getUsers());
         ArrayList<MovieInput> moviesList = new ArrayList<>(input.getMovies());
-        DataBase dataBase = DataBase.getDataBase();
+        dataBase = DataBase.getDataBase();
         dataBase.setUsers(usersList);
         dataBase.setMovies(moviesList);
     }
@@ -93,12 +96,14 @@ public class Menu {
                 case "on page" -> {
                     switch (actionsInput.getFeature()) {
                         case "login" -> {
-//                    Login login = new Login(output, dataBase);
-//                    login.execute();
+                            Login login = new Login(output, this.getDataBase(), input, currentUser,
+                                    currentMovieList, actionsInput.getCredentials());
+                            login.execute();
+                            currentPage = "homepage auth";
                         }
                         case "register" -> {
-//                    Register register = new Register();
-//                    register.execute();
+//                            Register register = new Register();
+//                            register.execute();
                         }
                         case "search" -> {
 //                    Search search = new Search();

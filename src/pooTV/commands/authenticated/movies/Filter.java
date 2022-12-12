@@ -1,6 +1,5 @@
 package pooTV.commands.authenticated.movies;
 
-import fileio.Filters;
 import pooTV.commands.Actions;
 import pooTV.commands.Command;
 
@@ -13,7 +12,7 @@ public class Filter implements Command {
 
     @Override
     public void execute() {
-        actions.login();
+//        actions.login();
     }
 
 }

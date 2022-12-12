@@ -1,8 +1,11 @@
 package pooTV.commands;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import fileio.Credentials;
+import fileio.Input;
 import fileio.MovieInput;
 import fileio.UserInput;
+import pooTV.DataBase;
 
 import java.util.ArrayList;
 
@@ -29,15 +32,37 @@ public class Actions {
                 .putPOJO("currentUser", currentUser);
     }
 
-    public void register(/*ArrayNode output, UsersInput usersInput*/) {
+    public void register(UserInput usersInput) {
 //        output.addObject().put("type", "on page")
 //                .put("page", "register")
 //                .put("feature", "register")
 //                .putPOJO("credentials", usersInput.toString());
     }
 
-    public void login(/*ArrayNode output, User user*/) {
-// TODO
+    public void login(ArrayNode output, DataBase dataBase, Input input,
+                      UserInput currentUser, ArrayList<MovieInput> currentMovieList,
+                      Credentials credentials) {
+
+        for (UserInput iterator : dataBase.getUsers()) {
+            if (iterator.getCredentials().getName().equals(credentials.getName())
+                    && iterator.getCredentials().getPassword().equals(credentials.getPassword())) {
+                currentUser = iterator;
+                break;
+            }
+        }
+
+        if (currentUser == null) {
+            error(output);
+            return;
+        }
+
+        for (MovieInput iterator : input.getMovies()) {
+            for (String country : iterator.getCountriesBanned()) {
+                if (!country.equals(currentUser.getCredentials().getCountry())) {
+                    currentMovieList.add(iterator);
+                }
+            }
+        }
     }
 
     public void search() {
