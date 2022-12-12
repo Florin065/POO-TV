@@ -1,6 +1,8 @@
 package pooTV.commands;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import fileio.MovieInput;
+import fileio.UserInput;
 
 import java.util.ArrayList;
 
@@ -9,6 +11,22 @@ public class Actions {
         output.addObject().put("error", "Error")
                 .putPOJO("currentMovieList", new ArrayList<>())
                 .putPOJO("currentUser", null);
+    }
+
+    public static void changePageToMovies(ArrayNode output,
+                                          ArrayList<MovieInput> currentMovieList,
+                                          UserInput currentUser) {
+        output.addObject().put("error", "null")
+                .putPOJO("currentMovieList", currentMovieList)
+                .putPOJO("currentUser", currentUser);
+    }
+
+    public static void movieDetails(ArrayNode output,
+                                    MovieInput movie,
+                                    UserInput currentUser) {
+        output.addObject().put("error", "null")
+                .putPOJO("currentMovieList", movie)
+                .putPOJO("currentUser", currentUser);
     }
 
     public void register(/*ArrayNode output, UsersInput usersInput*/) {

@@ -25,6 +25,8 @@ public class Menu {
     @Getter @Setter
     private String currentPage;
     @Getter @Setter
+    private ArrayList<MovieInput> currentMovieList;
+    @Getter @Setter
     private Actions actions;
     @Getter @Setter
     private Map<String, ArrayList<String>> pageList;
@@ -33,24 +35,14 @@ public class Menu {
         this.input = input;
         this.output = output;
         this.currentUser = null;
-        this.currentPage = "Homepage neautentificat";
+        this.currentPage = "homepage unauth";
+        this.currentMovieList = input.getMovies();
         pageList = createPage();
         ArrayList<UserInput> usersList = new ArrayList<>(input.getUsers());
         ArrayList<MovieInput> moviesList = new ArrayList<>(input.getMovies());
         DataBase dataBase = DataBase.getDataBase();
         dataBase.setUsers(usersList);
         dataBase.setMovies(moviesList);
-    }
-
-    public void changePage(ArrayNode output, String page) {
-        output.addObject().put("type", "change page")
-                .put("page", page);
-    }
-
-    public void changePage(ArrayNode output, MovieInput moviesInput, String page) {
-        output.addObject().put("type", "change page")
-                .put("page", page)
-                .put("movie", moviesInput.getName());
     }
 
     public void actionsPOOTV() {
@@ -64,11 +56,38 @@ public class Menu {
                             for (String pageToGo : page.getValue()) {
                                 if (pageToGo.equals(actionsInput.getPage())) {
                                     currentPage = pageToGo;
-                                    return;
+
+                                    if (currentPage.equals("movies")) {
+                                        Actions.changePageToMovies
+                                                (output, currentMovieList, currentUser);
+                                    } else if (currentPage.equals("see details")) {
+                                        for (MovieInput movieToDetail : currentMovieList) {
+                                            if (movieToDetail.getName()
+                                                    .equals(actionsInput.getMovie())) {
+                                                for (String ban :
+                                                        movieToDetail.getCountriesBanned()) {
+                                                    if (!ban.equals(currentUser
+                                                            .getCredentials().getCountry())) {
+                                                        Actions.movieDetails(output,
+                                                                movieToDetail,
+                                                                currentUser);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    break;
                                 }
                             }
                         }
                     }
+
+                    if (actionsInput.getPage().equals("login")
+                            || actionsInput.getPage().equals("register")) {
+                        currentPage = "homepage unauth";
+                    }
+
                     Actions.error(output);
                 }
                 case "on page" -> {
