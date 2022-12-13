@@ -27,7 +27,7 @@ import static pooTV.Page.createPageHierarchy;
 
 public class Menu {
     @Getter @Setter
-    private static ArrayNode output;
+    private ArrayNode output;
     @Getter @Setter
     private static Input input;
     @Getter @Setter
@@ -45,9 +45,9 @@ public class Menu {
 
     public Menu(Input input, ArrayNode output) {
         Menu.input = input;
-        Menu.output = output;
-        nullCred = new Credentials(null, null, null, null, 0);
-        currUser = new UserInput(nullCred, 0, 15, null, null, null, null);
+        this.output = output;
+        nullCred = new Credentials(null, null, null, null, "0");
+        currUser = new UserInput(nullCred, 0, 15, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         currPage = "homepage unauth";
         currML = new ArrayList<>();
         pageList = createPageHierarchy();
@@ -62,26 +62,26 @@ public class Menu {
         DataBase dataBase = DataBase.getDataBase();
 
         for (ActionsInput actionInput : input.getActions()) {
-            System.out.println(output);
-            System.out.println(actionInput);
+//            System.out.println(output);
+//            System.out.println(actionInput);
             switch (actionInput.getType()) {
-                case "change page" -> BasicCP.doChangePage(actionInput);
+                case "change page" -> BasicCP.doChangePage(actionInput, output);
                 case "on page" -> {
                     actions = new Actions(currPage, currUser, currML, actionInput);
 
                     switch (actionInput.getFeature()) {
                         case "login" -> {
                             if (!currPage.equals("login")) {
-                                Error.doError();
+                                Error.doError(output);
                                 break;
                             }
 
-                            Login login = new Login(actions);
+                            Login login = new Login(actions, output);
                             actions.doAction(login);
 
                             if (currUser.getCredentials().getName() != null) {
                                 currPage = "homepage auth";
-                                BasicOutput.doOutput();
+                                BasicOutput.doOutput(output);
                                 return;
                             } else {
                                 currPage = "homepage unauth";
@@ -89,19 +89,18 @@ public class Menu {
                         }
                         case "register" -> {
                             if (!currPage.equals("register")) {
-                                Error.doError();
+                                Error.doError(output);
                                 break;
                             }
 
-                            Register register = new Register(actions);
+                            Register register = new Register(actions, output);
                             actions.doAction(register);
 
                             currUser.setCredentials(actions.getCurrUser().getCredentials());
 
                             if (currUser.getCredentials().getName() != null) {
                                 currPage = "homepage auth";
-                                BasicOutput.doOutput();
-                                break;
+                                BasicOutput.doOutput(output);
                             } else {
                                 currPage = "homepage unauth";
                             }

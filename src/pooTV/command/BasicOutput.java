@@ -1,20 +1,12 @@
 package pooTV.command;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import pooTV.Menu;
 
-import java.util.ArrayList;
-
 public class BasicOutput {
-    public static void doOutput() {
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode output = mapper.createArrayNode();
-
-        output.addObject().put("error", "null")
-                .putPOJO("currentMovieList", Menu.getCurrML())
+    public static void doOutput(ArrayNode output) {
+        output.addObject().put("error", (String) null)
+                .putPOJO("currentMoviesList", Menu.getCurrML())
                 .putPOJO("currentUser", Menu.getCurrUser());
-
-        Menu.setOutput(output);
     }
 }

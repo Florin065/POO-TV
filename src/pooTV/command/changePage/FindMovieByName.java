@@ -8,13 +8,13 @@ import pooTV.command.Error;
 import java.util.ArrayList;
 
 public class FindMovieByName {
-    public static void findMovie(UserInput currUser,
-                                 ArrayList<MovieInput> currML, String movieName) {
+    public static void findMovie(UserInput currUser, ArrayList<MovieInput> currML,
+                                 String movieName, ArrayNode output) {
         for (MovieInput iterator : currML) {
             if (iterator.getName().equals(movieName)) {
-                SeeDetailsCP.movieDetails(iterator, currUser);
+                SeeDetailsCP.movieDetails(iterator, currUser, output);
             } else {
-                Error.doError();
+                Error.doError(output);
             }
         }
     }

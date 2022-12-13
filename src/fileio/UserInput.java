@@ -27,10 +27,10 @@ public class UserInput {
         credentials = new Credentials(usersInput.getCredentials());
         tokensCount = 0;
         numFreePremiumMovies = 15;
-        purchasedMovies = null;
-        watchedMovies = null;
-        likedMovies = null;
-        ratedMovies = null;
+        purchasedMovies = new ArrayList<>();
+        watchedMovies = new ArrayList<>();
+        likedMovies = new ArrayList<>();
+        ratedMovies = new ArrayList<>();
     }
 
     public UserInput(Credentials credentials, int tokensCount, int numFreePremiumMovies,

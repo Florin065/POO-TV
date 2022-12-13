@@ -15,13 +15,13 @@ public class Credentials {
     @Getter @Setter
     private String country;
     @Getter @Setter
-    private int balance;
+    private String balance;
 
     public Credentials() {
     }
 
     public Credentials(String name, String password,
-                       String accountType, String country, int balance) {
+                       String accountType, String country, String balance) {
         this.name = name;
         this.password = password;
         this.accountType = accountType;

@@ -19,10 +19,13 @@ public class Login implements Command {
     private Actions actions;
     @Getter @Setter
     private Credentials credentials;
+    @Getter @Setter
+    private ArrayNode output;
 
-    public Login(Actions actions) {
+    public Login(Actions actions, ArrayNode output) {
         this.actions = actions;
         this.credentials = actions.getActionInput().getCredentials();
+        this.output = output;
     }
 
     @Override
@@ -30,22 +33,21 @@ public class Login implements Command {
         for (UserInput iterator : DataBase.getDataBase().getUsers()) {
             if (iterator.getCredentials().getName().equals(credentials.getName())
                     && iterator.getCredentials().getPassword().equals(credentials.getPassword())) {
-                actions.setCurrUser(iterator);
+                actions.getCurrUser().setCredentials(iterator.getCredentials());
                 break;
             }
         }
 
         if (actions.getCurrUser().getCredentials().getName() == null) {
-            Error.doError();
-            return;
+            Error.doError(output);
         }
 
-        for (MovieInput iterator : input.getMovies()) {
-            for (String country : iterator.getCountriesBanned()) {
-                if (!country.equals(actions.getCurrUser().getCredentials().getCountry())) {
-                    actions.getCurrML().add(iterator);
-                }
-            }
-        }
+//        for (MovieInput iterator : input.getMovies()) {
+//            for (String country : iterator.getCountriesBanned()) {
+//                if (!country.equals(actions.getCurrUser().getCredentials().getCountry())) {
+//                    actions.getCurrML().add(iterator);
+//                }
+//            }
+//        }
     }
 }
