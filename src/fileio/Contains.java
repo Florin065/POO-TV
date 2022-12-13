@@ -2,9 +2,11 @@ package fileio;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 
+@ToString
 public class Contains {
     @Getter @Setter
     private ArrayList<String> actors;
@@ -12,14 +14,5 @@ public class Contains {
     private ArrayList<String> genre;
 
     public Contains() {
-
-    }
-
-    @Override
-    public String toString() {
-        return "Contains{" +
-                "actors=" + actors +
-                ", genre=" + genre +
-                '}';
     }
 }

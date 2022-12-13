@@ -2,9 +2,11 @@ package fileio;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 
+@ToString
 public class UserInput {
     @Getter @Setter
     private Credentials credentials;
@@ -31,13 +33,18 @@ public class UserInput {
         ratedMovies = null;
     }
 
-    public UserInput() {
+    public UserInput(Credentials credentials, int tokensCount, int numFreePremiumMovies,
+                     ArrayList<String> purchasedMovies, ArrayList<String> watchedMovies,
+                     ArrayList<String> likedMovies, ArrayList<String> ratedMovies) {
+        this.credentials = credentials;
+        this.tokensCount = tokensCount;
+        this.numFreePremiumMovies = numFreePremiumMovies;
+        this.purchasedMovies = purchasedMovies;
+        this.watchedMovies = watchedMovies;
+        this.likedMovies = likedMovies;
+        this.ratedMovies = ratedMovies;
     }
 
-    @Override
-    public String toString() {
-        return "UserInput{" +
-                "credentials=" + credentials +
-                '}';
+    public UserInput() {
     }
 }

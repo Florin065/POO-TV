@@ -2,9 +2,11 @@ package fileio;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.ArrayList;
 
+@ToString
 public class MovieInput {
     @Getter @Setter
     private String name;
@@ -29,17 +31,5 @@ public class MovieInput {
     }
 
     public MovieInput() {
-    }
-
-    @Override
-    public String toString() {
-        return "MoviesInput{" +
-                "name='" + name + '\'' +
-                ", year=" + year +
-                ", duration=" + duration +
-                ", genres=" + genres +
-                ", actors=" + actors +
-                ", countriesBanned=" + countriesBanned +
-                '}';
     }
 }

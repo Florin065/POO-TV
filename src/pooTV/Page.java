@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Page {
-    static Map<String, ArrayList<String>> createPage() {
+    static Map<String, ArrayList<String>> createPageHierarchy() {
         Map<String, ArrayList<String>> pages = new HashMap<>();
 
         pages.put("homepage unauth", new ArrayList<>());

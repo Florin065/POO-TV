@@ -2,7 +2,9 @@ package fileio;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 public class Credentials {
     @Getter @Setter
     private String name;
@@ -18,22 +20,20 @@ public class Credentials {
     public Credentials() {
     }
 
+    public Credentials(String name, String password,
+                       String accountType, String country, int balance) {
+        this.name = name;
+        this.password = password;
+        this.accountType = accountType;
+        this.country = country;
+        this.balance = balance;
+    }
+
     public Credentials(Credentials credentials) {
         name = credentials.name;
         password = credentials.name;
         accountType = credentials.accountType;
         country = credentials.country;
         balance = credentials.balance;
-    }
-
-    @Override
-    public String toString() {
-        return "CredentialsInput{" +
-                "name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", accountType='" + accountType + '\'' +
-                ", country='" + country + '\'' +
-                ", balance=" + balance +
-                '}';
     }
 }

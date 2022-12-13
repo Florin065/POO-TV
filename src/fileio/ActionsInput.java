@@ -2,7 +2,9 @@ package fileio;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 public class ActionsInput {
     @Getter @Setter
     private String type;
@@ -24,20 +26,5 @@ public class ActionsInput {
     private int rate;
 
     public ActionsInput() {
-    }
-
-    @Override
-    public String toString() {
-        return "ActionsInput{" +
-                "type='" + type + '\'' +
-                ", page='" + page + '\'' +
-                ", movie='" + movie + '\'' +
-                ", feature='" + feature + '\'' +
-                ", credentials=" + credentials +
-                ", startsWith='" + startsWith + '\'' +
-                ", filters='" + filters + '\'' +
-                ", count=" + count +
-                ", rate=" + rate +
-                '}';
     }
 }

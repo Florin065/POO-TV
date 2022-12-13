@@ -2,140 +2,141 @@ package pooTV;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
-import fileio.ActionsInput;
-import fileio.Input;
-import fileio.MovieInput;
-import fileio.UserInput;
+import fileio.*;
 import lombok.Getter;
 import lombok.Setter;
-import pooTV.commands.Actions;
-import pooTV.commands.unauthenticated.login.Login;
+import pooTV.command.Actions;
+import pooTV.command.BasicOutput;
+import pooTV.command.Error;
+import pooTV.command.authenticated.movies.Filter;
+import pooTV.command.authenticated.movies.Search;
+import pooTV.command.authenticated.seeDetails.Like;
+import pooTV.command.authenticated.seeDetails.Purchase;
+import pooTV.command.authenticated.seeDetails.RateTheMovie;
+import pooTV.command.authenticated.seeDetails.Watch;
+import pooTV.command.authenticated.upgrades.BuyPA;
+import pooTV.command.authenticated.upgrades.BuyTokens;
+import pooTV.command.changePage.BasicCP;
+import pooTV.command.unauthenticated.login.Login;
+import pooTV.command.unauthenticated.register.Register;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import static pooTV.Page.createPage;
+import static pooTV.Page.createPageHierarchy;
 
 public class Menu {
     @Getter @Setter
-    private Input input;
+    private static ArrayNode output;
     @Getter @Setter
-    private ArrayNode output;
+    private static Input input;
     @Getter @Setter
-    private UserInput currentUser;
+    private static Actions actions;
     @Getter @Setter
-    private String currentPage;
+    private static Map<String, ArrayList<String>> pageList;
     @Getter @Setter
-    private ArrayList<MovieInput> currentMovieList;
+    private static String currPage;
     @Getter @Setter
-    private Actions actions;
+    private static UserInput currUser;
     @Getter @Setter
-    private Map<String, ArrayList<String>> pageList;
+    private static ArrayList<MovieInput> currML;
     @Getter @Setter
-    private DataBase dataBase;
+    private Credentials nullCred;
 
     public Menu(Input input, ArrayNode output) {
-        this.input = input;
-        this.output = output;
-        this.currentUser = null;
-        this.currentPage = "homepage unauth";
-        this.currentMovieList = new ArrayList<>();
-        pageList = createPage();
+        Menu.input = input;
+        Menu.output = output;
+        nullCred = new Credentials(null, null, null, null, 0);
+        currUser = new UserInput(nullCred, 0, 15, null, null, null, null);
+        currPage = "homepage unauth";
+        currML = new ArrayList<>();
+        pageList = createPageHierarchy();
         ArrayList<UserInput> usersList = new ArrayList<>(input.getUsers());
         ArrayList<MovieInput> moviesList = new ArrayList<>(input.getMovies());
-        dataBase = DataBase.getDataBase();
-        dataBase.setUsers(usersList);
-        dataBase.setMovies(moviesList);
+        DataBase.getDataBase().setUsers(usersList);
+        DataBase.getDataBase().setMovies(moviesList);
     }
 
     public void actionsPOOTV() {
 
-        for (ActionsInput actionsInput : this.input.getActions()) {
-            System.out.println(actionsInput);
-            switch (actionsInput.getType()) {
-                case "change page" -> {
-                    for (Map.Entry<String, ArrayList<String>> page : pageList.entrySet()) {
-                        if (page.getKey().equals(currentPage)) {
-                            for (String pageToGo : page.getValue()) {
-                                if (pageToGo.equals(actionsInput.getPage())) {
-                                    currentPage = pageToGo;
+        DataBase dataBase = DataBase.getDataBase();
 
-                                    if (currentPage.equals("movies")) {
-                                        Actions.changePageToMovies
-                                                (output, currentMovieList, currentUser);
-                                    } else if (currentPage.equals("see details")) {
-                                        for (MovieInput movieToDetail : currentMovieList) {
-                                            if (movieToDetail.getName()
-                                                    .equals(actionsInput.getMovie())) {
-                                                for (String ban :
-                                                        movieToDetail.getCountriesBanned()) {
-                                                    if (!ban.equals(currentUser
-                                                            .getCredentials().getCountry())) {
-                                                        Actions.movieDetails(output,
-                                                                movieToDetail,
-                                                                currentUser);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+        for (ActionsInput actionInput : input.getActions()) {
+            System.out.println(output);
+            System.out.println(actionInput);
+            switch (actionInput.getType()) {
+                case "change page" -> BasicCP.doChangePage(actionInput);
+                case "on page" -> {
+                    actions = new Actions(currPage, currUser, currML, actionInput);
 
-                                    break;
-                                }
+                    switch (actionInput.getFeature()) {
+                        case "login" -> {
+                            if (!currPage.equals("login")) {
+                                Error.doError();
+                                break;
+                            }
+
+                            Login login = new Login(actions);
+                            actions.doAction(login);
+
+                            if (currUser.getCredentials().getName() != null) {
+                                currPage = "homepage auth";
+                                BasicOutput.doOutput();
+                                return;
+                            } else {
+                                currPage = "homepage unauth";
                             }
                         }
-                    }
-
-                    if (actionsInput.getPage().equals("login")
-                            || actionsInput.getPage().equals("register")) {
-                        currentPage = "homepage unauth";
-                    }
-
-                    Actions.error(output);
-                }
-                case "on page" -> {
-                    switch (actionsInput.getFeature()) {
-                        case "login" -> {
-                            Login login = new Login(output, this.getDataBase(), input, currentUser,
-                                    currentMovieList, actionsInput.getCredentials());
-                            login.execute();
-                            currentPage = "homepage auth";
-                        }
                         case "register" -> {
-//                            Register register = new Register();
-//                            register.execute();
+                            if (!currPage.equals("register")) {
+                                Error.doError();
+                                break;
+                            }
+
+                            Register register = new Register(actions);
+                            actions.doAction(register);
+
+                            currUser.setCredentials(actions.getCurrUser().getCredentials());
+
+                            if (currUser.getCredentials().getName() != null) {
+                                currPage = "homepage auth";
+                                BasicOutput.doOutput();
+                                break;
+                            } else {
+                                currPage = "homepage unauth";
+                            }
                         }
                         case "search" -> {
-//                    Search search = new Search();
-//                    search.execute();
+                            Search search = new Search();
+                            actions.doAction(search);
                         }
                         case "filter" -> {
-//                    Filter filter = new Filter();
-//                    filter.execute();
+                            Filter filter = new Filter();
+                            actions.doAction(filter);
                         }
                         case "purchase" -> {
-//                    Purchase purchase = new Purchase();
-//                    purchase.execute();
+                              Purchase purchase = new Purchase();
+                              actions.doAction(purchase);
                         }
                         case "watch" -> {
-//                    Watch watch = new Watch();
-//                    watch.execute();
+                            Watch watch = new Watch();
+                            actions.doAction(watch);
                         }
                         case "like" -> {
-//                    Like like = new Like();
-//                    like.execute();
+                            Like like = new Like();
+                            actions.doAction(like);
                         }
                         case "rate the movie" -> {
-//                    RateTheMovie rateTheMovie = new RateTheMovie();
-//                    rateTheMovie.execute();
+                            RateTheMovie rateTheMovie = new RateTheMovie();
+                            actions.doAction(rateTheMovie);
                         }
                         case "buy premium account" -> {
-//                    BuyPA buyPA = new BuyPA();
-//                    buyPA.execute();
+                            BuyPA buyPA = new BuyPA();
+                            actions.doAction(buyPA);
                         }
                         case "buy tokens" -> {
-//                    BuyTokens buyTokens = new BuyTokens();
-//                    buyTokens.execute();
+                            BuyTokens buyTokens = new BuyTokens();
+                            actions.doAction(buyTokens);
                         }
                     }
                 }

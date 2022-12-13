@@ -2,7 +2,9 @@ package fileio;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 public class Filters {
     @Getter @Setter
     private Sort sort;
@@ -10,14 +12,5 @@ public class Filters {
     private Contains contains;
 
     public Filters() {
-
-    }
-
-    @Override
-    public String toString() {
-        return "Filters{" +
-                "sort=" + sort +
-                ", contains=" + contains +
-                '}';
     }
 }
