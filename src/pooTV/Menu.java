@@ -106,7 +106,7 @@ public class Menu {
                             }
                         }
                         case "search" -> {
-                            Search search = new Search();
+                            Search search = new Search(input, actions, output);
                             actions.doAction(search);
                         }
                         case "filter" -> {

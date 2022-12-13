@@ -7,10 +7,10 @@ import fileio.UserInput;
 import java.util.ArrayList;
 
 public class MoviesCP {
-    public static void changePageToMovies(ArrayList<MovieInput> currentML,
-                                          UserInput currentUser, ArrayNode output) {
-        output.addObject().put("error", "null")
-                .putPOJO("currentMovieList", currentML)
-                .putPOJO("currentUser", currentUser);
+    public static void changePageToMovies(ArrayList<MovieInput> currML,
+                                          UserInput currUser, ArrayNode output) {
+        output.addObject().put("error", (String) null)
+                .putPOJO("currentMoviesList", currML)
+                .putPOJO("currentUser", currUser);
     }
 }

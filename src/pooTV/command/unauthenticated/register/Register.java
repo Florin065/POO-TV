@@ -36,13 +36,5 @@ public class Register implements Command {
         }
 
         actions.getCurrUser().setCredentials(credentials);
-
-//        for (MovieInput iterator : Menu.getInput().getMovies()) {
-//            for (String country : iterator.getCountriesBanned()) {
-//                if (!country.equals(actions.getCurrUser().getCredentials().getCountry())) {
-//                    actions.getCurrML().add(iterator);
-//                }
-//            }
-//        }
     }
 }

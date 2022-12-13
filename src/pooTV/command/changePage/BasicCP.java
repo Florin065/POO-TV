@@ -2,6 +2,7 @@ package pooTV.command.changePage;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.ActionsInput;
+import fileio.MovieInput;
 import pooTV.Menu;
 import pooTV.command.Error;
 import pooTV.command.authenticated.logout.Logout;
@@ -20,14 +21,19 @@ public class BasicCP {
                     }
                 }
             }
-
-//            if (!Menu.getCurrPage().equals("homepage unauth")) {
-//                break;
-//            }
         }
 
         if (Menu.getCurrUser().getCredentials().getName() != null) {
-//            FindCurrUserML.find(Menu.getCurrUser(), Menu.getCurrML(), Menu.getInput().getMovies());
+            ArrayList<MovieInput> currML = new ArrayList<>();
+
+            for (MovieInput iterator : Menu.getInput().getMovies()) {
+                for (String bannedCountry : iterator.getCountriesBanned()) {
+                    if (!Menu.getActions().getCurrUser()
+                            .getCredentials().getCountry().equals(bannedCountry)) {
+                        currML.add(iterator);
+                    }
+                }
+            }
 
             switch (Menu.getCurrPage()) {
                 case "logout" -> {
@@ -35,12 +41,11 @@ public class BasicCP {
                     return;
                 }
                 case "movies" -> {
-                    MoviesCP.changePageToMovies(Menu.getCurrML(),
-                            Menu.getCurrUser(), output);
+                    MoviesCP.changePageToMovies(currML, Menu.getCurrUser(), output);
                     return;
                 }
                 case "see details" -> {
-                    FindMovieByName.findMovie(Menu.getCurrUser(), Menu.getCurrML(),
+                    FindMovieByName.findMovie(Menu.getCurrUser(), currML,
                             actionsInput.getMovie(), output);
                     return;
                 }
