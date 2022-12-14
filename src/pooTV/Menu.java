@@ -10,6 +10,8 @@ import pooTV.command.BasicOutput;
 import pooTV.command.Error;
 import pooTV.command.authenticated.movies.Filter;
 import pooTV.command.authenticated.movies.Search;
+import pooTV.command.authenticated.movies.filterStrategy.ContainsFilter;
+import pooTV.command.authenticated.movies.filterStrategy.SortFilter;
 import pooTV.command.authenticated.seeDetails.Like;
 import pooTV.command.authenticated.seeDetails.Purchase;
 import pooTV.command.authenticated.seeDetails.RateTheMovie;
@@ -82,7 +84,7 @@ public class Menu {
                             if (currUser.getCredentials().getName() != null) {
                                 currPage = "homepage auth";
                                 BasicOutput.doOutput(output);
-                                return;
+                                break;
                             } else {
                                 currPage = "homepage unauth";
                             }
@@ -106,34 +108,80 @@ public class Menu {
                             }
                         }
                         case "search" -> {
+                            if (!currPage.equals("movies")) {
+                                Error.doError(output);
+                                break;
+                            }
+
                             Search search = new Search(input, actions, output);
                             actions.doAction(search);
                         }
                         case "filter" -> {
-                            Filter filter = new Filter();
+                            if (!currPage.equals("movies")) {
+                                Error.doError(output);
+                                break;
+                            }
+
+                            Filter filter = new Filter(input, actions, new ContainsFilter());
                             actions.doAction(filter);
+                            filter = new Filter(input, actions, new SortFilter());
+                            actions.doAction(filter);
+
+                            output.addObject().put("error", (String) null)
+                                    .putPOJO("currentMoviesList", actions.getFilterML())
+                                    .putPOJO("currentUser", Menu.getCurrUser());
                         }
                         case "purchase" -> {
-                              Purchase purchase = new Purchase();
-                              actions.doAction(purchase);
+                            if (!currPage.equals("see details")) {
+                                Error.doError(output);
+                                break;
+                            }
+
+                            Purchase purchase = new Purchase();
+                            actions.doAction(purchase);
                         }
                         case "watch" -> {
+                            if (!currPage.equals("see details")) {
+                                Error.doError(output);
+                                break;
+                            }
+
                             Watch watch = new Watch();
                             actions.doAction(watch);
                         }
                         case "like" -> {
+                            if (!currPage.equals("see details")) {
+                                Error.doError(output);
+                                break;
+                            }
+
                             Like like = new Like();
                             actions.doAction(like);
                         }
                         case "rate the movie" -> {
+                            if (!currPage.equals("see details")) {
+                                Error.doError(output);
+                                break;
+                            }
+
                             RateTheMovie rateTheMovie = new RateTheMovie();
                             actions.doAction(rateTheMovie);
                         }
                         case "buy premium account" -> {
+                            if (!currPage.equals("upgrades")) {
+                                Error.doError(output);
+                                break;
+                            }
+
                             BuyPA buyPA = new BuyPA();
                             actions.doAction(buyPA);
                         }
                         case "buy tokens" -> {
+                            if (!currPage.equals("upgrades")) {
+                                Error.doError(output);
+                                break;
+                            }
+
                             BuyTokens buyTokens = new BuyTokens();
                             actions.doAction(buyTokens);
                         }

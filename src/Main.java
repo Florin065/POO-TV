@@ -24,7 +24,7 @@ public final class Main {
 
         ObjectMapper objectMapper = new ObjectMapper();
         Input inputData = objectMapper.readValue(new File(inputFilePath), Input.class);
-//        Input inputDataTest = objectMapper.readValue(new File("checker/resources/in/basic_" + 2 + ".json"), Input.class);
+//        Input inputDataTest = objectMapper.readValue(new File("checker/resources/in/basic_" + 5 + ".json"), Input.class);
 
         ArrayNode output = objectMapper.createArrayNode();
 //        ArrayNode output1 = objectMapper.createArrayNode();
@@ -35,6 +35,5 @@ public final class Main {
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(outputFilePath), output);
 //        objectWriter.writeValue(new File("out.txt"), output1);
-        System.out.println(output);
     }
 }

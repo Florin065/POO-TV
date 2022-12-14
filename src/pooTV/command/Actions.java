@@ -1,7 +1,6 @@
 package pooTV.command;
 
 import fileio.ActionsInput;
-import fileio.Input;
 import fileio.MovieInput;
 import fileio.UserInput;
 import lombok.Getter;
@@ -20,6 +19,8 @@ public class Actions {
     private ArrayList<MovieInput> currML;
     @Getter @Setter
     private ActionsInput actionInput;
+    @Getter @Setter
+    private ArrayList<MovieInput> filterML;
 
     public Actions(String currPage, UserInput currUser,
                    ArrayList<MovieInput> currML, ActionsInput actionInput) {
@@ -28,6 +29,7 @@ public class Actions {
         this.currUser = currUser;
         this.currML = currML;
         this.actionInput = actionInput;
+        this.filterML = new ArrayList<>();
     }
 
     public void doAction(Command command) {
