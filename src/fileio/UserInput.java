@@ -15,13 +15,13 @@ public class UserInput {
     @Getter @Setter
     private int numFreePremiumMovies;
     @Getter @Setter
-    private ArrayList<String> purchasedMovies;
+    private ArrayList<MovieInput> purchasedMovies;
     @Getter @Setter
-    private ArrayList<String> watchedMovies;
+    private ArrayList<MovieInput> watchedMovies;
     @Getter @Setter
-    private ArrayList<String> likedMovies;
+    private ArrayList<MovieInput> likedMovies;
     @Getter @Setter
-    private ArrayList<String> ratedMovies;
+    private ArrayList<MovieInput> ratedMovies;
 
     public UserInput(UserInput usersInput) {
         credentials = new Credentials(usersInput.getCredentials());
@@ -34,8 +34,8 @@ public class UserInput {
     }
 
     public UserInput(Credentials credentials, int tokensCount, int numFreePremiumMovies,
-                     ArrayList<String> purchasedMovies, ArrayList<String> watchedMovies,
-                     ArrayList<String> likedMovies, ArrayList<String> ratedMovies) {
+                     ArrayList<MovieInput> purchasedMovies, ArrayList<MovieInput> watchedMovies,
+                     ArrayList<MovieInput> likedMovies, ArrayList<MovieInput> ratedMovies) {
         this.credentials = credentials;
         this.tokensCount = tokensCount;
         this.numFreePremiumMovies = numFreePremiumMovies;

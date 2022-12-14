@@ -173,8 +173,12 @@ public class Menu {
                                 break;
                             }
 
-                            BuyPA buyPA = new BuyPA();
+                            UserInput newCurrUser = new UserInput(currUser);
+
+                            BuyPA buyPA = new BuyPA(actions, output, newCurrUser);
                             actions.doAction(buyPA);
+
+                            currUser = new UserInput(newCurrUser);
                         }
                         case "buy tokens" -> {
                             if (!currPage.equals("upgrades")) {
@@ -182,8 +186,12 @@ public class Menu {
                                 break;
                             }
 
-                            BuyTokens buyTokens = new BuyTokens();
+                            UserInput newCurrUser = new UserInput(currUser);
+
+                            BuyTokens buyTokens = new BuyTokens(actions, output, newCurrUser);
                             actions.doAction(buyTokens);
+
+                            currUser = new UserInput(newCurrUser);
                         }
                     }
                 }

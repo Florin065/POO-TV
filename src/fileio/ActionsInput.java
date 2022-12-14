@@ -21,9 +21,9 @@ public class ActionsInput {
     @Getter @Setter
     private Filters filters;
     @Getter @Setter
-    private int count;
+    private String count;
     @Getter @Setter
-    private int rate;
+    private double rate;
 
     public ActionsInput() {
     }
