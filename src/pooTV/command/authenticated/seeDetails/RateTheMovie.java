@@ -27,6 +27,8 @@ public class RateTheMovie implements Command {
 
     @Override
     public void execute() {
+        ArrayList<MovieInput> movieOutput = new ArrayList<>();
+
         if (user.getWatchedMovies().equals(new ArrayList<>())) {
             Error.doError(output);
             return;
@@ -40,8 +42,10 @@ public class RateTheMovie implements Command {
                 sum = sum / iterator.getNumRatings();
                 iterator.setRating(sum);
 
+                movieOutput.add(iterator);
+
                 output.addObject().put("error", (String) null)
-                        .putPOJO("currentMoviesList", iterator)
+                        .putPOJO("currentMoviesList", movieOutput)
                         .putPOJO("currentUser", user);
 
                 return;

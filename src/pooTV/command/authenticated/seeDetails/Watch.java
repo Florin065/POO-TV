@@ -27,6 +27,8 @@ public class Watch implements Command {
 
     @Override
     public void execute() {
+        ArrayList<MovieInput> movieOutput = new ArrayList<>();
+
         if (user.getPurchasedMovies().equals(new ArrayList<>())) {
             Error.doError(output);
             return;
@@ -36,8 +38,10 @@ public class Watch implements Command {
             if (iterator.getName().equals(actions.getActionInput().getMovie())) {
                 user.getWatchedMovies().add(iterator);
 
+                movieOutput.add(iterator);
+
                 output.addObject().put("error", (String) null)
-                        .putPOJO("currentMoviesList", iterator)
+                        .putPOJO("currentMoviesList", movieOutput)
                         .putPOJO("currentUser", user);
 
                 return;

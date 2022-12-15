@@ -33,6 +33,8 @@ public class Purchase implements Command {
 
     @Override
     public void execute() {
+        ArrayList<MovieInput> movieOutput = new ArrayList<>();
+
         if (Menu.getCurrUser().getCredentials().getAccountType().equals("premium")) {
             if (user.getNumFreePremiumMovies() < 1) {
                 Error.doError(output);
@@ -45,8 +47,10 @@ public class Purchase implements Command {
                         user.setNumFreePremiumMovies(user.getNumFreePremiumMovies() - 1);
                         user.getPurchasedMovies().add(iterator);
 
+                        movieOutput.add(iterator);
+
                         output.addObject().put("error", (String) null)
-                                .putPOJO("currentMoviesList", iterator)
+                                .putPOJO("currentMoviesList", movieOutput)
                                 .putPOJO("currentUser", user);
 
                         return;
@@ -68,8 +72,10 @@ public class Purchase implements Command {
                     user.setNumFreePremiumMovies(user.getNumFreePremiumMovies() - 1);
                     user.getPurchasedMovies().add(iterator);
 
+                    movieOutput.add(iterator);
+
                     output.addObject().put("error", (String) null)
-                            .putPOJO("currentMoviesList", iterator)
+                            .putPOJO("currentMoviesList", movieOutput)
                             .putPOJO("currentUser", user);
 
                     return;
@@ -88,8 +94,10 @@ public class Purchase implements Command {
                     user.setTokensCount(getUser().getTokensCount() - 2);
                     user.getPurchasedMovies().add(iterator);
 
+                    movieOutput.add(iterator);
+
                     output.addObject().put("error", (String) null)
-                            .putPOJO("currentMoviesList", iterator)
+                            .putPOJO("currentMoviesList", movieOutput)
                             .putPOJO("currentUser", user);
 
                     return;
@@ -111,8 +119,10 @@ public class Purchase implements Command {
                 user.setTokensCount(getUser().getTokensCount() - 2);
                 user.getPurchasedMovies().add(iterator);
 
+                movieOutput.add(iterator);
+
                 output.addObject().put("error", (String) null)
-                        .putPOJO("currentMoviesList", iterator)
+                        .putPOJO("currentMoviesList", movieOutput)
                         .putPOJO("currentUser", user);
             }
         }

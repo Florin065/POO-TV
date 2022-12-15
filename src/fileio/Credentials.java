@@ -31,7 +31,7 @@ public class Credentials {
 
     public Credentials(Credentials credentials) {
         name = credentials.name;
-        password = credentials.name;
+        password = credentials.password;
         accountType = credentials.accountType;
         country = credentials.country;
         balance = credentials.balance;

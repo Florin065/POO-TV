@@ -6,10 +6,15 @@ import fileio.UserInput;
 import pooTV.Menu;
 import pooTV.command.Error;
 
+import java.util.ArrayList;
+
 public class SeeDetailsCP {
     public static void movieDetails(MovieInput movie, UserInput currUser, ArrayNode output) {
-        output.addObject().put("error", "null")
-                .putPOJO("currentMovieList", movie)
+        ArrayList<MovieInput> movieOutput = new ArrayList<>();
+        movieOutput.add(movie);
+
+        output.addObject().put("error", (String) null)
+                .putPOJO("currentMoviesList", movieOutput)
                 .putPOJO("currentUser", currUser);
     }
 }

@@ -21,11 +21,11 @@ public class MovieInput {
     @Getter @Setter
     private ArrayList<String> countriesBanned;
     @Getter @Setter
-    private int numLikes;
+    private int numLikes = 0;
     @Getter @Setter
-    private int numRatings;
+    private int numRatings = 0;
     @Getter @Setter
-    private double rating;
+    private double rating = 0;
 
     public MovieInput(MovieInput moviesInput) {
         this.name = moviesInput.getName();
@@ -34,9 +34,9 @@ public class MovieInput {
         this.genres = moviesInput.getGenres();
         this.actors = moviesInput.getActors();
         this.countriesBanned = moviesInput.getCountriesBanned();
-        rating = 0;
-        numLikes = 0;
-        numRatings = 0;
+        rating = moviesInput.getRating();
+        numLikes = moviesInput.numLikes;
+        numRatings = moviesInput.getNumRatings();
     }
 
     public MovieInput() {

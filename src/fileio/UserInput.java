@@ -27,10 +27,10 @@ public class UserInput {
         credentials = new Credentials(usersInput.getCredentials());
         tokensCount = usersInput.getTokensCount();
         numFreePremiumMovies = usersInput.getNumFreePremiumMovies();
-        purchasedMovies = usersInput.getPurchasedMovies();
-        watchedMovies = usersInput.getWatchedMovies();
-        likedMovies = usersInput.getLikedMovies();
-        ratedMovies = usersInput.getRatedMovies();
+        purchasedMovies = new ArrayList<>(usersInput.getPurchasedMovies());
+        watchedMovies = new ArrayList<>(usersInput.getWatchedMovies());
+        likedMovies = new ArrayList<>(usersInput.getLikedMovies());
+        ratedMovies = new ArrayList<>(usersInput.getRatedMovies());
     }
 
     public UserInput(ArrayList<MovieInput> likedMovies) {

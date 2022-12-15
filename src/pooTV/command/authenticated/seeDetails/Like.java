@@ -5,6 +5,8 @@ import fileio.MovieInput;
 import fileio.UserInput;
 import lombok.Getter;
 import lombok.Setter;
+import pooTV.DataBase;
+import pooTV.Menu;
 import pooTV.command.Actions;
 import pooTV.command.Command;
 import pooTV.command.Error;
@@ -33,6 +35,8 @@ public class Like implements Command {
 
     @Override
     public void execute() {
+        ArrayList<MovieInput> movieOutput = new ArrayList<>();
+
         if (watchedMovies.equals(new ArrayList<>())) {
             Error.doError(output);
             return;
@@ -40,11 +44,26 @@ public class Like implements Command {
 
         for (MovieInput iterator : watchedMovies) {
             if (iterator.getName().equals(actions.getActionInput().getMovie())) {
-                iterator.setNumLikes(iterator.getNumLikes() + 1);
+
+                MovieInput deepCopy = new MovieInput(iterator);
+                deepCopy.setNumLikes(deepCopy.getNumLikes() + 1);
+                user.getPurchasedMovies().set(user.getPurchasedMovies().indexOf(iterator), deepCopy);
+                user.getWatchedMovies().set(user.getWatchedMovies().indexOf(iterator), deepCopy);
+
+                if (!user.getRatedMovies().equals(new ArrayList<>())) {
+                    user.getRatedMovies().set(user.getRatedMovies().indexOf(iterator), deepCopy);
+                }
+
+                Menu.getInput().getMovies().set(
+                        Menu.getInput().getMovies().indexOf(iterator), deepCopy);
+
+                iterator = new MovieInput(deepCopy);
                 user.getLikedMovies().add(iterator);
 
+                movieOutput.add(iterator);
+
                 output.addObject().put("error", (String) null)
-                        .putPOJO("currentMoviesList", iterator)
+                        .putPOJO("currentMoviesList", movieOutput)
                         .putPOJO("currentUser", user);
 
                 return;

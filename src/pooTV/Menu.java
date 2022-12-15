@@ -137,8 +137,12 @@ public class Menu {
                                 break;
                             }
 
-                            Purchase purchase = new Purchase(actions, output, currUser);
+                            UserInput newCurrUser = new UserInput(currUser);
+
+                            Purchase purchase = new Purchase(actions, output, newCurrUser);
                             actions.doAction(purchase);
+
+                            currUser = new UserInput(newCurrUser);
                         }
                         case "watch" -> {
                             if (!currPage.equals("see details")) {
@@ -146,8 +150,12 @@ public class Menu {
                                 break;
                             }
 
-                            Watch watch = new Watch(actions, output, currUser);
+                            UserInput newCurrUser = new UserInput(currUser);
+
+                            Watch watch = new Watch(actions, output, newCurrUser);
                             actions.doAction(watch);
+
+                            currUser = new UserInput(newCurrUser);
                         }
                         case "like" -> {
                             if (!currPage.equals("see details")) {
@@ -155,8 +163,12 @@ public class Menu {
                                 break;
                             }
 
-                            Like like = new Like(actions, output, currUser);
+                            UserInput newCurrUser = new UserInput(currUser);
+
+                            Like like = new Like(actions, output, newCurrUser);
                             actions.doAction(like);
+
+                            currUser = new UserInput(newCurrUser);
                         }
                         case "rate" -> {
                             if (!currPage.equals("see details")) {
@@ -164,8 +176,12 @@ public class Menu {
                                 break;
                             }
 
-                            RateTheMovie rateTheMovie = new RateTheMovie(actions, output, currUser);
+                            UserInput newCurrUser = new UserInput(currUser);
+
+                            RateTheMovie rateTheMovie = new RateTheMovie(actions, output, newCurrUser);
                             actions.doAction(rateTheMovie);
+
+                            currUser = new UserInput(newCurrUser);
                         }
                         case "buy premium account" -> {
                             if (!currPage.equals("upgrades")) {
