@@ -7,6 +7,7 @@ import fileio.Input;
 import fileio.MovieInput;
 import lombok.Getter;
 import lombok.Setter;
+import pooTV.Menu;
 import pooTV.command.Actions;
 import pooTV.command.Command;
 
@@ -25,8 +26,6 @@ public class Search implements Command {
     private ArrayNode output;
     @Getter @Setter
     private ArrayList<MovieInput> searchML;
-    @Getter @Setter
-    private ArrayList<MovieInput> currML;
 
     public Search(Input input, Actions actions, ArrayNode output) {
         this.input = input;
@@ -35,21 +34,14 @@ public class Search implements Command {
         this.credentials = actions.getActionInput().getCredentials();
         this.actionsInput = actions.getActionInput();
         this.searchML = new ArrayList<>();
-        this.currML = new ArrayList<>();
     }
 
     @Override
     public void execute() {
         for (MovieInput iterator : input.getMovies()) {
-            for (String bannedCountry : iterator.getCountriesBanned()) {
-                if (!actions.getCurrUser().getCredentials().getCountry().equals(bannedCountry)) {
-                    currML.add(iterator);
-                }
-            }
-        }
-
-        for (MovieInput iterator : currML) {
-            if (iterator.getName().startsWith(actionsInput.getStartsWith())) {
+            if ((!iterator.getCountriesBanned().contains(
+                    actions.getCurrUser().getCredentials().getCountry()))
+                    && iterator.getName().startsWith(actions.getActionInput().getStartsWith())) {
                 searchML.add(iterator);
             }
         }

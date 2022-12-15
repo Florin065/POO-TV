@@ -28,6 +28,7 @@ public class BasicCP {
         }
 
         String copy = Menu.getCurrPage();
+
         for (Map.Entry<String, ArrayList<String>> page : Menu.getPageList().entrySet()) {
             if (page.getKey().equals(Menu.getCurrPage())) {
                 for (String pageToGo : page.getValue()) {
@@ -50,11 +51,9 @@ public class BasicCP {
             ArrayList<MovieInput> currML = new ArrayList<>();
 
             for (MovieInput iterator : Menu.getInput().getMovies()) {
-                for (String bannedCountry : iterator.getCountriesBanned()) {
-                    if (!Menu.getActions().getCurrUser()
-                            .getCredentials().getCountry().equals(bannedCountry)) {
-                        currML.add(iterator);
-                    }
+                if (!iterator.getCountriesBanned().contains(
+                        Menu.getActions().getCurrUser().getCredentials().getCountry())) {
+                    currML.add(iterator);
                 }
             }
 

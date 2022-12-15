@@ -24,7 +24,7 @@ public final class Main {
 
         ObjectMapper objectMapper = new ObjectMapper();
         Input inputData = objectMapper.readValue(new File(inputFilePath), Input.class);
-//        Input inputDataTest = objectMapper.readValue(new File("checker/resources/in/basic_" + 6 + ".json"), Input.class);
+//        Input inputDataTest = objectMapper.readValue(new File("checker/resources/in/basic_" + 7 + ".json"), Input.class);
 
         ArrayNode output = objectMapper.createArrayNode();
 //        ArrayNode output1 = objectMapper.createArrayNode();

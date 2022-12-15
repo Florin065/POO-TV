@@ -49,12 +49,15 @@ public class Menu {
         Menu.input = input;
         this.output = output;
         nullCred = new Credentials(null, null, null, null, "0");
-        currUser = new UserInput(nullCred, 0, 15, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        currUser = new UserInput(nullCred, 0, 15,
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         currPage = "homepage unauth";
         currML = new ArrayList<>();
         pageList = createPageHierarchy();
+
         ArrayList<UserInput> usersList = new ArrayList<>(input.getUsers());
         ArrayList<MovieInput> moviesList = new ArrayList<>(input.getMovies());
+
         DataBase.getDataBase().setUsers(usersList);
         DataBase.getDataBase().setMovies(moviesList);
     }
@@ -178,7 +181,8 @@ public class Menu {
 
                             UserInput newCurrUser = new UserInput(currUser);
 
-                            RateTheMovie rateTheMovie = new RateTheMovie(actions, output, newCurrUser);
+                            RateTheMovie rateTheMovie = new RateTheMovie(
+                                    actions, output, newCurrUser);
                             actions.doAction(rateTheMovie);
 
                             currUser = new UserInput(newCurrUser);
