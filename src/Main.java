@@ -19,21 +19,21 @@ public final class Main {
      * @throws IOException in case of exceptions to reading / writing
      */
     public static void main(String[] args) throws IOException {
-        String inputFilePath = args[0];
-        String outputFilePath = args[1];
+//        String inputFilePath = args[0];
+//        String outputFilePath = args[1];
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Input inputData = objectMapper.readValue(new File(inputFilePath), Input.class);
-//        Input inputDataTest = objectMapper.readValue(new File("checker/resources/in/basic_" + 5 + ".json"), Input.class);
+//        Input inputData = objectMapper.readValue(new File(inputFilePath), Input.class);
+        Input inputDataTest = objectMapper.readValue(new File("checker/resources/in/basic_" + 6 + ".json"), Input.class);
 
-        ArrayNode output = objectMapper.createArrayNode();
-//        ArrayNode output1 = objectMapper.createArrayNode();
+//        ArrayNode output = objectMapper.createArrayNode();
+        ArrayNode output1 = objectMapper.createArrayNode();
 
-        pooTVInit(inputData, output);
-//        pooTVInit(inputDataTest, output1);
+//        pooTVInit(inputData, output);
+        pooTVInit(inputDataTest, output1);
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(new File(outputFilePath), output);
-//        objectWriter.writeValue(new File("out.txt"), output1);
+//        objectWriter.writeValue(new File(outputFilePath), output);
+        objectWriter.writeValue(new File("out.txt"), output1);
     }
 }

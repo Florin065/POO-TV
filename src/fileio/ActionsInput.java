@@ -25,6 +25,18 @@ public class ActionsInput {
     @Getter @Setter
     private double rate;
 
+    public ActionsInput(ActionsInput actionsInput) {
+        this.startsWith = actionsInput.getStartsWith();
+        this.rate = actionsInput.getRate();
+        this.page = actionsInput.getPage();
+        this.type = actionsInput.getType();
+        this.movie = actionsInput.getMovie();
+        this.filters = actionsInput.getFilters();
+        this.feature = actionsInput.getFeature();
+        this.count = actionsInput.getCount();
+        this.credentials = actionsInput.getCredentials();
+    }
+
     public ActionsInput() {
     }
 }

@@ -64,12 +64,13 @@ public class Menu {
         DataBase dataBase = DataBase.getDataBase();
 
         for (ActionsInput actionInput : input.getActions()) {
-//            System.out.println(output);
 //            System.out.println(actionInput);
             switch (actionInput.getType()) {
                 case "change page" -> BasicCP.doChangePage(actionInput, output);
                 case "on page" -> {
-                    actions = new Actions(currPage, currUser, currML, actionInput);
+                    ActionsInput actionInputCopy = new ActionsInput(actionInput);
+
+                    actions = new Actions(currPage, currUser, currML, actionInputCopy);
 
                     switch (actionInput.getFeature()) {
                         case "login" -> {
@@ -84,7 +85,6 @@ public class Menu {
                             if (currUser.getCredentials().getName() != null) {
                                 currPage = "homepage auth";
                                 BasicOutput.doOutput(output);
-                                break;
                             } else {
                                 currPage = "homepage unauth";
                             }
@@ -137,7 +137,7 @@ public class Menu {
                                 break;
                             }
 
-                            Purchase purchase = new Purchase();
+                            Purchase purchase = new Purchase(actions, output, currUser);
                             actions.doAction(purchase);
                         }
                         case "watch" -> {
@@ -146,7 +146,7 @@ public class Menu {
                                 break;
                             }
 
-                            Watch watch = new Watch();
+                            Watch watch = new Watch(actions, output, currUser);
                             actions.doAction(watch);
                         }
                         case "like" -> {
@@ -155,16 +155,16 @@ public class Menu {
                                 break;
                             }
 
-                            Like like = new Like();
+                            Like like = new Like(actions, output, currUser);
                             actions.doAction(like);
                         }
-                        case "rate the movie" -> {
+                        case "rate" -> {
                             if (!currPage.equals("see details")) {
                                 Error.doError(output);
                                 break;
                             }
 
-                            RateTheMovie rateTheMovie = new RateTheMovie();
+                            RateTheMovie rateTheMovie = new RateTheMovie(actions, output, currUser);
                             actions.doAction(rateTheMovie);
                         }
                         case "buy premium account" -> {

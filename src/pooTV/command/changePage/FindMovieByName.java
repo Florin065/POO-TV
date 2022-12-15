@@ -24,9 +24,10 @@ public class FindMovieByName {
         for (MovieInput iterator : currML) {
             if (iterator.getName().equals(movieName)) {
                 SeeDetailsCP.movieDetails(iterator, currUser, output);
-            } else {
-                Error.doError(output);
+                return;
             }
         }
+
+        Error.doError(output);
     }
 }

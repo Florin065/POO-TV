@@ -12,6 +12,22 @@ import java.util.Map;
 
 public class BasicCP {
     public static void doChangePage(ActionsInput actionsInput, ArrayNode output) {
+        ArrayList<MovieInput> cornerCase = new ArrayList<>();
+
+        if (actionsInput.getPage().equals("see details")) {
+            for (MovieInput iterator : Menu.getInput().getMovies()) {
+                if (iterator.getName().equals(actionsInput.getMovie())) {
+                    cornerCase.add(iterator);
+                }
+            }
+
+            if (cornerCase.equals(new ArrayList<>())) {
+                Error.doError(output);
+                return;
+            }
+        }
+
+        String copy = Menu.getCurrPage();
         for (Map.Entry<String, ArrayList<String>> page : Menu.getPageList().entrySet()) {
             if (page.getKey().equals(Menu.getCurrPage())) {
                 for (String pageToGo : page.getValue()) {
@@ -20,7 +36,14 @@ public class BasicCP {
                         break;
                     }
                 }
+
+//                de pus conditie de iesire
             }
+        }
+
+        if (copy.equals(Menu.getCurrPage()) ) {
+            Error.doError(output);
+            return;
         }
 
         if (Menu.getCurrUser().getCredentials().getName() != null) {
@@ -38,20 +61,15 @@ public class BasicCP {
             switch (Menu.getCurrPage()) {
                 case "logout" -> {
                     Logout.logout();
-                    return;
                 }
                 case "movies" -> {
                     MoviesCP.changePageToMovies(currML, Menu.getCurrUser(), output);
-                    return;
                 }
                 case "see details" -> {
                     FindMovieByName.findMovie(Menu.getCurrUser(), currML,
                             actionsInput.getMovie(), output);
-                    return;
                 }
             }
-
-            Error.doError(output);
         }
     }
 }
