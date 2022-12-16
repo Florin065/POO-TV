@@ -10,17 +10,7 @@ import java.util.ArrayList;
 
 public class FindMovieByName {
     public static void findMovie(UserInput currUser, ArrayList<MovieInput> currML,
-                                 String movieName, ArrayNode output) {
-        for (MovieInput iterator : Menu.getInput().getMovies()) {
-            for (String ban : iterator.getCountriesBanned()) {
-                if (currUser.getCredentials().getCountry().equals(ban)
-                        && movieName.equals(iterator.getName())) {
-                    Error.doError(output);
-                    return;
-                }
-            }
-        }
-
+                                 String movieName, ArrayNode output, String copy) {
         for (MovieInput iterator : currML) {
             if (iterator.getName().equals(movieName)) {
                 SeeDetailsCP.movieDetails(iterator, currUser, output);
@@ -28,6 +18,7 @@ public class FindMovieByName {
             }
         }
 
+        Menu.setCurrPage(copy);
         Error.doError(output);
     }
 }

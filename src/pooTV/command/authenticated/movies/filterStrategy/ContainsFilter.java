@@ -10,8 +10,9 @@ public class ContainsFilter implements FilterStrategy {
     @Override
     public void doFiltering(Actions actions, Input input, ArrayList<MovieInput> currML) {
         ArrayList<MovieInput> newML = new ArrayList<>();
+        actions.setFilterML(new ArrayList<>());
 
-        if (currML != null && actions.getActionInput().getFilters().getContains() != null) {
+        if ((!currML.equals(new ArrayList<>())) && actions.getActionInput().getFilters().getContains() != null) {
             if (actions.getActionInput().getFilters().getContains().getActors() != null
                     && actions.getActionInput().getFilters().getContains().getGenre() != null) {
                 for (MovieInput movie : currML) {
@@ -31,7 +32,7 @@ public class ContainsFilter implements FilterStrategy {
                 }
             } else if (actions.getActionInput().getFilters().getContains().getGenre() != null) {
                 for (MovieInput movie : currML) {
-                    if (movie.getActors().containsAll(actions.getActionInput()
+                    if (movie.getGenres().containsAll(actions.getActionInput()
                             .getFilters().getContains().getGenre())) {
                         newML.add(movie);
                     }

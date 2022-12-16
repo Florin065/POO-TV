@@ -5,6 +5,7 @@ import fileio.MovieInput;
 import fileio.UserInput;
 import lombok.Getter;
 import lombok.Setter;
+import pooTV.Menu;
 import pooTV.command.Actions;
 import pooTV.command.Command;
 import pooTV.command.Error;
@@ -27,21 +28,42 @@ public class RateTheMovie implements Command {
 
     @Override
     public void execute() {
+        for (MovieInput iterator : Menu.getCurrUser().getRatedMovies()) {
+            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
+                Error.doError(output);
+                return;
+            }
+        }
+
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
 
-        if (user.getWatchedMovies().equals(new ArrayList<>())) {
+        if (user.getWatchedMovies().equals(new ArrayList<>())
+                || actions.getActionInput().getRate() > 5
+                || actions.getActionInput().getRate() < 0) {
             Error.doError(output);
             return;
         }
 
         for (MovieInput iterator : user.getWatchedMovies()) {
-            if (iterator.getName().equals(actions.getActionInput().getMovie())) {
-                double sum = iterator.getRating() * iterator.getNumRatings()
+            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
+                MovieInput deepCopy = new MovieInput(iterator);
+                double sum = deepCopy.getRating() * deepCopy.getNumRatings()
                         + actions.getActionInput().getRate();
-                iterator.setNumRatings(iterator.getNumRatings() + 1);
-                sum = sum / iterator.getNumRatings();
-                iterator.setRating(sum);
+                deepCopy.setNumRatings(deepCopy.getNumRatings() + 1);
+                sum = sum / deepCopy.getNumRatings();
+                deepCopy.setRating(sum);
 
+                user.getPurchasedMovies().set(user.getPurchasedMovies().indexOf(iterator), deepCopy);
+                user.getWatchedMovies().set(user.getWatchedMovies().indexOf(iterator), deepCopy);
+                Menu.getInput().getMovies().set(
+                        Menu.getInput().getMovies().indexOf(iterator), deepCopy);
+
+                if (!user.getLikedMovies().equals(new ArrayList<>())) {
+                    user.getLikedMovies().set(user.getRatedMovies().indexOf(iterator), deepCopy);
+                }
+
+                iterator = new MovieInput(deepCopy);
+                user.getRatedMovies().add(iterator);
                 movieOutput.add(iterator);
 
                 output.addObject().put("error", (String) null)

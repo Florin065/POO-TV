@@ -33,6 +33,13 @@ public class Purchase implements Command {
 
     @Override
     public void execute() {
+        for (MovieInput iterator : Menu.getCurrUser().getPurchasedMovies()) {
+            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
+                Error.doError(output);
+                return;
+            }
+        }
+
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
 
         if (Menu.getCurrUser().getCredentials().getAccountType().equals("premium")) {
@@ -59,16 +66,14 @@ public class Purchase implements Command {
             }
 
             for (MovieInput iterator : Menu.getInput().getMovies()) {
-                for (String bannedCountry : iterator.getCountriesBanned()) {
-                    if (!Menu.getActions().getCurrUser()
-                            .getCredentials().getCountry().equals(bannedCountry)) {
-                        currML.add(iterator);
-                    }
+                if (!iterator.getCountriesBanned().contains(
+                        Menu.getActions().getCurrUser().getCredentials().getCountry())) {
+                    currML.add(iterator);
                 }
             }
 
             for (MovieInput iterator : currML) {
-                if (iterator.getName().equals(actions.getActionInput().getMovie())) {
+                if (iterator.getName().equals(Menu.getMovieDetailsName())) {
                     user.setNumFreePremiumMovies(user.getNumFreePremiumMovies() - 1);
                     user.getPurchasedMovies().add(iterator);
 
@@ -106,16 +111,14 @@ public class Purchase implements Command {
         }
 
         for (MovieInput iterator : Menu.getInput().getMovies()) {
-            for (String bannedCountry : iterator.getCountriesBanned()) {
-                if (!Menu.getActions().getCurrUser()
-                        .getCredentials().getCountry().equals(bannedCountry)) {
-                    currML.add(iterator);
-                }
+            if (!iterator.getCountriesBanned().contains(
+                    Menu.getActions().getCurrUser().getCredentials().getCountry())) {
+                currML.add(iterator);
             }
         }
 
         for (MovieInput iterator : currML) {
-            if (iterator.getName().equals(actions.getActionInput().getMovie())) {
+            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
                 user.setTokensCount(getUser().getTokensCount() - 2);
                 user.getPurchasedMovies().add(iterator);
 
@@ -124,6 +127,8 @@ public class Purchase implements Command {
                 output.addObject().put("error", (String) null)
                         .putPOJO("currentMoviesList", movieOutput)
                         .putPOJO("currentUser", user);
+
+                return;
             }
         }
 

@@ -35,6 +35,13 @@ public class Like implements Command {
 
     @Override
     public void execute() {
+        for (MovieInput iterator : Menu.getCurrUser().getLikedMovies()) {
+            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
+                Error.doError(output);
+                return;
+            }
+        }
+
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
 
         if (watchedMovies.equals(new ArrayList<>())) {
@@ -43,7 +50,7 @@ public class Like implements Command {
         }
 
         for (MovieInput iterator : watchedMovies) {
-            if (iterator.getName().equals(actions.getActionInput().getMovie())) {
+            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
 
                 MovieInput deepCopy = new MovieInput(iterator);
                 deepCopy.setNumLikes(deepCopy.getNumLikes() + 1);

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class SortFilter implements FilterStrategy {
     @Override
     public void doFiltering(Actions actions, Input input, ArrayList<MovieInput> currML) {
-        if (actions.getFilterML() != null) {
+        if ((!actions.getFilterML().equals(new ArrayList<>()))
+                && actions.getActionInput().getFilters().getSort() != null) {
             if (actions.getActionInput().getFilters().getSort().getDuration() != null
                     && actions.getActionInput().getFilters().getSort().getRating() != null) {
                 String duration = actions.getActionInput().getFilters().getSort().getDuration();
@@ -50,7 +51,7 @@ public class SortFilter implements FilterStrategy {
             return;
         }
 
-        if (currML != null) {
+        if ((!currML.equals(new ArrayList<>())) && actions.getActionInput().getFilters().getSort()!= null) {
             if (actions.getActionInput().getFilters().getSort().getDuration() != null
                     && actions.getActionInput().getFilters().getSort().getRating() != null) {
                 String duration = actions.getActionInput().getFilters().getSort().getDuration();
@@ -69,6 +70,9 @@ public class SortFilter implements FilterStrategy {
                     }
                     return (int) (t2.getRating() - t1.getRating());
                 });
+
+                actions.setFilterML(currML);
+                return;
             } else if (actions.getActionInput().getFilters().getSort().getDuration() != null) {
                 String duration = actions.getActionInput().getFilters().getSort().getDuration();
 
@@ -78,6 +82,9 @@ public class SortFilter implements FilterStrategy {
                     }
                     return t2.getDuration() - t1.getDuration();
                 });
+
+                actions.setFilterML(currML);
+                return;
             }
             String rating = actions.getActionInput().getFilters().getSort().getRating();
 
@@ -87,6 +94,8 @@ public class SortFilter implements FilterStrategy {
                 }
                 return (int) (t2.getRating() - t1.getRating());
             });
+
+            actions.setFilterML(currML);
         }
     }
 }

@@ -7,6 +7,7 @@ import fileio.Input;
 import fileio.MovieInput;
 import lombok.Getter;
 import lombok.Setter;
+import pooTV.Menu;
 import pooTV.command.Actions;
 import pooTV.command.Command;
 import pooTV.command.authenticated.movies.filterStrategy.FilterStrategy;
@@ -36,11 +37,10 @@ public class Filter implements Command {
 
     @Override
     public void execute() {
-        for (MovieInput iterator : input.getMovies()) {
-            for (String bannedCountry : iterator.getCountriesBanned()) {
-                if (!actions.getCurrUser().getCredentials().getCountry().equals(bannedCountry)) {
-                    currML.add(iterator);
-                }
+        for (MovieInput iterator : Menu.getInput().getMovies()) {
+            if (!iterator.getCountriesBanned().contains(
+                    Menu.getActions().getCurrUser().getCredentials().getCountry())) {
+                currML.add(iterator);
             }
         }
 

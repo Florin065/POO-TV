@@ -5,6 +5,7 @@ import fileio.MovieInput;
 import fileio.UserInput;
 import lombok.Getter;
 import lombok.Setter;
+import pooTV.Menu;
 import pooTV.command.Actions;
 import pooTV.command.Command;
 import pooTV.command.Error;
@@ -27,6 +28,13 @@ public class Watch implements Command {
 
     @Override
     public void execute() {
+        for (MovieInput iterator : Menu.getCurrUser().getWatchedMovies()) {
+            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
+                Error.doError(output);
+                return;
+            }
+        }
+
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
 
         if (user.getPurchasedMovies().equals(new ArrayList<>())) {
@@ -35,7 +43,7 @@ public class Watch implements Command {
         }
 
         for (MovieInput iterator : user.getPurchasedMovies()) {
-            if (iterator.getName().equals(actions.getActionInput().getMovie())) {
+            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
                 user.getWatchedMovies().add(iterator);
 
                 movieOutput.add(iterator);

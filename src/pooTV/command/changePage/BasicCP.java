@@ -12,12 +12,19 @@ import java.util.Map;
 
 public class BasicCP {
     public static void doChangePage(ActionsInput actionsInput, ArrayNode output) {
+        if ((actionsInput.getPage().equals("login") || actionsInput.getPage().equals("register"))
+                && (!Menu.getCurrPage().equals("homepage unauth"))) {
+            Error.doError(output);
+            return;
+        }
+
         ArrayList<MovieInput> cornerCase = new ArrayList<>();
 
         if (actionsInput.getPage().equals("see details")) {
             for (MovieInput iterator : Menu.getInput().getMovies()) {
                 if (iterator.getName().equals(actionsInput.getMovie())) {
                     cornerCase.add(iterator);
+                    break;
                 }
             }
 
@@ -30,21 +37,28 @@ public class BasicCP {
         String copy = Menu.getCurrPage();
 
         for (Map.Entry<String, ArrayList<String>> page : Menu.getPageList().entrySet()) {
+            String cond = null;
+
             if (page.getKey().equals(Menu.getCurrPage())) {
                 for (String pageToGo : page.getValue()) {
                     if (pageToGo.equals(actionsInput.getPage())) {
                         Menu.setCurrPage(pageToGo);
+                        cond = pageToGo;
                         break;
                     }
                 }
 
-//                de pus conditie de iesire
+                if (cond != null && cond.equals(Menu.getCurrPage())) {
+                    break;
+                }
             }
         }
 
-        if (copy.equals(Menu.getCurrPage()) ) {
-            Error.doError(output);
-            return;
+        if (copy.equals(Menu.getCurrPage())) {
+            if (!copy.equals("movies")) {
+                Error.doError(output);
+                return;
+            }
         }
 
         if (Menu.getCurrUser().getCredentials().getName() != null) {
@@ -58,15 +72,25 @@ public class BasicCP {
             }
 
             switch (Menu.getCurrPage()) {
-                case "logout" -> {
-                    Logout.logout();
-                }
+                case "logout" -> Logout.logout();
                 case "movies" -> {
+                    if (!Menu.getActions().getFilterML().equals(new ArrayList<>())) {
+                        MoviesCP.changePageToMovies(Menu.getActions().getFilterML(),
+                                Menu.getCurrUser(), output);
+                        return;
+                    }
+
                     MoviesCP.changePageToMovies(currML, Menu.getCurrUser(), output);
                 }
                 case "see details" -> {
+                    if (Menu.getLastAction().equals("filter")) {
+                        FindMovieByName.findMovie(Menu.getCurrUser(),
+                                Menu.getActions().getFilterML(), actionsInput.getMovie(), output, copy);
+                        return;
+                    }
+
                     FindMovieByName.findMovie(Menu.getCurrUser(), currML,
-                            actionsInput.getMovie(), output);
+                            actionsInput.getMovie(), output, copy);
                 }
             }
         }

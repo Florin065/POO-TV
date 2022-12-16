@@ -44,6 +44,10 @@ public class Menu {
     private static ArrayList<MovieInput> currML;
     @Getter @Setter
     private Credentials nullCred;
+    @Getter @Setter
+    private static String movieDetailsName = null;
+    @Getter @Setter
+    private static String lastAction = null;
 
     public Menu(Input input, ArrayNode output) {
         Menu.input = input;
@@ -67,7 +71,7 @@ public class Menu {
         DataBase dataBase = DataBase.getDataBase();
 
         for (ActionsInput actionInput : input.getActions()) {
-//            System.out.println(actionInput);
+            System.out.println(actionInput);
             switch (actionInput.getType()) {
                 case "change page" -> BasicCP.doChangePage(actionInput, output);
                 case "on page" -> {
@@ -91,6 +95,8 @@ public class Menu {
                             } else {
                                 currPage = "homepage unauth";
                             }
+
+                            lastAction = actionInput.getFeature();
                         }
                         case "register" -> {
                             if (!currPage.equals("register")) {
@@ -109,6 +115,8 @@ public class Menu {
                             } else {
                                 currPage = "homepage unauth";
                             }
+
+                            lastAction = actionInput.getFeature();
                         }
                         case "search" -> {
                             if (!currPage.equals("movies")) {
@@ -118,6 +126,8 @@ public class Menu {
 
                             Search search = new Search(input, actions, output);
                             actions.doAction(search);
+
+                            lastAction = actionInput.getFeature();
                         }
                         case "filter" -> {
                             if (!currPage.equals("movies")) {
@@ -133,6 +143,8 @@ public class Menu {
                             output.addObject().put("error", (String) null)
                                     .putPOJO("currentMoviesList", actions.getFilterML())
                                     .putPOJO("currentUser", Menu.getCurrUser());
+
+                            lastAction = actionInput.getFeature();
                         }
                         case "purchase" -> {
                             if (!currPage.equals("see details")) {
@@ -146,6 +158,8 @@ public class Menu {
                             actions.doAction(purchase);
 
                             currUser = new UserInput(newCurrUser);
+
+                            lastAction = actionInput.getFeature();
                         }
                         case "watch" -> {
                             if (!currPage.equals("see details")) {
@@ -159,6 +173,8 @@ public class Menu {
                             actions.doAction(watch);
 
                             currUser = new UserInput(newCurrUser);
+
+                            lastAction = actionInput.getFeature();
                         }
                         case "like" -> {
                             if (!currPage.equals("see details")) {
@@ -172,6 +188,8 @@ public class Menu {
                             actions.doAction(like);
 
                             currUser = new UserInput(newCurrUser);
+
+                            lastAction = actionInput.getFeature();
                         }
                         case "rate" -> {
                             if (!currPage.equals("see details")) {
@@ -186,6 +204,8 @@ public class Menu {
                             actions.doAction(rateTheMovie);
 
                             currUser = new UserInput(newCurrUser);
+
+                            lastAction = actionInput.getFeature();
                         }
                         case "buy premium account" -> {
                             if (!currPage.equals("upgrades")) {
@@ -199,6 +219,8 @@ public class Menu {
                             actions.doAction(buyPA);
 
                             currUser = new UserInput(newCurrUser);
+
+                            lastAction = actionInput.getFeature();
                         }
                         case "buy tokens" -> {
                             if (!currPage.equals("upgrades")) {
@@ -212,6 +234,8 @@ public class Menu {
                             actions.doAction(buyTokens);
 
                             currUser = new UserInput(newCurrUser);
+
+                            lastAction = actionInput.getFeature();
                         }
                     }
                 }

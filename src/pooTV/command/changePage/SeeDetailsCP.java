@@ -12,6 +12,7 @@ public class SeeDetailsCP {
     public static void movieDetails(MovieInput movie, UserInput currUser, ArrayNode output) {
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
         movieOutput.add(movie);
+        Menu.setMovieDetailsName(movie.getName());
 
         output.addObject().put("error", (String) null)
                 .putPOJO("currentMoviesList", movieOutput)
