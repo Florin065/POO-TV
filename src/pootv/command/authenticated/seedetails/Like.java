@@ -3,32 +3,14 @@ package pootv.command.authenticated.seedetails;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
 import fileio.UserInput;
-import lombok.Getter;
-import lombok.Setter;
 import pootv.Menu;
-import pootv.command.Actions;
 import pootv.command.Command;
-import pootv.command.Error;
+import pootv.Error;
 
 import java.util.ArrayList;
 
 public class Like implements Command {
-    @Getter @Setter
-    private Actions actions;
-    @Getter @Setter
-    private ArrayNode output;
-    @Getter @Setter
-    private UserInput user;
-    @Getter @Setter
-    private ArrayList<MovieInput> watchedMovies;
-    @Getter @Setter
-    private ArrayList<MovieInput> like;
-
-    public Like(final Actions actions, final ArrayNode output, final UserInput newCurrUser) {
-        this.actions = actions;
-        this.output = output;
-        this.user = newCurrUser;
-        watchedMovies = user.getWatchedMovies();
+    public Like() {
     }
 
     /**
@@ -36,25 +18,37 @@ public class Like implements Command {
      */
     @Override
     public void execute() {
+        ArrayNode output = Menu.getOutput();
+
+        if (!Menu.getCurrPage().equals("see details")) {
+            Error.doError(output);
+
+            return;
+        }
+
         for (MovieInput iterator : Menu.getCurrUser().getLikedMovies()) {
             if (iterator.getName().equals(Menu.getMovieDetailsName())) {
                 Error.doError(output);
+
                 return;
             }
         }
 
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
+        UserInput user = new UserInput(Menu.getCurrUser());
+        ArrayList<MovieInput> watchedMovies = user.getWatchedMovies();
 
         if (watchedMovies.equals(new ArrayList<>())) {
             Error.doError(output);
+
             return;
         }
 
         for (MovieInput iterator : watchedMovies) {
             if (iterator.getName().equals(Menu.getMovieDetailsName())) {
-
                 MovieInput deepCopy = new MovieInput(iterator);
                 deepCopy.setNumLikes(deepCopy.getNumLikes() + 1);
+
                 user.getPurchasedMovies().set(user.getPurchasedMovies()
                         .indexOf(iterator), deepCopy);
                 user.getWatchedMovies().set(user.getWatchedMovies().indexOf(iterator), deepCopy);
@@ -68,12 +62,13 @@ public class Like implements Command {
 
                 iterator = new MovieInput(deepCopy);
                 user.getLikedMovies().add(iterator);
-
                 movieOutput.add(iterator);
 
                 output.addObject().put("error", (String) null)
                         .putPOJO("currentMoviesList", movieOutput)
                         .putPOJO("currentUser", user);
+
+                Menu.setCurrUser(new UserInput(user));
 
                 return;
             }

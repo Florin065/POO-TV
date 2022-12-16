@@ -15,7 +15,6 @@ public final class Logout {
      */
     public static void logout() {
         Menu.setCurrPage("homepage unauth");
-        Menu.setCurrML(new ArrayList<>());
         Credentials nullCred = new Credentials(null, null, null, null, "0");
         Menu.setCurrUser(new UserInput(nullCred, 0, 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1,
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));

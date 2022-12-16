@@ -1,7 +1,7 @@
 package pootv.command.authenticated.movies.filterstrategy;
 
-import fileio.Input;
 import fileio.MovieInput;
+import pootv.Menu;
 import pootv.command.Actions;
 
 import java.util.ArrayList;
@@ -9,13 +9,12 @@ import java.util.ArrayList;
 public class ContainsFilter implements FilterStrategy {
     /**
      *
-     * @param actions
-     * @param input
      * @param currML
      */
     @Override
-    public void doFiltering(final Actions actions, final Input input,
-                            final ArrayList<MovieInput> currML) {
+    public void doFiltering(final ArrayList<MovieInput> currML) {
+        Actions actions = Menu.getActions();
+
         ArrayList<MovieInput> newML = new ArrayList<>();
         actions.setFilterML(new ArrayList<>());
 

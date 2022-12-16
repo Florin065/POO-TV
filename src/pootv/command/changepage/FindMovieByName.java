@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
 import fileio.UserInput;
 import pootv.Menu;
-import pootv.command.Error;
+import pootv.Error;
 
 import java.util.ArrayList;
 

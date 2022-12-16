@@ -8,7 +8,11 @@ public final class Page {
     private Page() {
     }
 
-    static Map<String, ArrayList<String>> createPageHierarchy() {
+    /**
+     *
+     * @return
+     */
+    public static Map<String, ArrayList<String>> createPageHierarchy() {
         Map<String, ArrayList<String>> pages = new HashMap<>();
 
         pages.put("homepage unauth", new ArrayList<>());

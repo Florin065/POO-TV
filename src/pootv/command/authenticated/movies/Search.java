@@ -1,38 +1,15 @@
 package pootv.command.authenticated.movies;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import fileio.ActionsInput;
-import fileio.Credentials;
-import fileio.Input;
 import fileio.MovieInput;
-import lombok.Getter;
-import lombok.Setter;
-import pootv.command.Actions;
+import pootv.Menu;
 import pootv.command.Command;
+import pootv.Error;
 
 import java.util.ArrayList;
 
 public class Search implements Command {
-    @Getter @Setter
-    private Input input;
-    @Getter @Setter
-    private Actions actions;
-    @Getter @Setter
-    private Credentials credentials;
-    @Getter @Setter
-    private ActionsInput actionsInput;
-    @Getter @Setter
-    private ArrayNode output;
-    @Getter @Setter
-    private ArrayList<MovieInput> searchML;
-
-    public Search(final Input input, final Actions actions, final ArrayNode output) {
-        this.input = input;
-        this.actions = actions;
-        this.output = output;
-        this.credentials = actions.getActionInput().getCredentials();
-        this.actionsInput = actions.getActionInput();
-        this.searchML = new ArrayList<>();
+    public Search() {
     }
 
     /**
@@ -40,16 +17,25 @@ public class Search implements Command {
      */
     @Override
     public void execute() {
-        for (MovieInput iterator : input.getMovies()) {
+        if (!Menu.getCurrPage().equals("movies")) {
+            Error.doError(Menu.getOutput());
+            return;
+        }
+
+        ArrayList<MovieInput> searchML = new ArrayList<>();
+
+        for (MovieInput iterator : Menu.getInput().getMovies()) {
             if ((!iterator.getCountriesBanned().contains(
-                    actions.getCurrUser().getCredentials().getCountry()))
-                    && iterator.getName().startsWith(actions.getActionInput().getStartsWith())) {
+                    Menu.getCurrUser().getCredentials().getCountry()))
+                    && iterator.getName().startsWith(
+                            Menu.getActions().getActionInput().getStartsWith())) {
                 searchML.add(iterator);
             }
         }
 
+        ArrayNode output = Menu.getOutput();
         output.addObject().put("error", (String) null)
                 .putPOJO("currentMoviesList", searchML)
-                .putPOJO("currentUser", actions.getCurrUser());
+                .putPOJO("currentUser", Menu.getCurrUser());
     }
 }

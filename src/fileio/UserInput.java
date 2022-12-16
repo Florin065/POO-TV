@@ -13,15 +13,15 @@ public class UserInput {
     @Getter @Setter
     private int tokensCount = 0;
     @Getter @Setter
-    private int numFreePremiumMovies = 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1;
+    private int numFreePremiumMovies;
     @Getter @Setter
-    private ArrayList<MovieInput> purchasedMovies = new ArrayList<>();
+    private ArrayList<MovieInput> purchasedMovies;
     @Getter @Setter
-    private ArrayList<MovieInput> watchedMovies = new ArrayList<>();
+    private ArrayList<MovieInput> watchedMovies;
     @Getter @Setter
-    private ArrayList<MovieInput> likedMovies = new ArrayList<>();
+    private ArrayList<MovieInput> likedMovies;
     @Getter @Setter
-    private ArrayList<MovieInput> ratedMovies = new ArrayList<>();
+    private ArrayList<MovieInput> ratedMovies;
 
     public UserInput(final UserInput usersInput) {
         credentials = new Credentials(usersInput.getCredentials());

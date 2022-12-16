@@ -1,27 +1,15 @@
 package pootv.command.unauthenticated.register;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.Credentials;
 import fileio.UserInput;
-import lombok.Getter;
-import lombok.Setter;
 import pootv.DataBase;
-import pootv.command.Actions;
+import pootv.Menu;
+import pootv.command.unauthenticated.UnauthOutput;
 import pootv.command.Command;
-import pootv.command.Error;
+import pootv.Error;
 
 public class Register implements Command {
-    @Getter @Setter
-    private Actions actions;
-    @Getter @Setter
-    private Credentials credentials;
-    @Getter @Setter
-    private ArrayNode output;
-
-    public Register(final Actions actions, final ArrayNode output) {
-        this.actions = actions;
-        credentials = actions.getActionInput().getCredentials();
-        this.output = output;
+    public Register() {
     }
 
     /**
@@ -29,13 +17,27 @@ public class Register implements Command {
      */
     @Override
     public void execute() {
+        if (!Menu.getCurrPage().equals("register")) {
+            Error.doError(Menu.getOutput());
+            return;
+        }
+
+        Credentials credentials = Menu.getActions().getActionInput().getCredentials();
+
         for (UserInput iterator : DataBase.getDataBase().getUsers()) {
             if (iterator.getCredentials().getName().equals(credentials.getName())) {
-                Error.doError(output);
+                Error.doError(Menu.getOutput());
                 return;
             }
         }
 
-        actions.getCurrUser().setCredentials(credentials);
+        Menu.getCurrUser().setCredentials(credentials);
+
+        if (Menu.getCurrUser().getCredentials().getName() != null) {
+            Menu.setCurrPage("homepage auth");
+            UnauthOutput.doOutput(Menu.getOutput());
+        } else {
+            Menu.setCurrPage("homepage unauth");
+        }
     }
 }

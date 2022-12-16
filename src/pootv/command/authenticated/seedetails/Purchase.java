@@ -3,32 +3,16 @@ package pootv.command.authenticated.seedetails;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
 import fileio.UserInput;
-import lombok.Getter;
-import lombok.Setter;
 import pootv.Menu;
 import pootv.command.Actions;
 import pootv.command.Command;
-import pootv.command.Error;
+import pootv.Error;
+import pootv.command.NonBannedMVS;
 
 import java.util.ArrayList;
 
 public class Purchase implements Command {
-    @Getter @Setter
-    private Actions actions;
-    @Getter @Setter
-    private ArrayNode output;
-    @Getter @Setter
-    private UserInput user;
-    @Getter @Setter
-    private ArrayList<MovieInput> movieList;
-    @Getter @Setter
-    private ArrayList<MovieInput> currML;
-
-    public Purchase(final Actions actions, final ArrayNode output, final UserInput newCurrUser) {
-        this.actions = actions;
-        this.output = output;
-        this.user = newCurrUser;
-        this.currML = new ArrayList<>();
+    public Purchase() {
     }
 
     /**
@@ -36,6 +20,13 @@ public class Purchase implements Command {
      */
     @Override
     public void execute() {
+        ArrayNode output = Menu.getOutput();
+
+        if (!Menu.getCurrPage().equals("see details")) {
+            Error.doError(output);
+            return;
+        }
+
         for (MovieInput iterator : Menu.getCurrUser().getPurchasedMovies()) {
             if (iterator.getName().equals(Menu.getMovieDetailsName())) {
                 Error.doError(output);
@@ -43,7 +34,11 @@ public class Purchase implements Command {
             }
         }
 
+        Actions actions = Menu.getActions();
+        ArrayList<MovieInput> currML = new ArrayList<>();
+        UserInput user = new UserInput(Menu.getCurrUser());
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
+        NonBannedMVS.get(currML);
 
         if (Menu.getCurrUser().getCredentials().getAccountType().equals("premium")) {
             if (user.getNumFreePremiumMovies() <= 0) {
@@ -55,37 +50,16 @@ public class Purchase implements Command {
                 if (actions.getFilterML() != null) {
                     for (MovieInput iterator : actions.getFilterML()) {
                         if (iterator.getName().equals(actions.getActionInput().getMovie())) {
-                            user.setTokensCount(user.getTokensCount() - 2);
-                            user.getPurchasedMovies().add(iterator);
-
-                            movieOutput.add(iterator);
-
-                            output.addObject().put("error", (String) null)
-                                    .putPOJO("currentMoviesList", movieOutput)
-                                    .putPOJO("currentUser", user);
+                            TokensPurchase.tokens(output, user, iterator, movieOutput);
 
                             return;
                         }
                     }
                 }
 
-                for (MovieInput iterator : Menu.getInput().getMovies()) {
-                    if (!iterator.getCountriesBanned().contains(
-                            Menu.getActions().getCurrUser().getCredentials().getCountry())) {
-                        currML.add(iterator);
-                    }
-                }
-
                 for (MovieInput iterator : currML) {
                     if (iterator.getName().equals(Menu.getMovieDetailsName())) {
-                        user.setTokensCount(user.getTokensCount() - 2);
-                        user.getPurchasedMovies().add(iterator);
-
-                        movieOutput.add(iterator);
-
-                        output.addObject().put("error", (String) null)
-                                .putPOJO("currentMoviesList", movieOutput)
-                                .putPOJO("currentUser", user);
+                        TokensPurchase.tokens(output, user, iterator, movieOutput);
 
                         return;
                     }
@@ -95,44 +69,23 @@ public class Purchase implements Command {
             if (actions.getFilterML() != null) {
                 for (MovieInput iterator : actions.getFilterML()) {
                     if (iterator.getName().equals(actions.getActionInput().getMovie())) {
-                        user.setNumFreePremiumMovies(user.getNumFreePremiumMovies() - 1);
-                        user.getPurchasedMovies().add(iterator);
-
-                        movieOutput.add(iterator);
-
-                        output.addObject().put("error", (String) null)
-                                .putPOJO("currentMoviesList", movieOutput)
-                                .putPOJO("currentUser", user);
+                        FreePurchase.free(output, user, iterator, movieOutput);
 
                         return;
                     }
                 }
             }
 
-            for (MovieInput iterator : Menu.getInput().getMovies()) {
-                if (!iterator.getCountriesBanned().contains(
-                        Menu.getActions().getCurrUser().getCredentials().getCountry())) {
-                    currML.add(iterator);
-                }
-            }
-
             for (MovieInput iterator : currML) {
                 if (iterator.getName().equals(Menu.getMovieDetailsName())) {
-                    user.setNumFreePremiumMovies(user.getNumFreePremiumMovies() - 1);
-                    user.getPurchasedMovies().add(iterator);
-
-                    movieOutput.add(iterator);
-
-                    output.addObject().put("error", (String) null)
-                            .putPOJO("currentMoviesList", movieOutput)
-                            .putPOJO("currentUser", user);
+                    FreePurchase.free(output, user, iterator, movieOutput);
 
                     return;
                 }
             }
         }
 
-        if (getUser().getTokensCount() < 2) {
+        if (user.getTokensCount() < 2) {
             Error.doError(output);
             return;
         }
@@ -140,38 +93,18 @@ public class Purchase implements Command {
         if (actions.getFilterML() != null) {
             for (MovieInput iterator : actions.getFilterML()) {
                 if (iterator.getName().equals(actions.getActionInput().getMovie())) {
-                    user.setTokensCount(getUser().getTokensCount() - 2);
-                    user.getPurchasedMovies().add(iterator);
-
-                    movieOutput.add(iterator);
-
-                    output.addObject().put("error", (String) null)
-                            .putPOJO("currentMoviesList", movieOutput)
-                            .putPOJO("currentUser", user);
+                    TokensPurchase.tokens(output, user, iterator, movieOutput);
 
                     return;
                 }
             }
         }
 
-        for (MovieInput iterator : Menu.getInput().getMovies()) {
-            if (!iterator.getCountriesBanned().contains(
-                    Menu.getActions().getCurrUser().getCredentials().getCountry())) {
-                currML.add(iterator);
-            }
-        }
-
         for (MovieInput iterator : currML) {
             if (iterator.getName().equals(Menu.getMovieDetailsName())) {
-                user.setTokensCount(getUser().getTokensCount() - 2);
-                user.getPurchasedMovies().add(iterator);
+                TokensPurchase.tokens(output, user, iterator, movieOutput);
 
-                movieOutput.add(iterator);
-
-                output.addObject().put("error", (String) null)
-                        .putPOJO("currentMoviesList", movieOutput)
-                        .putPOJO("currentUser", user);
-
+                Menu.setCurrUser(new UserInput(user));
                 return;
             }
         }

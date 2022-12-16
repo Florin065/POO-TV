@@ -2,11 +2,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.Input;
+import pootv.Menu;
 
 import java.io.File;
 import java.io.IOException;
-
-import static pootv.POOTV.pooTVInit;
 
 /**
  * The entry point to this homework. It runs the checker that tests your implentation.
@@ -30,7 +29,8 @@ public final class Main {
 
         ArrayNode output = objectMapper.createArrayNode();
 
-        pooTVInit(inputData, output);
+        Menu menu = new Menu(inputData, output);
+        menu.actionsPOOTV();
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(outputFilePath), output);
