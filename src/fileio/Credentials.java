@@ -20,8 +20,8 @@ public class Credentials {
     public Credentials() {
     }
 
-    public Credentials(String name, String password,
-                       String accountType, String country, String balance) {
+    public Credentials(final String name, final String password,
+                       final String accountType, final String country, final String balance) {
         this.name = name;
         this.password = password;
         this.accountType = accountType;
@@ -29,7 +29,7 @@ public class Credentials {
         this.balance = balance;
     }
 
-    public Credentials(Credentials credentials) {
+    public Credentials(final Credentials credentials) {
         name = credentials.name;
         password = credentials.password;
         accountType = credentials.accountType;

@@ -6,34 +6,33 @@ import fileio.Input;
 import java.io.File;
 import java.io.IOException;
 
-import static pooTV.POOTV.pooTVInit;
+import static pootv.POOTV.pooTVInit;
 
 /**
  * The entry point to this homework. It runs the checker that tests your implentation.
  */
 public final class Main {
+    private Main() {
+    }
+
     /**
      * DO NOT MODIFY MAIN METHOD
      * Call the checker
      * @param args from command line
      * @throws IOException in case of exceptions to reading / writing
      */
-    public static void main(String[] args) throws IOException {
-//        String inputFilePath = args[0];
-//        String outputFilePath = args[1];
+    public static void main(final String[] args) throws IOException {
+        String inputFilePath = args[0];
+        String outputFilePath = args[1];
 
         ObjectMapper objectMapper = new ObjectMapper();
-//        Input inputData = objectMapper.readValue(new File(inputFilePath), Input.class);
-        Input inputDataTest = objectMapper.readValue(new File("checker/resources/in/basic_" + 8 + ".json"), Input.class);
+        Input inputData = objectMapper.readValue(new File(inputFilePath), Input.class);
 
-//        ArrayNode output = objectMapper.createArrayNode();
-        ArrayNode output1 = objectMapper.createArrayNode();
+        ArrayNode output = objectMapper.createArrayNode();
 
-//        pooTVInit(inputData, output);
-        pooTVInit(inputDataTest, output1);
+        pooTVInit(inputData, output);
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-//        objectWriter.writeValue(new File(outputFilePath), output);
-        objectWriter.writeValue(new File("out.txt"), output1);
+        objectWriter.writeValue(new File(outputFilePath), output);
     }
 }

@@ -27,7 +27,7 @@ public class MovieInput {
     @Getter @Setter
     private double rating = 0;
 
-    public MovieInput(MovieInput moviesInput) {
+    public MovieInput(final MovieInput moviesInput) {
         this.name = moviesInput.getName();
         this.year = moviesInput.getYear();
         this.duration = moviesInput.getDuration();

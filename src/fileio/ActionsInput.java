@@ -25,7 +25,7 @@ public class ActionsInput {
     @Getter @Setter
     private double rate;
 
-    public ActionsInput(ActionsInput actionsInput) {
+    public ActionsInput(final ActionsInput actionsInput) {
         this.startsWith = actionsInput.getStartsWith();
         this.rate = actionsInput.getRate();
         this.page = actionsInput.getPage();
