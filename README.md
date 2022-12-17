@@ -1,6 +1,6 @@
 # POO-TV
 
-<div class="tenor-gif-embed" data-postid="19508101" data-share-method="host" data-aspect-ratio="1" data-width="100%"><a href="https://tenor.com/view/hulu-netflix-hbo-max-i-got-all-the-accounts-and-passwords-you-need-nathan-south-park-basic-cable-s23e9-gif-19508101">Hulu Netflix Hbo Max I Got All The Accounts And Passwords You Need Nathan GIF</a>from <a href="https://tenor.com/search/hulu+netflix+hbo+max+i+got+all+the+accounts+and+passwords+you+need-gifs">Hulu Netflix Hbo Max I Got All The Accounts And Passwords You Need GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+<div align="center"><img src="https://media.tenor.com/bbNRRKEeV9MAAAAd/hulu-netflix-hbo-max-i-got-all-the-accounts-and-passwords-you-need-nathan.gif" width="500px"></div>
 
 ## Implementation
 
