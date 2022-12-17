@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
 import fileio.UserInput;
 import pootv.Menu;
+import pootv.Error;
 
 import java.util.ArrayList;
 
@@ -13,18 +14,30 @@ public final class SeeDetailsCP {
 
     /**
      *
-     * @param movie
      * @param currUser
+     * @param currML
+     * @param movieName
      * @param output
+     * @param copy
      */
-    public static void movieDetails(final MovieInput movie, final UserInput currUser,
-                                    final ArrayNode output) {
-        ArrayList<MovieInput> movieOutput = new ArrayList<>();
-        movieOutput.add(movie);
-        Menu.setMovieDetailsName(movie.getName());
+    public static void findMovie(final UserInput currUser, final ArrayList<MovieInput> currML,
+                                 final String movieName, final ArrayNode output,
+                                 final String copy) {
+        for (MovieInput iterator : currML) {
+            if (iterator.getName().equals(movieName)) {
+                ArrayList<MovieInput> movieOutput = new ArrayList<>();
+                movieOutput.add(iterator);
+                Menu.setMovieDetailsName(iterator.getName());
 
-        output.addObject().put("error", (String) null)
-                .putPOJO("currentMoviesList", movieOutput)
-                .putPOJO("currentUser", currUser);
+                output.addObject().put("error", (String) null)
+                        .putPOJO("currentMoviesList", movieOutput)
+                        .putPOJO("currentUser", currUser);
+
+                return;
+            }
+        }
+
+        Menu.setCurrPage(copy);
+        Error.doError(output);
     }
 }

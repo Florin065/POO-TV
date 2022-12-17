@@ -22,9 +22,6 @@ import pootv.command.unauthenticated.login.Login;
 import pootv.command.unauthenticated.register.Register;
 
 import java.util.ArrayList;
-import java.util.Map;
-
-import static pootv.Page.createPageHierarchy;
 
 public class Menu {
     @Getter @Setter
@@ -34,27 +31,22 @@ public class Menu {
     @Getter @Setter
     private static Actions actions;
     @Getter @Setter
-    private static Map<String, ArrayList<String>> pageList;
-    @Getter @Setter
     private static String currPage;
     @Getter @Setter
     private static UserInput currUser;
     @Getter @Setter
-    private Credentials nullCred;
+    private static String movieDetailsName;
     @Getter @Setter
-    private static String movieDetailsName = null;
-    @Getter @Setter
-    private static String lastAction = null;
+    private static String lastAction;
 
     public Menu(final Input input, final ArrayNode output) {
         Menu.input = input;
         Menu.output = output;
-        nullCred = new Credentials(null, null, null, null, "0");
-        currUser = new UserInput(nullCred, 0, 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1,
+        currUser = new UserInput(new Credentials(), 0, 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1,
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+        movieDetailsName = null;
+        lastAction = null;
         currPage = "homepage unauth";
-        pageList = createPageHierarchy();
-
         DataBase.getDataBase().setUsers(new ArrayList<>(input.getUsers()));
         DataBase.getDataBase().setMovies(new ArrayList<>(input.getMovies()));
     }

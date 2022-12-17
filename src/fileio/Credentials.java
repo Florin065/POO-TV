@@ -18,15 +18,11 @@ public class Credentials {
     private String balance;
 
     public Credentials() {
-    }
-
-    public Credentials(final String name, final String password,
-                       final String accountType, final String country, final String balance) {
-        this.name = name;
-        this.password = password;
-        this.accountType = accountType;
-        this.country = country;
-        this.balance = balance;
+        this.name = null;
+        this.password = null;
+        this.accountType = null;
+        this.country = null;
+        this.balance = "0";
     }
 
     public Credentials(final Credentials credentials) {

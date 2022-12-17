@@ -5,7 +5,7 @@ import fileio.ActionsInput;
 import fileio.MovieInput;
 import pootv.Menu;
 import pootv.Error;
-import pootv.command.NonBannedMVS;
+import pootv.command.NotBannedMVS;
 import pootv.command.authenticated.logout.Logout;
 
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public final class ChangePage {
         if (Menu.getCurrUser().getCredentials().getName() != null) {
             ArrayList<MovieInput> currML = new ArrayList<>();
 
-            NonBannedMVS.get(currML);
+            NotBannedMVS.get(currML);
 
             switch (Menu.getCurrPage()) {
                 case "logout" -> Logout.logout();
@@ -90,13 +90,13 @@ public final class ChangePage {
                 }
                 case "see details" -> {
                     if (Menu.getLastAction().equals("filter")) {
-                        FindMovieByName.findMovie(Menu.getCurrUser(),
+                        SeeDetailsCP.findMovie(Menu.getCurrUser(),
                                 Menu.getActions().getFilterML(),
                                 actionsInput.getMovie(), output, copyCurrPage);
                         return;
                     }
 
-                    FindMovieByName.findMovie(Menu.getCurrUser(), currML,
+                    SeeDetailsCP.findMovie(Menu.getCurrUser(), currML,
                             actionsInput.getMovie(), output, copyCurrPage);
                 }
                 default -> {

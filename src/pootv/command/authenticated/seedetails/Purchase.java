@@ -7,7 +7,7 @@ import pootv.Menu;
 import pootv.command.Actions;
 import pootv.command.Command;
 import pootv.Error;
-import pootv.command.NonBannedMVS;
+import pootv.command.NotBannedMVS;
 
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ public class Purchase implements Command {
         ArrayList<MovieInput> currML = new ArrayList<>();
         UserInput user = new UserInput(Menu.getCurrUser());
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
-        NonBannedMVS.get(currML);
+        NotBannedMVS.get(currML);
 
         if (Menu.getCurrUser().getCredentials().getAccountType().equals("premium")) {
             if (user.getNumFreePremiumMovies() <= 0) {
