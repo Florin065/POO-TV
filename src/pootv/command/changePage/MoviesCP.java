@@ -1,4 +1,4 @@
-package pootv.command.changepage;
+package pootv.command.changePage;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;

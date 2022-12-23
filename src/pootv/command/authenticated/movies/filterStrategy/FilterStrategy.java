@@ -1,4 +1,4 @@
-package pootv.command.authenticated.movies.filterstrategy;
+package pootv.command.authenticated.movies.filterStrategy;
 
 import fileio.MovieInput;
 

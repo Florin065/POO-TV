@@ -5,8 +5,8 @@ import pootv.Menu;
 
 import java.util.ArrayList;
 
-public final class NotBannedMVS {
-    private NotBannedMVS() {
+public final class NotBannedMovies {
+    private NotBannedMovies() {
     }
 
     /**

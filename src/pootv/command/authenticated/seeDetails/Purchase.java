@@ -1,4 +1,4 @@
-package pootv.command.authenticated.seedetails;
+package pootv.command.authenticated.seeDetails;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
@@ -7,7 +7,7 @@ import pootv.Menu;
 import pootv.command.Actions;
 import pootv.command.Command;
 import pootv.Error;
-import pootv.command.NotBannedMVS;
+import pootv.command.NotBannedMovies;
 
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ public class Purchase implements Command {
         ArrayList<MovieInput> currML = new ArrayList<>();
         UserInput user = new UserInput(Menu.getCurrUser());
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
-        NotBannedMVS.get(currML);
+        NotBannedMovies.get(currML);
 
         if (Menu.getCurrUser().getCredentials().getAccountType().equals("premium")) {
             if (user.getNumFreePremiumMovies() <= 0) {
@@ -47,8 +47,8 @@ public class Purchase implements Command {
                     return;
                 }
 
-                if (actions.getFilterML() != null) {
-                    for (MovieInput iterator : actions.getFilterML()) {
+                if (actions.getFilter() != null) {
+                    for (MovieInput iterator : actions.getFilter()) {
                         if (iterator.getName().equals(actions.getActionInput().getMovie())) {
                             TokensPurchase.tokens(output, user, iterator, movieOutput);
 
@@ -66,8 +66,8 @@ public class Purchase implements Command {
                 }
             }
 
-            if (actions.getFilterML() != null) {
-                for (MovieInput iterator : actions.getFilterML()) {
+            if (actions.getFilter() != null) {
+                for (MovieInput iterator : actions.getFilter()) {
                     if (iterator.getName().equals(actions.getActionInput().getMovie())) {
                         FreePurchase.free(output, user, iterator, movieOutput);
 
@@ -90,8 +90,8 @@ public class Purchase implements Command {
             return;
         }
 
-        if (actions.getFilterML() != null) {
-            for (MovieInput iterator : actions.getFilterML()) {
+        if (actions.getFilter() != null) {
+            for (MovieInput iterator : actions.getFilter()) {
                 if (iterator.getName().equals(actions.getActionInput().getMovie())) {
                     TokensPurchase.tokens(output, user, iterator, movieOutput);
 

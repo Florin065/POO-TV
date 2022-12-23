@@ -15,7 +15,7 @@ public final class FilterOutput {
      */
     public static void doOutput(final ArrayNode output, final Actions actions) {
         output.addObject().put("error", (String) null)
-                .putPOJO("currentMoviesList", actions.getFilterML())
+                .putPOJO("currentMoviesList", actions.getFilter())
                 .putPOJO("currentUser", Menu.getCurrUser());
     }
 }

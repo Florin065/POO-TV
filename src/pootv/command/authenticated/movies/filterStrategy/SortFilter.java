@@ -1,4 +1,4 @@
-package pootv.command.authenticated.movies.filterstrategy;
+package pootv.command.authenticated.movies.filterStrategy;
 
 import fileio.MovieInput;
 import pootv.Menu;
@@ -15,14 +15,14 @@ public class SortFilter implements FilterStrategy {
     public void doFiltering(final ArrayList<MovieInput> currML) {
         Actions actions = Menu.getActions();
 
-        if ((!actions.getFilterML().equals(new ArrayList<>()))
+        if ((!actions.getFilter().isEmpty())
                 && actions.getActionInput().getFilters().getSort() != null) {
             if (actions.getActionInput().getFilters().getSort().getDuration() != null
                     && actions.getActionInput().getFilters().getSort().getRating() != null) {
                 String duration = actions.getActionInput().getFilters().getSort().getDuration();
                 String rating = actions.getActionInput().getFilters().getSort().getRating();
 
-                actions.getFilterML().sort((t2, t1) -> {
+                actions.getFilter().sort((t2, t1) -> {
                     if (t1.getDuration() != t2.getDuration()
                             && duration.equals("decreasing")) {
                         return t1.getDuration() - t2.getDuration();
@@ -38,7 +38,7 @@ public class SortFilter implements FilterStrategy {
             } else if (actions.getActionInput().getFilters().getSort().getDuration() != null) {
                 String duration = actions.getActionInput().getFilters().getSort().getDuration();
 
-                actions.getFilterML().sort((t2, t1) -> {
+                actions.getFilter().sort((t2, t1) -> {
                     if (duration.equals("decreasing")) {
                         return t1.getDuration() - t2.getDuration();
                     }
@@ -47,7 +47,7 @@ public class SortFilter implements FilterStrategy {
             }
             String rating = actions.getActionInput().getFilters().getSort().getRating();
 
-            actions.getFilterML().sort((t2, t1) -> {
+            actions.getFilter().sort((t2, t1) -> {
                 if (rating.equals("decreasing")) {
                     return (int) (t1.getRating() - t2.getRating());
                 }
@@ -57,7 +57,7 @@ public class SortFilter implements FilterStrategy {
             return;
         }
 
-        if ((!currML.equals(new ArrayList<>()))
+        if ((!currML.isEmpty())
                 && actions.getActionInput().getFilters().getSort() != null) {
             if (actions.getActionInput().getFilters().getSort().getDuration() != null
                     && actions.getActionInput().getFilters().getSort().getRating() != null) {
@@ -78,7 +78,7 @@ public class SortFilter implements FilterStrategy {
                     return (int) (t2.getRating() - t1.getRating());
                 });
 
-                actions.setFilterML(currML);
+                actions.setFilter(currML);
                 return;
             } else if (actions.getActionInput().getFilters().getSort().getDuration() != null) {
                 String duration = actions.getActionInput().getFilters().getSort().getDuration();
@@ -90,7 +90,7 @@ public class SortFilter implements FilterStrategy {
                     return t2.getDuration() - t1.getDuration();
                 });
 
-                actions.setFilterML(currML);
+                actions.setFilter(currML);
                 return;
             }
             String rating = actions.getActionInput().getFilters().getSort().getRating();
@@ -102,7 +102,7 @@ public class SortFilter implements FilterStrategy {
                 return (int) (t2.getRating() - t1.getRating());
             });
 
-            actions.setFilterML(currML);
+            actions.setFilter(currML);
         }
     }
 }

@@ -1,11 +1,11 @@
-package pootv.command.changepage;
+package pootv.command.changePage;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.ActionsInput;
 import fileio.MovieInput;
 import pootv.Menu;
 import pootv.Error;
-import pootv.command.NotBannedMVS;
+import pootv.command.NotBannedMovies;
 import pootv.command.authenticated.logout.Logout;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public final class ChangePage {
                 }
             }
 
-            if (cornerCase.equals(new ArrayList<>())) {
+            if (cornerCase.isEmpty()) {
                 Error.doError(output);
                 return;
             }
@@ -75,13 +75,13 @@ public final class ChangePage {
         if (Menu.getCurrUser().getCredentials().getName() != null) {
             ArrayList<MovieInput> currML = new ArrayList<>();
 
-            NotBannedMVS.get(currML);
+            NotBannedMovies.get(currML);
 
             switch (Menu.getCurrPage()) {
                 case "logout" -> Logout.logout();
                 case "movies" -> {
-                    if (!Menu.getActions().getFilterML().equals(new ArrayList<>())) {
-                        MoviesCP.changePageToMovies(Menu.getActions().getFilterML(),
+                    if (!Menu.getActions().getFilter().isEmpty()) {
+                        MoviesCP.changePageToMovies(Menu.getActions().getFilter(),
                                 Menu.getCurrUser(), output);
                         return;
                     }
@@ -91,7 +91,7 @@ public final class ChangePage {
                 case "see details" -> {
                     if (Menu.getLastAction().equals("filter")) {
                         SeeDetailsCP.findMovie(Menu.getCurrUser(),
-                                Menu.getActions().getFilterML(),
+                                Menu.getActions().getFilter(),
                                 actionsInput.getMovie(), output, copyCurrPage);
                         return;
                     }

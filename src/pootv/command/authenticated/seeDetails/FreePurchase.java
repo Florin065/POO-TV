@@ -1,4 +1,4 @@
-package pootv.command.authenticated.seedetails;
+package pootv.command.authenticated.seeDetails;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;

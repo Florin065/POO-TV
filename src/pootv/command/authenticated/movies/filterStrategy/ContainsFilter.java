@@ -1,4 +1,4 @@
-package pootv.command.authenticated.movies.filterstrategy;
+package pootv.command.authenticated.movies.filterStrategy;
 
 import fileio.MovieInput;
 import pootv.Menu;
@@ -16,9 +16,9 @@ public class ContainsFilter implements FilterStrategy {
         Actions actions = Menu.getActions();
 
         ArrayList<MovieInput> newML = new ArrayList<>();
-        actions.setFilterML(new ArrayList<>());
+        actions.setFilter(new ArrayList<>());
 
-        if ((!currML.equals(new ArrayList<>()))
+        if ((!currML.isEmpty())
                 && actions.getActionInput().getFilters().getContains() != null) {
             if (actions.getActionInput().getFilters().getContains().getActors() != null
                     && actions.getActionInput().getFilters().getContains().getGenre() != null) {
@@ -47,6 +47,6 @@ public class ContainsFilter implements FilterStrategy {
             }
         }
 
-        actions.setFilterML(newML);
+        actions.setFilter(newML);
     }
 }

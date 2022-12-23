@@ -13,12 +13,12 @@ public class Actions {
     @Getter @Setter
     private ActionsInput actionInput;
     @Getter @Setter
-    private ArrayList<MovieInput> filterML;
+    private ArrayList<MovieInput> filter;
 
     public Actions(final ActionsInput actionInput) {
         this.invoker = new Invoker();
         this.actionInput = actionInput;
-        this.filterML = new ArrayList<>();
+        this.filter = new ArrayList<>();
     }
 
     /**
