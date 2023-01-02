@@ -11,12 +11,10 @@ import pootv.command.authenticated.movies.Filter;
 import pootv.command.authenticated.movies.Search;
 import pootv.command.authenticated.movies.filterStrategy.ContainsFilter;
 import pootv.command.authenticated.movies.filterStrategy.SortFilter;
-import pootv.command.authenticated.seeDetails.Like;
-import pootv.command.authenticated.seeDetails.Purchase;
-import pootv.command.authenticated.seeDetails.Rate;
-import pootv.command.authenticated.seeDetails.Watch;
+import pootv.command.authenticated.seeDetails.*;
 import pootv.command.authenticated.upgrades.BuyPA;
 import pootv.command.authenticated.upgrades.BuyTokens;
+import pootv.command.changePage.Back;
 import pootv.command.changePage.ChangePage;
 import pootv.command.unauthenticated.login.Login;
 import pootv.command.unauthenticated.register.Register;
@@ -38,14 +36,21 @@ public class Menu {
     private static String movieDetailsName;
     @Getter @Setter
     private static String lastAction;
+    @Getter @Setter
+    private static String lastPage;
+    @Getter @Setter
+    private static String currMovie;
 
     public Menu(final Input input, final ArrayNode output) {
         Menu.input = input;
         Menu.output = output;
         currUser = new UserInput(new Credentials(), 0, 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1,
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                new ArrayList<>(), new ArrayList<>(),
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         movieDetailsName = null;
         lastAction = null;
+        currMovie = null;
+        lastPage = null;
         currPage = "homepage unauth";
         DataBase.getDataBase().setUsers(new ArrayList<>(input.getUsers()));
         DataBase.getDataBase().setMovies(new ArrayList<>(input.getMovies()));
@@ -60,7 +65,7 @@ public class Menu {
                 case "change page" -> ChangePage.doChangePage(actionInput, output);
                 case "on page" -> {
                     actions = new Actions(actionInput);
-                    Menu.setLastAction(actions.getActionInput().getFeature());
+                    setLastAction(actions.getActionInput().getFeature());
 
                     switch (actionInput.getFeature()) {
                         case "login" -> {
@@ -106,17 +111,35 @@ public class Menu {
                         }
                         case "buy premium account" -> {
                             BuyPA buyPA = new BuyPA();
-                            Menu.getActions().doAction(buyPA);
+                            actions.doAction(buyPA);
                         }
                         case "buy tokens" -> {
                             BuyTokens buyTokens = new BuyTokens();
                             actions.doAction(buyTokens);
+                        }
+                        case "subscribe" -> {
+                            Subscribe subscribe = new Subscribe();
+                            actions.doAction(subscribe);
                         }
                         default -> {
                             return;
                         }
                     }
                 }
+                case "database" -> {
+                    switch (actionInput.getFeature()) {
+                        case "add" -> {
+
+                        }
+                        case "delete" -> {
+
+                        }
+                        default -> {
+                            return;
+                        }
+                    }
+                }
+                case "back" -> Back.goBack(output);
                 default -> {
                     return;
                 }

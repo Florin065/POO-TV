@@ -74,8 +74,9 @@ public final class ChangePage {
 
         if (Menu.getCurrUser().getCredentials().getName() != null) {
             ArrayList<MovieInput> currML = new ArrayList<>();
-
             NotBannedMovies.get(currML);
+
+            Menu.setLastPage(Menu.getCurrPage());
 
             switch (Menu.getCurrPage()) {
                 case "logout" -> Logout.logout();
@@ -89,6 +90,8 @@ public final class ChangePage {
                     MoviesCP.changePageToMovies(currML, Menu.getCurrUser(), output);
                 }
                 case "see details" -> {
+                    Menu.setCurrMovie(actionsInput.getMovie());
+
                     if (Menu.getLastAction().equals("filter")) {
                         SeeDetailsCP.findMovie(Menu.getCurrUser(),
                                 Menu.getActions().getFilter(),
@@ -100,7 +103,6 @@ public final class ChangePage {
                             actionsInput.getMovie(), output, copyCurrPage);
                 }
                 default -> {
-                    return;
                 }
             }
         }

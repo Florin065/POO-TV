@@ -1,5 +1,6 @@
 package fileio;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,19 +23,21 @@ public class UserInput {
     private ArrayList<MovieInput> likedMovies;
     @Getter @Setter
     private ArrayList<MovieInput> ratedMovies;
+    @Getter @Setter
+    private ArrayList<String> notifications;
+    @Getter @Setter @JsonIgnore
+    private ArrayList<String> subscribedGenres;
 
     public UserInput(final UserInput usersInput) {
         credentials = new Credentials(usersInput.getCredentials());
-        tokensCount = usersInput.getTokensCount();
-        numFreePremiumMovies = usersInput.getNumFreePremiumMovies();
-        purchasedMovies = new ArrayList<>(usersInput.getPurchasedMovies());
-        watchedMovies = new ArrayList<>(usersInput.getWatchedMovies());
-        likedMovies = new ArrayList<>(usersInput.getLikedMovies());
-        ratedMovies = new ArrayList<>(usersInput.getRatedMovies());
-    }
-
-    public UserInput(final ArrayList<MovieInput> likedMovies) {
-        this.likedMovies = likedMovies;
+        tokensCount = usersInput.tokensCount;
+        numFreePremiumMovies = usersInput.numFreePremiumMovies;
+        purchasedMovies = new ArrayList<>(usersInput.purchasedMovies);
+        watchedMovies = new ArrayList<>(usersInput.watchedMovies);
+        likedMovies = new ArrayList<>(usersInput.likedMovies);
+        ratedMovies = new ArrayList<>(usersInput.ratedMovies);
+        notifications = new ArrayList<>(usersInput.notifications);
+        subscribedGenres = new ArrayList<>(usersInput.subscribedGenres);
     }
 
     public UserInput(final Credentials credentials,
@@ -43,7 +46,8 @@ public class UserInput {
                      final ArrayList<MovieInput> purchasedMovies,
                      final ArrayList<MovieInput> watchedMovies,
                      final ArrayList<MovieInput> likedMovies,
-                     final ArrayList<MovieInput> ratedMovies) {
+                     final ArrayList<MovieInput> ratedMovies,
+                     final ArrayList<String> notifications) {
         this.credentials = credentials;
         this.tokensCount = tokensCount;
         this.numFreePremiumMovies = numFreePremiumMovies;
@@ -51,6 +55,7 @@ public class UserInput {
         this.watchedMovies = watchedMovies;
         this.likedMovies = likedMovies;
         this.ratedMovies = ratedMovies;
+        this.notifications = notifications;
     }
 
     public UserInput() {

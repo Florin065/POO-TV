@@ -35,7 +35,7 @@ public class Watch implements Command {
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
         UserInput user = new UserInput(Menu.getCurrUser());
 
-        if (user.getPurchasedMovies().equals(new ArrayList<>())) {
+        if (user.getPurchasedMovies().isEmpty()) {
             Error.doError(output);
             return;
         }

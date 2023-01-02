@@ -53,7 +53,7 @@ public class Like implements Command {
                         .indexOf(iterator), deepCopy);
                 user.getWatchedMovies().set(user.getWatchedMovies().indexOf(iterator), deepCopy);
 
-                if (!user.getRatedMovies().equals(new ArrayList<>())) {
+                if (!user.getRatedMovies().isEmpty()) {
                     user.getRatedMovies().set(user.getRatedMovies().indexOf(iterator), deepCopy);
                 }
 

@@ -37,7 +37,7 @@ public class Rate implements Command {
         UserInput user = new UserInput(Menu.getCurrUser());
         Actions actions = Menu.getActions();
 
-        if (user.getWatchedMovies().equals(new ArrayList<>())
+        if (user.getWatchedMovies().isEmpty()
                 || actions.getActionInput().getRate() > 2 + 2 + 1
                 || actions.getActionInput().getRate() < 0) {
             Error.doError(output);

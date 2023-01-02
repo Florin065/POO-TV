@@ -11,7 +11,7 @@ public class MovieInput {
     @Getter @Setter
     private String name;
     @Getter @Setter
-    private int year;
+    private String year;
     @Getter @Setter
     private int duration;
     @Getter @Setter
@@ -23,9 +23,9 @@ public class MovieInput {
     @Getter @Setter
     private int numLikes = 0;
     @Getter @Setter
-    private int numRatings = 0;
-    @Getter @Setter
     private double rating = 0;
+    @Getter @Setter
+    private int numRatings = 0;
 
     public MovieInput(final MovieInput moviesInput) {
         this.name = moviesInput.getName();
