@@ -16,6 +16,8 @@ import pootv.command.authenticated.upgrades.BuyPA;
 import pootv.command.authenticated.upgrades.BuyTokens;
 import pootv.command.changePage.Back;
 import pootv.command.changePage.ChangePage;
+import pootv.command.database.Add;
+import pootv.command.database.Delete;
 import pootv.command.unauthenticated.login.Login;
 import pootv.command.unauthenticated.register.Register;
 
@@ -40,12 +42,14 @@ public class Menu {
     private static String lastPage;
     @Getter @Setter
     private static String currMovie;
+    @Getter @Setter
+    private static int userIndex;
 
     public Menu(final Input input, final ArrayNode output) {
         Menu.input = input;
         Menu.output = output;
         currUser = new UserInput(new Credentials(), 0, 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1,
-                new ArrayList<>(), new ArrayList<>(),
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
         movieDetailsName = null;
         lastAction = null;
@@ -61,79 +65,43 @@ public class Menu {
      */
     public void actionsPOOTV() {
         for (ActionsInput actionInput : input.getActions()) {
+            System.out.println(actionInput.getType() + " -> " + actionInput.getFeature());
+            DataBase dataBase = DataBase.getDataBase();
             switch (actionInput.getType()) {
                 case "change page" -> ChangePage.doChangePage(actionInput, output);
                 case "on page" -> {
                     actions = new Actions(actionInput);
                     setLastAction(actions.getActionInput().getFeature());
-
                     switch (actionInput.getFeature()) {
-                        case "login" -> {
-                            Login login = new Login();
-                            actions.doAction(login);
-                        }
-                        case "register" -> {
-                            Register register = new Register();
-                            actions.doAction(register);
-                        }
-                        case "search" -> {
-                            Search search = new Search();
-                            actions.doAction(search);
-                        }
+                        case "login" -> actions.doAction(new Login());
+                        case "register" -> actions.doAction(new Register());
+                        case "search" -> actions.doAction(new Search());
                         case "filter" -> {
                             if (!Menu.getCurrPage().equals("movies")) {
                                 Error.doError(Menu.getOutput());
                                 break;
                             }
-
-                            Filter filter = new Filter(new ContainsFilter());
-                            actions.doAction(filter);
-                            filter = new Filter(new SortFilter());
-                            actions.doAction(filter);
-
+                            actions.doAction(new Filter(new ContainsFilter()));
+                            actions.doAction(new Filter(new SortFilter()));
                             FilterOutput.doOutput(Menu.getOutput(), actions);
                         }
-                        case "purchase" -> {
-                            Purchase purchase = new Purchase();
-                            actions.doAction(purchase);
-                        }
-                        case "watch" -> {
-                            Watch watch = new Watch();
-                            actions.doAction(watch);
-                        }
-                        case "like" -> {
-                            Like like = new Like();
-                            actions.doAction(like);
-                        }
-                        case "rate" -> {
-                            Rate rate = new Rate();
-                            actions.doAction(rate);
-                        }
-                        case "buy premium account" -> {
-                            BuyPA buyPA = new BuyPA();
-                            actions.doAction(buyPA);
-                        }
-                        case "buy tokens" -> {
-                            BuyTokens buyTokens = new BuyTokens();
-                            actions.doAction(buyTokens);
-                        }
-                        case "subscribe" -> {
-                            Subscribe subscribe = new Subscribe();
-                            actions.doAction(subscribe);
-                        }
+                        case "purchase" -> actions.doAction(new Purchase());
+                        case "watch" -> actions.doAction(new Watch());
+                        case "like" -> actions.doAction(new Like());
+                        case "rate" -> actions.doAction(new Rate());
+                        case "buy premium account" -> actions.doAction(new BuyPA());
+                        case "buy tokens" -> actions.doAction(new BuyTokens());
+                        case "subscribe" -> actions.doAction(new Subscribe());
                         default -> {
                             return;
                         }
                     }
                 }
                 case "database" -> {
+                    actions = new Actions(actionInput);
                     switch (actionInput.getFeature()) {
-                        case "add" -> {
-
-                        }
-                        case "delete" -> {
-
-                        }
+                        case "add" -> actions.doAction(new Add());
+                        case "delete" -> actions.doAction(new Delete());
                         default -> {
                             return;
                         }

@@ -104,7 +104,6 @@ public class Purchase implements Command {
             if (iterator.getName().equals(Menu.getMovieDetailsName())) {
                 TokensPurchase.tokens(output, user, iterator, movieOutput);
 
-                Menu.setCurrUser(new UserInput(user));
                 return;
             }
         }

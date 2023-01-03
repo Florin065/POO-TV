@@ -1,9 +1,13 @@
 package pootv.command.authenticated.upgrades;
 
 import fileio.UserInput;
+import pootv.DataBase;
 import pootv.Menu;
 import pootv.command.Command;
 import pootv.Error;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BuyPA implements Command {
     public BuyPA() {
@@ -15,6 +19,8 @@ public class BuyPA implements Command {
     @Override
     public void execute() {
         UserInput user = new UserInput(Menu.getCurrUser());
+        List<UserInput> userList = new ArrayList<>(DataBase.getDataBase().getUsers());
+        int indexUser = userList.indexOf(user);
 
         if (user.getTokensCount() < 2 + 2 + 2 + 2 + 2
                 || (!Menu.getCurrPage().equals("upgrades"))) {
@@ -26,5 +32,7 @@ public class BuyPA implements Command {
         user.getCredentials().setAccountType("premium");
 
         Menu.setCurrUser(new UserInput(user));
+        userList.set(indexUser, user);
+        DataBase.getDataBase().setUsers(new ArrayList<>(userList));
     }
 }

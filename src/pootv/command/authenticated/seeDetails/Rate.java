@@ -3,12 +3,14 @@ package pootv.command.authenticated.seeDetails;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
 import fileio.UserInput;
+import pootv.DataBase;
 import pootv.Menu;
 import pootv.command.Actions;
 import pootv.command.Command;
 import pootv.Error;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Rate implements Command {
     public Rate() {
@@ -56,8 +58,10 @@ public class Rate implements Command {
                 user.getPurchasedMovies().set(user.getPurchasedMovies()
                         .indexOf(iterator), deepCopy);
                 user.getWatchedMovies().set(user.getWatchedMovies().indexOf(iterator), deepCopy);
-                Menu.getInput().getMovies().set(
-                        Menu.getInput().getMovies().indexOf(iterator), deepCopy);
+
+                List<MovieInput> movies = DataBase.getDataBase().getMovies();
+                int index = movies.indexOf(iterator);
+                DataBase.getDataBase().getMovies().set(index, deepCopy);
 
                 if (!user.getLikedMovies().equals(new ArrayList<>())) {
                     user.getLikedMovies().set(user.getRatedMovies().indexOf(iterator), deepCopy);

@@ -3,11 +3,13 @@ package pootv.command.authenticated.seeDetails;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
 import fileio.UserInput;
+import pootv.DataBase;
 import pootv.Menu;
 import pootv.command.Command;
 import pootv.Error;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Like implements Command {
     public Like() {
@@ -57,8 +59,9 @@ public class Like implements Command {
                     user.getRatedMovies().set(user.getRatedMovies().indexOf(iterator), deepCopy);
                 }
 
-                Menu.getInput().getMovies().set(
-                        Menu.getInput().getMovies().indexOf(iterator), deepCopy);
+                List<MovieInput> movies = DataBase.getDataBase().getMovies();
+                int index = movies.indexOf(iterator);
+                DataBase.getDataBase().getMovies().set(index, deepCopy);
 
                 iterator = new MovieInput(deepCopy);
                 user.getLikedMovies().add(iterator);

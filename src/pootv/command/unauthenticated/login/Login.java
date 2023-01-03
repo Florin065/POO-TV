@@ -29,7 +29,31 @@ public class Login implements Command {
         for (UserInput iterator : DataBase.getDataBase().getUsers()) {
             if (iterator.getCredentials().getName().equals(credentials.getName())
                     && iterator.getCredentials().getPassword().equals(credentials.getPassword())) {
-                Menu.getCurrUser().setCredentials(iterator.getCredentials());
+                UserInput user = new UserInput.Builder(iterator.getCredentials())
+                        .tokensCount(iterator.getTokensCount())
+                        .numFreePremiumMovies(iterator.getNumFreePremiumMovies())
+                        .build();
+
+                if (iterator.getPurchasedMovies() != null) {
+                    user.setPurchasedMovies(iterator.getPurchasedMovies());
+                }
+                if (iterator.getWatchedMovies() != null) {
+                    user.setWatchedMovies(iterator.getWatchedMovies());
+                }
+                if (iterator.getLikedMovies() != null) {
+                    user.setLikedMovies(iterator.getLikedMovies());
+                }
+                if (iterator.getRatedMovies() != null) {
+                    user.setRatedMovies(iterator.getRatedMovies());
+                }
+                if (iterator.getSubscribedGenres() != null) {
+                    user.setSubscribedGenres(iterator.getSubscribedGenres());
+                }
+                if (iterator.getPurchasedMovies() != null) {
+                    user.setNotifications(iterator.getNotifications());
+                }
+
+                Menu.setUserIndex(DataBase.getDataBase().getUsers().indexOf(iterator));
                 break;
             }
         }

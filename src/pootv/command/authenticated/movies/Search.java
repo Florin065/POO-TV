@@ -2,6 +2,7 @@ package pootv.command.authenticated.movies;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
+import pootv.DataBase;
 import pootv.Menu;
 import pootv.command.Command;
 import pootv.Error;
@@ -24,7 +25,7 @@ public class Search implements Command {
 
         ArrayList<MovieInput> searchML = new ArrayList<>();
 
-        for (MovieInput iterator : Menu.getInput().getMovies()) {
+        for (MovieInput iterator : DataBase.getDataBase().getMovies()) {
             if ((!iterator.getCountriesBanned().contains(
                     Menu.getCurrUser().getCredentials().getCountry()))
                     && iterator.getName().startsWith(

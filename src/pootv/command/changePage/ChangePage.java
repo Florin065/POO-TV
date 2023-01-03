@@ -3,6 +3,7 @@ package pootv.command.changePage;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.ActionsInput;
 import fileio.MovieInput;
+import pootv.DataBase;
 import pootv.Menu;
 import pootv.Error;
 import pootv.command.NotBannedMovies;
@@ -32,7 +33,7 @@ public final class ChangePage {
         ArrayList<MovieInput> cornerCase = new ArrayList<>();
 
         if (actionsInput.getPage().equals("see details")) {
-            for (MovieInput iterator : Menu.getInput().getMovies()) {
+            for (MovieInput iterator : DataBase.getDataBase().getMovies()) {
                 if (iterator.getName().equals(actionsInput.getMovie())) {
                     cornerCase.add(iterator);
                     break;
@@ -72,11 +73,11 @@ public final class ChangePage {
             }
         }
 
+        Menu.setLastPage(copyCurrPage);
+
         if (Menu.getCurrUser().getCredentials().getName() != null) {
             ArrayList<MovieInput> currML = new ArrayList<>();
             NotBannedMovies.get(currML);
-
-            Menu.setLastPage(Menu.getCurrPage());
 
             switch (Menu.getCurrPage()) {
                 case "logout" -> Logout.logout();
