@@ -2,6 +2,7 @@ package pootv.command.authenticated.seeDetails;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
+import fileio.Rating;
 import fileio.UserInput;
 import pootv.DataBase;
 import pootv.Menu;
@@ -26,13 +27,6 @@ public class Rate implements Command {
         if (!Menu.getCurrPage().equals("see details")) {
             Error.doError(output);
             return;
-        }
-
-        for (MovieInput iterator : Menu.getCurrUser().getRatedMovies()) {
-            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
-                Error.doError(output);
-                return;
-            }
         }
 
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
@@ -63,8 +57,43 @@ public class Rate implements Command {
                 int index = movies.indexOf(iterator);
                 DataBase.getDataBase().getMovies().set(index, deepCopy);
 
-                if (!user.getLikedMovies().equals(new ArrayList<>())) {
-                    user.getLikedMovies().set(user.getRatedMovies().indexOf(iterator), deepCopy);
+                if (!user.getLikedMovies().isEmpty()) {
+                    user.getLikedMovies().set(user.getLikedMovies().indexOf(iterator), deepCopy);
+                }
+
+                for (UserInput userData : DataBase.getDataBase().getUsers()) {
+                    int index1 = DataBase.getDataBase().getUsers().indexOf(userData);
+                    if (!userData.getRatedMovies().isEmpty()) {
+                        for (MovieInput rated : userData.getRatedMovies()) {
+                            if (rated.getName().equals(deepCopy.getName())) {
+                                int index2 = userData.getRatedMovies().indexOf(rated);
+                                userData.getRatedMovies().set(index2, deepCopy);
+
+                                for (MovieInput watched : userData.getWatchedMovies()) {
+                                    if (rated.getName().equals(watched.getName())) {
+                                        int index4 = userData.getWatchedMovies().indexOf(watched);
+                                        userData.getWatchedMovies().set(index4, deepCopy);
+                                    }
+                                }
+
+                                for (MovieInput purchased : userData.getPurchasedMovies()) {
+                                    if (rated.getName().equals(purchased.getName())) {
+                                        int index5 = userData.getPurchasedMovies().indexOf(purchased);
+                                        userData.getPurchasedMovies().set(index5, deepCopy);
+                                    }
+                                }
+
+                                for (MovieInput liked : userData.getLikedMovies()) {
+                                    if (rated.getName().equals(liked.getName())) {
+                                        int index3 = userData.getLikedMovies().indexOf(liked);
+                                        userData.getLikedMovies().set(index3, deepCopy);
+                                    }
+                                }
+
+                                DataBase.getDataBase().getUsers().set(index1, userData);
+                            }
+                        }
+                    }
                 }
 
                 iterator = new MovieInput(deepCopy);
@@ -75,6 +104,7 @@ public class Rate implements Command {
                         .putPOJO("currentMoviesList", movieOutput)
                         .putPOJO("currentUser", user);
 
+                user.getRating().add(new Rating(Menu.getMovieDetailsName(), actions.getActionInput().getRate()));
                 Menu.setCurrUser(new UserInput(user));
                 return;
             }

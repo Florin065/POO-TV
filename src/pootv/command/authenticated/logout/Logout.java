@@ -1,6 +1,8 @@
 package pootv.command.authenticated.logout;
 
 import fileio.Credentials;
+import fileio.MovieInput;
+import fileio.Rating;
 import fileio.UserInput;
 import pootv.DataBase;
 import pootv.Menu;
@@ -22,6 +24,6 @@ public final class Logout {
         Menu.setCurrPage("homepage unauth");
         Menu.setCurrUser(new UserInput(new Credentials(), 0, 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1,
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
     }
 }

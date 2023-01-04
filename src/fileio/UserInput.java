@@ -14,30 +14,33 @@ public class UserInput {
     @Getter @Setter
     private int tokensCount = 0;
     @Getter @Setter
-    private int numFreePremiumMovies;
+    private int numFreePremiumMovies = 15;
     @Getter @Setter
-    private ArrayList<MovieInput> purchasedMovies;
+    private ArrayList<MovieInput> purchasedMovies = new ArrayList<>();
     @Getter @Setter
-    private ArrayList<MovieInput> watchedMovies;
+    private ArrayList<MovieInput> watchedMovies = new ArrayList<>();
     @Getter @Setter
-    private ArrayList<MovieInput> likedMovies;
+    private ArrayList<MovieInput> likedMovies = new ArrayList<>();
     @Getter @Setter
-    private ArrayList<MovieInput> ratedMovies;
+    private ArrayList<MovieInput> ratedMovies = new ArrayList<>();
     @Getter @Setter
-    private ArrayList<Notifications> notifications;
+    private ArrayList<Notifications> notifications = new ArrayList<>();
     @Getter @Setter @JsonIgnore
-    private ArrayList<String> subscribedGenres;
+    private ArrayList<String> subscribedGenres = new ArrayList<>();
+    @Getter @Setter @JsonIgnore
+    private ArrayList<Rating> rating = new ArrayList<>();
 
     public static class Builder {
-        private Credentials credentials;
-        private int tokensCount;
-        private int numFreePremiumMovies;
-        private ArrayList<MovieInput> purchasedMovies;
-        private ArrayList<MovieInput> watchedMovies;
-        private ArrayList<MovieInput> likedMovies;
-        private ArrayList<MovieInput> ratedMovies;
-        private ArrayList<Notifications> notifications;
-        private ArrayList<String> subscribedGenres;
+        private final Credentials credentials;
+        private int tokensCount = 0;
+        private int numFreePremiumMovies = 15;
+        private ArrayList<MovieInput> purchasedMovies = new ArrayList<>();
+        private ArrayList<MovieInput> watchedMovies = new ArrayList<>();
+        private ArrayList<MovieInput> likedMovies = new ArrayList<>();
+        private ArrayList<MovieInput> ratedMovies = new ArrayList<>();
+        private ArrayList<Notifications> notifications = new ArrayList<>();
+        private ArrayList<String> subscribedGenres = new ArrayList<>();
+        private ArrayList<Rating> rating = new ArrayList<>();
 
         public Builder(Credentials credentials) {
             this.credentials = credentials;
@@ -76,6 +79,11 @@ public class UserInput {
             return this;
         }
 
+        public Builder rating(ArrayList<Rating> rating) {
+            this.rating = rating;
+            return this;
+        }
+
         public UserInput build() {
             return new UserInput(this);
         }
@@ -91,6 +99,7 @@ public class UserInput {
         this.ratedMovies = builder.ratedMovies;
         this.notifications = builder.notifications;
         this.subscribedGenres = builder.subscribedGenres;
+        this.rating = builder.rating;
     }
 
     public UserInput(final UserInput usersInput) {
@@ -103,6 +112,7 @@ public class UserInput {
         ratedMovies = new ArrayList<>(usersInput.ratedMovies);
         notifications = new ArrayList<>(usersInput.notifications);
         subscribedGenres = new ArrayList<>(usersInput.subscribedGenres);
+        rating = new ArrayList<>(usersInput.rating);
     }
 
     public UserInput(final Credentials credentials,
@@ -113,7 +123,8 @@ public class UserInput {
                      final ArrayList<MovieInput> likedMovies,
                      final ArrayList<MovieInput> ratedMovies,
                      final ArrayList<Notifications> notifications,
-                     final ArrayList<String> subscribedGenres) {
+                     final ArrayList<String> subscribedGenres,
+                     final ArrayList<Rating> rating) {
         this.credentials = credentials;
         this.tokensCount = tokensCount;
         this.numFreePremiumMovies = numFreePremiumMovies;
@@ -123,6 +134,7 @@ public class UserInput {
         this.ratedMovies = ratedMovies;
         this.notifications = notifications;
         this.subscribedGenres = subscribedGenres;
+        this.rating = rating;
     }
 
     public UserInput() {

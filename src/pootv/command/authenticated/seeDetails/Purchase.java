@@ -27,10 +27,12 @@ public class Purchase implements Command {
             return;
         }
 
-        for (MovieInput iterator : Menu.getCurrUser().getPurchasedMovies()) {
-            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
-                Error.doError(output);
-                return;
+        if (!Menu.getCurrUser().getPurchasedMovies().isEmpty()) {
+            for (MovieInput iterator : Menu.getCurrUser().getPurchasedMovies()) {
+                if (iterator.getName().equals(Menu.getMovieDetailsName())) {
+                    Error.doError(output);
+                    return;
+                }
             }
         }
 

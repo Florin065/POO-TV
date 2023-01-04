@@ -27,13 +27,6 @@ public class Watch implements Command {
             return;
         }
 
-        for (MovieInput iterator : Menu.getCurrUser().getWatchedMovies()) {
-            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
-                Error.doError(output);
-                return;
-            }
-        }
-
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
         UserInput user = new UserInput(Menu.getCurrUser());
 
@@ -46,6 +39,15 @@ public class Watch implements Command {
             if (iterator.getName().equals(Menu.getMovieDetailsName())) {
                 user.getWatchedMovies().add(iterator);
                 movieOutput.add(iterator);
+
+                for (MovieInput movie : Menu.getCurrUser().getWatchedMovies()) {
+                    if (movie.getName().equals(Menu.getMovieDetailsName())) {
+                        output.addObject().put("error", (String) null)
+                                .putPOJO("currentMoviesList", movieOutput)
+                                .putPOJO("currentUser", Menu.getCurrUser());
+                        return;
+                    }
+                }
 
                 output.addObject().put("error", (String) null)
                         .putPOJO("currentMoviesList", movieOutput)

@@ -34,25 +34,29 @@ public class Login implements Command {
                         .numFreePremiumMovies(iterator.getNumFreePremiumMovies())
                         .build();
 
-                if (iterator.getPurchasedMovies() != null) {
+                if (!iterator.getPurchasedMovies().isEmpty()) {
                     user.setPurchasedMovies(iterator.getPurchasedMovies());
                 }
-                if (iterator.getWatchedMovies() != null) {
+                if (!iterator.getWatchedMovies().isEmpty()) {
                     user.setWatchedMovies(iterator.getWatchedMovies());
                 }
-                if (iterator.getLikedMovies() != null) {
+                if (!iterator.getLikedMovies().isEmpty()) {
                     user.setLikedMovies(iterator.getLikedMovies());
                 }
-                if (iterator.getRatedMovies() != null) {
+                if (!iterator.getRatedMovies().isEmpty()) {
                     user.setRatedMovies(iterator.getRatedMovies());
                 }
-                if (iterator.getSubscribedGenres() != null) {
+                if (!iterator.getSubscribedGenres().isEmpty()) {
                     user.setSubscribedGenres(iterator.getSubscribedGenres());
                 }
-                if (iterator.getPurchasedMovies() != null) {
+                if (!iterator.getNotifications().isEmpty()) {
                     user.setNotifications(iterator.getNotifications());
                 }
+                if (!iterator.getRating().isEmpty()) {
+                    user.setRating(iterator.getRating());
+                }
 
+                Menu.setCurrUser(user);
                 Menu.setUserIndex(DataBase.getDataBase().getUsers().indexOf(iterator));
                 break;
             }
