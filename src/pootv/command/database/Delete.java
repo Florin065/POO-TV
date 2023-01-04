@@ -17,22 +17,34 @@ public class Delete implements Command {
 
     @Override
     public void execute() {
-        MovieInput deletedMovie = Menu.getActions().getActionInput().getAddedMovie();
+        String deletedMovie = Menu.getActions().getActionInput().getDeletedMovie();
+        MovieInput deleted = null;
 
-        if (!DataBase.getDataBase().getMovies().contains(deletedMovie)) {
+        for (MovieInput movie : DataBase.getDataBase().getMovies()) {
+            if (movie.getName().equals(deletedMovie)) {
+                deleted = new MovieInput(movie);
+            }
+        }
+
+        List<String> movieNames = new ArrayList<>();
+        for (MovieInput movieInput : DataBase.getDataBase().getMovies()) {
+            movieNames.add(movieInput.getName());
+        }
+
+        if (!movieNames.contains(deletedMovie)) {
             Error.doError(Menu.getOutput());
             return;
         }
 
         List<MovieInput> newMovieList = new ArrayList<>(DataBase.getDataBase().getMovies());
-        newMovieList.remove(deletedMovie);
+        newMovieList.remove(deleted);
         DataBase.getDataBase().setMovies(newMovieList);
 
         List<UserInput> newUserList = new ArrayList<>(DataBase.getDataBase().getUsers());
 
         for (UserInput user : newUserList) {
             ArrayList<Notifications> notification = new ArrayList<>(user.getNotifications());
-            notification.add(new Notifications(deletedMovie.getName(), "DELETE"));
+            notification.add(new Notifications(deletedMovie, "DELETE"));
             UserInput newUser = new UserInput(user);
 
             if (newUser.getCredentials().getAccountType().equals("premium")) {
@@ -42,10 +54,10 @@ public class Delete implements Command {
             }
 
             newUser.setNumFreePremiumMovies(user.getNumFreePremiumMovies() + 1);
-            newUser.getPurchasedMovies().remove(deletedMovie);
-            newUser.getWatchedMovies().remove(deletedMovie);
-            newUser.getLikedMovies().remove(deletedMovie);
-            newUser.getRatedMovies().remove(deletedMovie);
+            newUser.getPurchasedMovies().remove(deleted);
+            newUser.getWatchedMovies().remove(deleted);
+            newUser.getLikedMovies().remove(deleted);
+            newUser.getRatedMovies().remove(deleted);
             newUser.setNotifications(notification);
         }
 

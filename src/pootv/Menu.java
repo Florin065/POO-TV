@@ -22,6 +22,7 @@ import pootv.command.unauthenticated.login.Login;
 import pootv.command.unauthenticated.register.Register;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Menu {
     @Getter @Setter
@@ -50,7 +51,7 @@ public class Menu {
         Menu.output = output;
         currUser = new UserInput(new Credentials(), 0, 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1,
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>());
         movieDetailsName = null;
         lastAction = null;
         currMovie = null;
@@ -65,7 +66,7 @@ public class Menu {
      */
     public void actionsPOOTV() {
         for (ActionsInput actionInput : input.getActions()) {
-            System.out.println(actionInput.getType() + " -> " + actionInput.getFeature());
+//            System.out.println(actionInput.getType() + " -> " + actionInput.getFeature());
             DataBase dataBase = DataBase.getDataBase();
             switch (actionInput.getType()) {
                 case "change page" -> ChangePage.doChangePage(actionInput, output);

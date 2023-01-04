@@ -20,7 +20,12 @@ public class BuyPA implements Command {
     public void execute() {
         UserInput user = new UserInput(Menu.getCurrUser());
         List<UserInput> userList = new ArrayList<>(DataBase.getDataBase().getUsers());
-        int indexUser = userList.indexOf(user);
+        int indexUser = 0;
+        for (UserInput userInput : userList) {
+            if (user.getCredentials().getName().equals(userInput.getCredentials().getName())) {
+                indexUser = userList.indexOf(userInput);
+            }
+        }
 
         if (user.getTokensCount() < 2 + 2 + 2 + 2 + 2
                 || (!Menu.getCurrPage().equals("upgrades"))) {

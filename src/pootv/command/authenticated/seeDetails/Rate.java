@@ -1,9 +1,11 @@
 package pootv.command.authenticated.seeDetails;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
-import fileio.Rating;
 import fileio.UserInput;
+import lombok.Getter;
+import lombok.Setter;
 import pootv.DataBase;
 import pootv.Menu;
 import pootv.command.Actions;
@@ -43,11 +45,21 @@ public class Rate implements Command {
         for (MovieInput iterator : user.getWatchedMovies()) {
             if (iterator.getName().equals(Menu.getMovieDetailsName())) {
                 MovieInput deepCopy = new MovieInput(iterator);
-                double sum = deepCopy.getRating() * deepCopy.getNumRatings()
-                        + actions.getActionInput().getRate();
-                deepCopy.setNumRatings(deepCopy.getNumRatings() + 1);
-                sum = sum / deepCopy.getNumRatings();
-                deepCopy.setRating(sum);
+                double sum;
+                if (user.getRating().containsKey(Menu.getMovieDetailsName())) {
+                    sum = deepCopy.getRating() * deepCopy.getNumRatings()
+                            - user.getRating().get(Menu.getMovieDetailsName())
+                            + actions.getActionInput().getRate();
+                    sum = sum / deepCopy.getNumRatings();
+                    deepCopy.setRating(sum);
+                } else {
+                    sum = deepCopy.getRating() * deepCopy.getNumRatings()
+                            + actions.getActionInput().getRate();
+                    deepCopy.setNumRatings(deepCopy.getNumRatings() + 1);
+                    sum = sum / deepCopy.getNumRatings();
+                    deepCopy.setRating(sum);
+                    user.getRatedMovies().add(deepCopy);
+                }
 
                 user.getPurchasedMovies().set(user.getPurchasedMovies()
                         .indexOf(iterator), deepCopy);
@@ -71,21 +83,24 @@ public class Rate implements Command {
 
                                 for (MovieInput watched : userData.getWatchedMovies()) {
                                     if (rated.getName().equals(watched.getName())) {
-                                        int index4 = userData.getWatchedMovies().indexOf(watched);
+                                        int index4 = userData.getWatchedMovies()
+                                                .indexOf(watched);
                                         userData.getWatchedMovies().set(index4, deepCopy);
                                     }
                                 }
 
                                 for (MovieInput purchased : userData.getPurchasedMovies()) {
                                     if (rated.getName().equals(purchased.getName())) {
-                                        int index5 = userData.getPurchasedMovies().indexOf(purchased);
+                                        int index5 = userData.getPurchasedMovies()
+                                                .indexOf(purchased);
                                         userData.getPurchasedMovies().set(index5, deepCopy);
                                     }
                                 }
 
                                 for (MovieInput liked : userData.getLikedMovies()) {
                                     if (rated.getName().equals(liked.getName())) {
-                                        int index3 = userData.getLikedMovies().indexOf(liked);
+                                        int index3 = userData.getLikedMovies()
+                                                .indexOf(liked);
                                         userData.getLikedMovies().set(index3, deepCopy);
                                     }
                                 }
@@ -96,16 +111,13 @@ public class Rate implements Command {
                     }
                 }
 
-                iterator = new MovieInput(deepCopy);
-                user.getRatedMovies().add(iterator);
-                movieOutput.add(iterator);
+                movieOutput.add(deepCopy);
 
-                output.addObject().put("error", (String) null)
-                        .putPOJO("currentMoviesList", movieOutput)
-                        .putPOJO("currentUser", user);
+                ObjectMapper mapper = new ObjectMapper();
+                output.add(mapper.valueToTree(new CommandOutput(null, movieOutput, user)));
 
-                user.getRating().add(new Rating(Menu.getMovieDetailsName(), actions.getActionInput().getRate()));
-                Menu.setCurrUser(new UserInput(user));
+                user.getRating().put(Menu.getMovieDetailsName(), actions.getActionInput().getRate());
+                Menu.setCurrUser(user);
                 return;
             }
         }

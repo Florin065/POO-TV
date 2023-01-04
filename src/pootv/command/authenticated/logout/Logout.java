@@ -1,13 +1,12 @@
 package pootv.command.authenticated.logout;
 
 import fileio.Credentials;
-import fileio.MovieInput;
-import fileio.Rating;
 import fileio.UserInput;
 import pootv.DataBase;
 import pootv.Menu;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public final class Logout {
@@ -24,6 +23,6 @@ public final class Logout {
         Menu.setCurrPage("homepage unauth");
         Menu.setCurrUser(new UserInput(new Credentials(), 0, 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1,
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>()));
     }
 }

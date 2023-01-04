@@ -20,7 +20,12 @@ public class BuyTokens implements Command {
     public void execute() {
         UserInput user = new UserInput(Menu.getCurrUser());
         List<UserInput> userList =  new ArrayList<>(DataBase.getDataBase().getUsers());
-        int indexUser = userList.indexOf(user);
+        int indexUser = 0;
+        for (UserInput userInput : userList) {
+            if (user.getCredentials().getName().equals(userInput.getCredentials().getName())) {
+                indexUser = userList.indexOf(userInput);
+            }
+        }
 
         if (Integer.parseInt(user.getCredentials().getBalance())
                 < Integer.parseInt(Menu.getActions().getActionInput().getCount())

@@ -21,6 +21,13 @@ public class Back {
             return;
         }
 
+        String page1 = Menu.getCurrPage();
+        String page2 = Menu.getLastPage();
+
+        if (page1.equals(page2)) {
+            Menu.setLastPage("homepage auth");
+        }
+
         Menu.setCurrPage(Menu.getLastPage());
         ArrayList<MovieInput> currML = new ArrayList<>();
         NotBannedMovies.get(currML);

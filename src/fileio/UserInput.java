@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @ToString
 public class UserInput {
@@ -28,7 +30,7 @@ public class UserInput {
     @Getter @Setter @JsonIgnore
     private ArrayList<String> subscribedGenres = new ArrayList<>();
     @Getter @Setter @JsonIgnore
-    private ArrayList<Rating> rating = new ArrayList<>();
+    private Map<String, Double> rating = new HashMap<>();
 
     public static class Builder {
         private final Credentials credentials;
@@ -40,7 +42,7 @@ public class UserInput {
         private ArrayList<MovieInput> ratedMovies = new ArrayList<>();
         private ArrayList<Notifications> notifications = new ArrayList<>();
         private ArrayList<String> subscribedGenres = new ArrayList<>();
-        private ArrayList<Rating> rating = new ArrayList<>();
+        private Map<String, Double> rating = new HashMap<>();
 
         public Builder(Credentials credentials) {
             this.credentials = credentials;
@@ -79,7 +81,7 @@ public class UserInput {
             return this;
         }
 
-        public Builder rating(ArrayList<Rating> rating) {
+        public Builder rating(Map<String, Double> rating) {
             this.rating = rating;
             return this;
         }
@@ -112,7 +114,7 @@ public class UserInput {
         ratedMovies = new ArrayList<>(usersInput.ratedMovies);
         notifications = new ArrayList<>(usersInput.notifications);
         subscribedGenres = new ArrayList<>(usersInput.subscribedGenres);
-        rating = new ArrayList<>(usersInput.rating);
+        rating = new HashMap<>(usersInput.rating);
     }
 
     public UserInput(final Credentials credentials,
@@ -124,7 +126,7 @@ public class UserInput {
                      final ArrayList<MovieInput> ratedMovies,
                      final ArrayList<Notifications> notifications,
                      final ArrayList<String> subscribedGenres,
-                     final ArrayList<Rating> rating) {
+                     final Map<String, Double> rating) {
         this.credentials = credentials;
         this.tokensCount = tokensCount;
         this.numFreePremiumMovies = numFreePremiumMovies;

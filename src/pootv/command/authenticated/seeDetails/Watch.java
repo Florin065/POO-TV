@@ -1,5 +1,6 @@
 package pootv.command.authenticated.seeDetails;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
 import fileio.UserInput;
@@ -42,16 +43,14 @@ public class Watch implements Command {
 
                 for (MovieInput movie : Menu.getCurrUser().getWatchedMovies()) {
                     if (movie.getName().equals(Menu.getMovieDetailsName())) {
-                        output.addObject().put("error", (String) null)
-                                .putPOJO("currentMoviesList", movieOutput)
-                                .putPOJO("currentUser", Menu.getCurrUser());
+                        ObjectMapper mapper = new ObjectMapper();
+                        output.add(mapper.valueToTree(new CommandOutput(null, movieOutput, Menu.getCurrUser())));
                         return;
                     }
                 }
 
-                output.addObject().put("error", (String) null)
-                        .putPOJO("currentMoviesList", movieOutput)
-                        .putPOJO("currentUser", user);
+                ObjectMapper mapper = new ObjectMapper();
+                output.add(mapper.valueToTree(new CommandOutput(null, movieOutput, user)));
 
                 Menu.setCurrUser(new UserInput(user));
                 return;

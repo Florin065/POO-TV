@@ -5,6 +5,9 @@ import pootv.Menu;
 import pootv.command.Actions;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.function.ToDoubleFunction;
 
 public class SortFilter implements FilterStrategy {
     /**
@@ -95,12 +98,11 @@ public class SortFilter implements FilterStrategy {
             }
             String rating = actions.getActionInput().getFilters().getSort().getRating();
 
-            currML.sort((t2, t1) -> {
-                if (rating.equals("decreasing")) {
-                    return (int) (t1.getRating() - t2.getRating());
-                }
-                return (int) (t2.getRating() - t1.getRating());
-            });
+            if (rating.equals("decreasing")) {
+                currML.sort((t1, t2) -> Double.compare(t2.getRating(), t1.getRating()));
+            } else {
+                currML.sort(Comparator.comparingDouble(MovieInput::getRating));
+            }
 
             actions.setFilter(currML);
         }
