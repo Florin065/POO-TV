@@ -16,7 +16,7 @@ public class UserInput {
     @Getter @Setter
     private int tokensCount = 0;
     @Getter @Setter
-    private int numFreePremiumMovies = 15;
+    private int numFreePremiumMovies = 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1;
     @Getter @Setter
     private ArrayList<MovieInput> purchasedMovies = new ArrayList<>();
     @Getter @Setter
@@ -35,7 +35,7 @@ public class UserInput {
     public static class Builder {
         private final Credentials credentials;
         private int tokensCount = 0;
-        private int numFreePremiumMovies = 15;
+        private int numFreePremiumMovies = 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1;
         private ArrayList<MovieInput> purchasedMovies = new ArrayList<>();
         private ArrayList<MovieInput> watchedMovies = new ArrayList<>();
         private ArrayList<MovieInput> likedMovies = new ArrayList<>();
@@ -44,54 +44,100 @@ public class UserInput {
         private ArrayList<String> subscribedGenres = new ArrayList<>();
         private Map<String, Double> rating = new HashMap<>();
 
-        public Builder(Credentials credentials) {
+        public Builder(final Credentials credentials) {
             this.credentials = credentials;
         }
-
-        public Builder tokensCount(int tokensCount) {
+        /**
+         *
+         * @param tokensCount
+         * @return
+         */
+        public Builder tokensCount(final int tokensCount) {
             this.tokensCount = tokensCount;
             return this;
         }
-        public Builder numFreePremiumMovies(int numFreePremiumMovies) {
+        /**
+         *
+         * @param numFreePremiumMovies
+         * @return
+         */
+        public Builder numFreePremiumMovies(final int numFreePremiumMovies) {
             this.numFreePremiumMovies = numFreePremiumMovies;
             return this;
         }
-        public Builder purchasedMovies(ArrayList<MovieInput> purchasedMovies) {
+        /**
+         *
+         * @param purchasedMovies
+         * @return
+         */
+        public Builder purchasedMovies(final ArrayList<MovieInput> purchasedMovies) {
             this.purchasedMovies = purchasedMovies;
             return this;
         }
-        public Builder watchedMovies(ArrayList<MovieInput> watchedMovies) {
+        /**
+         *
+         * @param watchedMovies
+         * @return
+         */
+        public Builder watchedMovies(final ArrayList<MovieInput> watchedMovies) {
             this.watchedMovies = watchedMovies;
             return this;
         }
-        public Builder likedMovies(ArrayList<MovieInput> likedMovies) {
+        /**
+         *
+         * @param likedMovies
+         * @return
+         */
+        public Builder likedMovies(final ArrayList<MovieInput> likedMovies) {
             this.likedMovies = likedMovies;
             return this;
         }
-        public Builder ratedMovies(ArrayList<MovieInput> ratedMovies) {
+        /**
+         *
+         * @param ratedMovies
+         * @return
+         */
+        public Builder ratedMovies(final ArrayList<MovieInput> ratedMovies) {
             this.ratedMovies = ratedMovies;
             return this;
         }
-        public Builder notifications(ArrayList<Notifications> notifications) {
+        /**
+         *
+         * @param notifications
+         * @return
+         */
+        public Builder notifications(final ArrayList<Notifications> notifications) {
             this.notifications = notifications;
             return this;
         }
-        public Builder subscribedGenres(ArrayList<String> subscribedGenres) {
+        /**
+         *
+         * @param subscribedGenres
+         * @return
+         */
+        public Builder subscribedGenres(final ArrayList<String> subscribedGenres) {
             this.subscribedGenres = subscribedGenres;
             return this;
         }
-
-        public Builder rating(Map<String, Double> rating) {
+        /**
+         *
+         * @param rating
+         * @return
+         */
+        public Builder rating(final Map<String, Double> rating) {
             this.rating = rating;
             return this;
         }
-
+        /**
+         *
+         * @return
+         */
         public UserInput build() {
             return new UserInput(this);
         }
     }
 
-    public UserInput(Builder builder) {
+    public UserInput(final Builder builder) {
         this.credentials = builder.credentials;
         this.tokensCount = builder.tokensCount;
         this.numFreePremiumMovies = builder.numFreePremiumMovies;

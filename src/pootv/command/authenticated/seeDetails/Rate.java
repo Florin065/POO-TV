@@ -140,7 +140,8 @@ public class Rate implements Command {
                 movieOutput.add(deepCopy);
                 ObjectMapper mapper = new ObjectMapper();
                 output.add(mapper.valueToTree(new CommandOutput(null, movieOutput, user)));
-                user.getRating().put(Menu.getMovieDetailsName(), actions.getActionInput().getRate());
+                user.getRating().put(Menu.getMovieDetailsName(),
+                        actions.getActionInput().getRate());
                 Menu.setCurrUser(new UserInput(user));
                 return;
             }

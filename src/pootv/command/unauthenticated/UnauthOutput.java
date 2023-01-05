@@ -17,6 +17,7 @@ public final class UnauthOutput {
      */
     public static void doOutput(final ArrayNode output) {
         ObjectMapper mapper = new ObjectMapper();
-        output.add(mapper.valueToTree(new CommandOutput(null, new ArrayList<>(), Menu.getCurrUser())));
+        output.add(mapper.valueToTree(
+                new CommandOutput(null, new ArrayList<>(), Menu.getCurrUser())));
     }
 }

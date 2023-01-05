@@ -4,13 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
 import fileio.UserInput;
-import pootv.DataBase;
 import pootv.Menu;
 import pootv.command.Command;
 import pootv.Error;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Watch implements Command {
     public Watch() {
@@ -44,7 +42,8 @@ public class Watch implements Command {
                 for (MovieInput movie : Menu.getCurrUser().getWatchedMovies()) {
                     if (movie.getName().equals(Menu.getMovieDetailsName())) {
                         ObjectMapper mapper = new ObjectMapper();
-                        output.add(mapper.valueToTree(new CommandOutput(null, movieOutput, Menu.getCurrUser())));
+                        output.add(mapper.valueToTree(
+                                new CommandOutput(null, movieOutput, Menu.getCurrUser())));
                         return;
                     }
                 }

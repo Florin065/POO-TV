@@ -11,7 +11,7 @@ public class Notifications {
     @Getter @Setter
     private String message;
 
-    public Notifications(String movieName, String message) {
+    public Notifications(final String movieName, final String message) {
         this.movieName = movieName;
         this.message = message;
     }

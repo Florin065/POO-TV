@@ -24,5 +24,6 @@ public final class Logout {
         Menu.setCurrUser(new UserInput(new Credentials(), 0, 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1,
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>()));
+        Menu.setLastPages(new ArrayList<>());
     }
 }

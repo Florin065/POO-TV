@@ -9,14 +9,16 @@ import pootv.command.NotBannedMovies;
 import pootv.command.authenticated.seeDetails.CommandOutput;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toMap;
 
-public class Recommendation {
-    public Recommendation() {
+public final class Recommendation {
+    private Recommendation() {
     }
 
+    /**
+     *
+     */
     public static void recommendation() {
         Map<String, Integer> genreTop = new HashMap<>();
         UserInput user = Menu.getCurrUser();

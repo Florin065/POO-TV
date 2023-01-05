@@ -10,8 +10,8 @@ import pootv.command.authenticated.seeDetails.CommandOutput;
 
 import java.util.ArrayList;
 
-public final class SeeDetailsCP {
-    private SeeDetailsCP() {
+public final class ChangePageToSeeDetails {
+    private ChangePageToSeeDetails() {
     }
 
     /**
@@ -38,6 +38,7 @@ public final class SeeDetailsCP {
             }
         }
 
+        Menu.getLastPages().remove(Menu.getLastPages().size() - 1);
         Menu.setCurrPage(copy);
         Error.doError(output);
     }

@@ -73,7 +73,7 @@ public final class ChangePage {
             }
         }
 
-        Menu.setLastPage(copyCurrPage);
+        Menu.getLastPages().add(copyCurrPage);
 
         if (Menu.getCurrUser().getCredentials().getName() != null) {
             ArrayList<MovieInput> currML = new ArrayList<>();
@@ -83,24 +83,24 @@ public final class ChangePage {
                 case "logout" -> Logout.logout();
                 case "movies" -> {
                     if (!Menu.getActions().getFilter().isEmpty()) {
-                        MoviesCP.changePageToMovies(Menu.getActions().getFilter(),
+                        ChangePageToMovies.changePageToMovies(Menu.getActions().getFilter(),
                                 Menu.getCurrUser(), output);
                         return;
                     }
 
-                    MoviesCP.changePageToMovies(currML, Menu.getCurrUser(), output);
+                    ChangePageToMovies.changePageToMovies(currML, Menu.getCurrUser(), output);
                 }
                 case "see details" -> {
                     Menu.setCurrMovie(actionsInput.getMovie());
 
                     if (Menu.getLastAction().equals("filter")) {
-                        SeeDetailsCP.findMovie(Menu.getCurrUser(),
+                        ChangePageToSeeDetails.findMovie(Menu.getCurrUser(),
                                 Menu.getActions().getFilter(),
                                 actionsInput.getMovie(), output, copyCurrPage);
                         return;
                     }
 
-                    SeeDetailsCP.findMovie(Menu.getCurrUser(), currML,
+                    ChangePageToSeeDetails.findMovie(Menu.getCurrUser(), currML,
                             actionsInput.getMovie(), output, copyCurrPage);
                 }
                 default -> {

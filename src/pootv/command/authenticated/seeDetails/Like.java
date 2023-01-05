@@ -80,7 +80,8 @@ public class Like implements Command {
 
                                 for (MovieInput purchased : userData.getPurchasedMovies()) {
                                     if (liked.getName().equals(purchased.getName())) {
-                                        int index4 = userData.getPurchasedMovies().indexOf(purchased);
+                                        int index4 =
+                                                userData.getPurchasedMovies().indexOf(purchased);
                                         userData.getPurchasedMovies().set(index4, deepCopy);
                                     }
                                 }

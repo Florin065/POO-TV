@@ -37,8 +37,8 @@ public class BuyTokens implements Command {
         user.getCredentials().setBalance(String.valueOf(
                 Integer.parseInt(user.getCredentials().getBalance())
                         - Integer.parseInt(Menu.getActions().getActionInput().getCount())));
-        user.setTokensCount(Integer.parseInt(
-                user.getTokensCount() + Menu.getActions().getActionInput().getCount()));
+        user.setTokensCount(user.getTokensCount()
+                + Integer.parseInt(Menu.getActions().getActionInput().getCount()));
 
         Menu.setCurrUser(new UserInput(user));
         userList.set(indexUser, user);

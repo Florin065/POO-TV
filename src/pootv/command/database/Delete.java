@@ -15,6 +15,9 @@ public class Delete implements Command {
     public Delete() {
     }
 
+    /**
+     *
+     */
     @Override
     public void execute() {
         String deletedMovie = Menu.getActions().getActionInput().getDeletedMovie();

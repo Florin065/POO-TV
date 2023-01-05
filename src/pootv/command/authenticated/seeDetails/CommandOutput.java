@@ -15,9 +15,11 @@ public class CommandOutput {
     @Getter @Setter
     private UserInput currentUser;
 
-    public CommandOutput() {}
+    public CommandOutput() {
+    }
 
-    public CommandOutput(String error, ArrayList<MovieInput> currentMoviesList, UserInput currentUser) {
+    public CommandOutput(final String error, final ArrayList<MovieInput> currentMoviesList,
+                         final UserInput currentUser) {
         this.error = error;
         this.currentMoviesList = currentMoviesList;
         this.currentUser = currentUser;

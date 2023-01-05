@@ -2,7 +2,6 @@ package pootv.command.changePage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.MovieInput;
 import pootv.Error;
 import pootv.Menu;
@@ -11,26 +10,24 @@ import pootv.command.authenticated.seeDetails.CommandOutput;
 
 import java.util.ArrayList;
 
-public class Back {
-    public Back() {
+public final class Back {
+    private Back() {
     }
 
+    /**
+     *
+     * @param output
+     */
     public static void goBack(final ArrayNode output) {
-        if (Menu.getCurrPage().equals("homepage unauth")
-                || Menu.getCurrPage().equals("homepage auth")
+        String page = Menu.getLastPages().get(Menu.getLastPages().size() - 1);
+        if (page.equals("homepage unauth")
                 || Menu.getCurrUser().getCredentials().getName() == null) {
             Error.doError(output);
             return;
         }
 
-        String page1 = Menu.getCurrPage();
-        String page2 = Menu.getLastPage();
-
-        if (page1.equals(page2)) {
-            Menu.setLastPage("homepage auth");
-        }
-
-        Menu.setCurrPage(Menu.getLastPage());
+        Menu.setCurrPage(Menu.getLastPages().get(Menu.getLastPages().size() - 1));
+        Menu.getLastPages().remove(Menu.getLastPages().size() - 1);
         ArrayList<MovieInput> currML = new ArrayList<>();
         NotBannedMovies.get(currML);
 
@@ -43,10 +40,12 @@ public class Back {
 
         if (Menu.getCurrPage().equals("movies")) {
             ObjectMapper mapper = new ObjectMapper();
-            output.add(mapper.valueToTree(new CommandOutput(null, currML, Menu.getCurrUser())));
+            output.add(mapper.valueToTree(
+                    new CommandOutput(null, currML, Menu.getCurrUser())));
         } else if (Menu.getCurrPage().equals("see details")) {
             ObjectMapper mapper = new ObjectMapper();
-            output.add(mapper.valueToTree(new CommandOutput(null, movieOutput, Menu.getCurrUser())));
+            output.add(mapper.valueToTree(
+                    new CommandOutput(null, movieOutput, Menu.getCurrUser())));
         }
     }
 }

@@ -15,6 +15,9 @@ public class Add implements Command {
     public Add() {
     }
 
+    /**
+     *
+     */
     @Override
     public void execute() {
         MovieInput addedMovie = Menu.getActions().getActionInput().getAddedMovie();
@@ -37,7 +40,8 @@ public class Add implements Command {
                 && (currUser.getSubscribedGenres() != null)) {
             for (String genre : currUser.getSubscribedGenres()) {
                 if (addedMovie.getGenres().contains(genre)) {
-                    ArrayList<Notifications> notification = new ArrayList<>(currUser.getNotifications());
+                    ArrayList<Notifications> notification =
+                            new ArrayList<>(currUser.getNotifications());
                     notification.add(new Notifications(addedMovie.getName(), "ADD"));
                     Menu.getCurrUser().setNotifications(notification);
                     break;
@@ -50,7 +54,8 @@ public class Add implements Command {
                     && (user.getSubscribedGenres() != null)) {
                 for (String genre : user.getSubscribedGenres()) {
                     if (addedMovie.getGenres().contains(genre)) {
-                        ArrayList<Notifications> notification = new ArrayList<>(user.getNotifications());
+                        ArrayList<Notifications> notification =
+                                new ArrayList<>(user.getNotifications());
                         notification.add(new Notifications(addedMovie.getName(), "ADD"));
                         user.setNotifications(notification);
                         break;

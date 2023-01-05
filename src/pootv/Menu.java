@@ -40,7 +40,7 @@ public class Menu {
     @Getter @Setter
     private static String lastAction;
     @Getter @Setter
-    private static String lastPage;
+    private static ArrayList<String> lastPages;
     @Getter @Setter
     private static String currMovie;
     @Getter @Setter
@@ -55,7 +55,7 @@ public class Menu {
         movieDetailsName = null;
         lastAction = null;
         currMovie = null;
-        lastPage = null;
+        lastPages = new ArrayList<>();
         currPage = "homepage unauth";
         DataBase.getDataBase().setUsers(new ArrayList<>(input.getUsers()));
         DataBase.getDataBase().setMovies(new ArrayList<>(input.getMovies()));
@@ -66,8 +66,6 @@ public class Menu {
      */
     public void actionsPOOTV() {
         for (ActionsInput actionInput : input.getActions()) {
-//            System.out.println(actionInput.getType() + " -> " + actionInput.getFeature());
-            DataBase dataBase = DataBase.getDataBase();
             switch (actionInput.getType()) {
                 case "change page" -> ChangePage.doChangePage(actionInput, output);
                 case "on page" -> {

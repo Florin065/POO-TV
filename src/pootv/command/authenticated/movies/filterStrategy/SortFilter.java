@@ -5,9 +5,7 @@ import pootv.Menu;
 import pootv.command.Actions;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.function.ToDoubleFunction;
 
 public class SortFilter implements FilterStrategy {
     /**
