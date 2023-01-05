@@ -6,6 +6,7 @@ import fileio.MovieInput;
 import fileio.UserInput;
 import pootv.Menu;
 import pootv.Error;
+import pootv.command.authenticated.seeDetails.CommandOutput;
 
 import java.util.ArrayList;
 
@@ -30,9 +31,8 @@ public final class SeeDetailsCP {
                 movieOutput.add(iterator);
                 Menu.setMovieDetailsName(iterator.getName());
 
-                output.addObject().put("error", (String) null)
-                        .putPOJO("currentMoviesList", movieOutput)
-                        .putPOJO("currentUser", currUser);
+                ObjectMapper mapper = new ObjectMapper();
+                output.add(mapper.valueToTree(new CommandOutput(null, movieOutput, currUser)));
 
                 return;
             }

@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.Input;
 import pootv.Menu;
+import pootv.recommendation.Recommendation;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,20 +22,21 @@ public final class Main {
      * @throws IOException in case of exceptions to reading / writing
      */
     public static void main(final String[] args) throws IOException {
-//        String inputFilePath = args[0];
-//        String outputFilePath = args[1];
+        String inputFilePath = args[0];
+        String outputFilePath = args[1];
 
         ObjectMapper objectMapper = new ObjectMapper();
-//        Input inputData = objectMapper.readValue(new File(inputFilePath), Input.class);
-        Input inputData = objectMapper.readValue(new File("checker/resources/in/basic_" + 7 + ".json"), Input.class);
+        Input inputData = objectMapper.readValue(new File(inputFilePath), Input.class);
+//        Input inputData = objectMapper.readValue(new File("checker/resources/in/basic_" + 4 + ".json"), Input.class);
 
         ArrayNode output = objectMapper.createArrayNode();
 
         Menu menu = new Menu(inputData, output);
         menu.actionsPOOTV();
+        Recommendation.recommendation();
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-//        objectWriter.writeValue(new File(outputFilePath), output);
-        objectWriter.writeValue(new File("out.txt"), output);
+        objectWriter.writeValue(new File(outputFilePath), output);
+//        objectWriter.writeValue(new File("out.txt"), output);
     }
 }

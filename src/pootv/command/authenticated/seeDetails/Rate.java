@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
 import fileio.UserInput;
-import lombok.Getter;
-import lombok.Setter;
 import pootv.DataBase;
 import pootv.Menu;
 import pootv.command.Actions;
@@ -60,68 +58,93 @@ public class Rate implements Command {
                     deepCopy.setRating(sum);
                     user.getRatedMovies().add(deepCopy);
                 }
-
-                user.getPurchasedMovies().set(user.getPurchasedMovies()
-                        .indexOf(iterator), deepCopy);
-                user.getWatchedMovies().set(user.getWatchedMovies().indexOf(iterator), deepCopy);
-
+                int index;
                 List<MovieInput> movies = DataBase.getDataBase().getMovies();
-                int index = movies.indexOf(iterator);
-                DataBase.getDataBase().getMovies().set(index, deepCopy);
-
-                if (!user.getLikedMovies().isEmpty()) {
-                    user.getLikedMovies().set(user.getLikedMovies().indexOf(iterator), deepCopy);
+                for (MovieInput iterator2 : user.getRatedMovies()) {
+                    if (iterator.getName().equals(iterator2.getName())) {
+                        index = user.getRatedMovies().indexOf(iterator2);
+                        user.getRatedMovies().set(index, deepCopy);
+                        break;
+                    }
                 }
-
-                for (UserInput userData : DataBase.getDataBase().getUsers()) {
+                for (MovieInput iterator2 : user.getPurchasedMovies()) {
+                    if (iterator.getName().equals(iterator2.getName())) {
+                        index = user.getPurchasedMovies().indexOf(iterator2);
+                        user.getPurchasedMovies().set(index, deepCopy);
+                        break;
+                    }
+                }
+                for (MovieInput iterator2 : user.getWatchedMovies()) {
+                    if (iterator.getName().equals(iterator2.getName())) {
+                        index = user.getWatchedMovies().indexOf(iterator2);
+                        user.getWatchedMovies().set(index, deepCopy);
+                        break;
+                    }
+                }
+                for (MovieInput iterator2 : movies) {
+                    if (iterator.getName().equals(iterator2.getName())) {
+                        index = movies.indexOf(iterator2);
+                        DataBase.getDataBase().getMovies().set(index, deepCopy);
+                        break;
+                    }
+                }
+                if (!user.getLikedMovies().isEmpty()) {
+                    for (MovieInput iterator2 : user.getLikedMovies()) {
+                        if (iterator.getName().equals(iterator2.getName())) {
+                            index = user.getLikedMovies().indexOf(iterator2);
+                            user.getLikedMovies().set(index, deepCopy);
+                            break;
+                        }
+                    }
+                }
+                ArrayList<UserInput> users = new ArrayList<>(DataBase.getDataBase().getUsers());
+                for (UserInput userData : users) {
                     int index1 = DataBase.getDataBase().getUsers().indexOf(userData);
                     if (!userData.getRatedMovies().isEmpty()) {
                         for (MovieInput rated : userData.getRatedMovies()) {
                             if (rated.getName().equals(deepCopy.getName())) {
                                 int index2 = userData.getRatedMovies().indexOf(rated);
                                 userData.getRatedMovies().set(index2, deepCopy);
-
-                                for (MovieInput watched : userData.getWatchedMovies()) {
-                                    if (rated.getName().equals(watched.getName())) {
-                                        int index4 = userData.getWatchedMovies()
-                                                .indexOf(watched);
-                                        userData.getWatchedMovies().set(index4, deepCopy);
-                                    }
-                                }
-
-                                for (MovieInput purchased : userData.getPurchasedMovies()) {
-                                    if (rated.getName().equals(purchased.getName())) {
-                                        int index5 = userData.getPurchasedMovies()
-                                                .indexOf(purchased);
-                                        userData.getPurchasedMovies().set(index5, deepCopy);
-                                    }
-                                }
-
-                                for (MovieInput liked : userData.getLikedMovies()) {
-                                    if (rated.getName().equals(liked.getName())) {
-                                        int index3 = userData.getLikedMovies()
-                                                .indexOf(liked);
-                                        userData.getLikedMovies().set(index3, deepCopy);
-                                    }
-                                }
-
-                                DataBase.getDataBase().getUsers().set(index1, userData);
+                                break;
                             }
                         }
                     }
+                    for (MovieInput watched : userData.getWatchedMovies()) {
+                        if (iterator.getName().equals(watched.getName())) {
+                            int index4 = userData.getWatchedMovies()
+                                    .indexOf(watched);
+                            userData.getWatchedMovies().set(index4, deepCopy);
+                            break;
+                        }
+                    }
+                    for (MovieInput purchased : userData.getPurchasedMovies()) {
+                        if (iterator.getName().equals(purchased.getName())) {
+                            int index5 = userData.getPurchasedMovies()
+                                    .indexOf(purchased);
+                            userData.getPurchasedMovies().set(index5, deepCopy);
+                            break;
+                        }
+                    }
+                    if (!userData.getLikedMovies().isEmpty()) {
+                        for (MovieInput liked : userData.getLikedMovies()) {
+                            if (iterator.getName().equals(liked.getName())) {
+                                int index3 = userData.getLikedMovies()
+                                        .indexOf(liked);
+                                userData.getLikedMovies().set(index3, deepCopy);
+                                break;
+                            }
+                        }
+                    }
+                    DataBase.getDataBase().getUsers().set(index1, userData);
                 }
-
                 movieOutput.add(deepCopy);
-
                 ObjectMapper mapper = new ObjectMapper();
                 output.add(mapper.valueToTree(new CommandOutput(null, movieOutput, user)));
-
                 user.getRating().put(Menu.getMovieDetailsName(), actions.getActionInput().getRate());
-                Menu.setCurrUser(user);
+                Menu.setCurrUser(new UserInput(user));
                 return;
             }
         }
-
         Error.doError(output);
     }
 }
