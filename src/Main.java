@@ -22,12 +22,12 @@ public final class Main {
      * @throws IOException in case of exceptions to reading / writing
      */
     public static void main(final String[] args) throws IOException {
-        String inputFilePath = args[0];
-        String outputFilePath = args[1];
+//        String inputFilePath = args[0];
+//        String outputFilePath = args[1];
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Input inputData = objectMapper.readValue(new File(inputFilePath), Input.class);
-//        Input inputData = objectMapper.readValue(new File("checker/resources/in/basic_" + 4 + ".json"), Input.class);
+//        Input inputData = objectMapper.readValue(new File(inputFilePath), Input.class);
+        Input inputData = objectMapper.readValue(new File("checker/resources/in/basic_" + 8 + ".json"), Input.class);
 
         ArrayNode output = objectMapper.createArrayNode();
 
@@ -36,7 +36,7 @@ public final class Main {
         Recommendation.recommendation();
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(new File(outputFilePath), output);
-//        objectWriter.writeValue(new File("out.txt"), output);
+//        objectWriter.writeValue(new File(outputFilePath), output);
+        objectWriter.writeValue(new File("out.txt"), output);
     }
 }

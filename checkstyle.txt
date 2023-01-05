@@ -1,7 +1,6 @@
 Starting audit...
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/Notifications.java:7:8: Unused import - java.util.ArrayList. [UnusedImports]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/Notifications.java:16:26: Parameter movieName should be final. [FinalParameters]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/Notifications.java:16:44: Parameter message should be final. [FinalParameters]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/Notifications.java:14:26: Parameter movieName should be final. [FinalParameters]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/Notifications.java:14:44: Parameter message should be final. [FinalParameters]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/ActionsInput.java:7:8: Unused import - java.util.ArrayList. [UnusedImports]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:19:40: '15' is a magic number. [MagicNumber]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:38:44: '15' is a magic number. [MagicNumber]
@@ -54,7 +53,8 @@ Starting audit...
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/Menu.java:14:46: Using the '.*' form of import should be avoided - pootv.command.authenticated.seeDetails.*. [AvoidStarImport]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/database/Delete.java:18:5: Class 'Delete' looks like designed for extension (can be subclassed), but the method 'execute' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Delete' final or making the method 'execute' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/database/Add.java:18:5: Class 'Add' looks like designed for extension (can be subclassed), but the method 'execute' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Add' final or making the method 'execute' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/database/Add.java:38: Line is longer than 100 characters (found 105). [LineLength]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/database/Add.java:40: Line is longer than 100 characters (found 105). [LineLength]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/database/Add.java:53: Line is longer than 100 characters (found 105). [LineLength]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/authenticated/movies/filterStrategy/SortFilter.java:8:8: Unused import - java.util.Collections. [UnusedImports]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/authenticated/movies/filterStrategy/SortFilter.java:10:8: Unused import - java.util.function.ToDoubleFunction. [UnusedImports]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/authenticated/seeDetails/Rate.java:143: Line is longer than 100 characters (found 101). [LineLength]
@@ -68,6 +68,7 @@ Starting audit...
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/authenticated/seeDetails/Watch.java:7:8: Unused import - pootv.DataBase. [UnusedImports]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/authenticated/seeDetails/Watch.java:13:8: Unused import - java.util.List. [UnusedImports]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/authenticated/seeDetails/Watch.java:47: Line is longer than 100 characters (found 113). [LineLength]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/unauthenticated/UnauthOutput.java:20: Line is longer than 100 characters (found 103). [LineLength]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/changePage/Back.java:5:8: Unused import - com.fasterxml.jackson.databind.node.ObjectNode. [UnusedImports]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/changePage/Back.java:14:1: Utility classes should not have a public or default constructor. [HideUtilityClassConstructor]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/command/changePage/Back.java:18:5: Missing a Javadoc comment. [MissingJavadocMethod]
@@ -79,4 +80,4 @@ Starting audit...
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/recommendation/Recommendation.java:20:5: Missing a Javadoc comment. [MissingJavadocMethod]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/Main.java:30: Line is longer than 100 characters (found 119). [LineLength]
 Audit done.
-Checkstyle ends with 79 errors.
+Checkstyle ends with 80 errors.

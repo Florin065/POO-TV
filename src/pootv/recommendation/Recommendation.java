@@ -23,14 +23,13 @@ public class Recommendation {
         if (user.getCredentials().getName() != null
                 && user.getCredentials().getAccountType().equals("premium")) {
             for (MovieInput movie : user.getLikedMovies()) {
-                for (String genre : user.getSubscribedGenres()) {
-                    if (movie.getGenres().contains(genre)) {
-                        if (!genreTop.containsKey(genre)) {
-                            genreTop.put(genre, 0);
-                        } else {
-                            genreTop.put(genre, genreTop.get(genre) + 1);
-                        }
-                    }
+                for (String genre : movie.getGenres()) {
+                    genreTop.put(genre, 0);
+                }
+            }
+            for (MovieInput movie : user.getLikedMovies()) {
+                for (String genre : movie.getGenres()) {
+                    genreTop.put(genre, genreTop.get(genre) + 1);
                 }
             }
            Map<String, Integer> sortedGenreTop = genreTop
@@ -56,23 +55,21 @@ public class Recommendation {
                     notWatched.add(movieInput);
                 }
             }
-            notWatched.sort((Comparator.comparingInt(MovieInput::getNumLikes)));
+            notWatched.sort((t1, t2) -> Integer.compare(t2.getNumLikes(), t1.getNumLikes()));
 
             UserInput userCopy = new UserInput(user);
             for (String genre : sortedGenreTop.keySet()) {
-                for (MovieInput movieInput : notWatched) {
-                    if (movieInput != null && movieInput.getGenres().contains(genre)) {
-                        Notifications notifications = new Notifications();
-                        notifications.setMovieName(movieInput.getName());
-                        notifications.setMessage("Recommendation");
-                        userCopy.getNotifications().add(notifications);
-                        user = new UserInput(userCopy);
+                if (notWatched.get(0) != null && notWatched.get(0).getGenres().contains(genre)) {
+                    Notifications notifications = new Notifications();
+                    notifications.setMovieName(notWatched.get(0).getName());
+                    notifications.setMessage("Recommendation");
+                    userCopy.getNotifications().add(notifications);
+                    user = new UserInput(userCopy);
 
-                        ObjectMapper mapper = new ObjectMapper();
-                        Menu.getOutput()
-                                .add(mapper.valueToTree(new CommandOutput(null, null, user)));
-                        return;
-                    }
+                    ObjectMapper mapper = new ObjectMapper();
+                    Menu.getOutput()
+                            .add(mapper.valueToTree(new CommandOutput(null, null, user)));
+                    return;
                 }
             }
 
