@@ -17,13 +17,13 @@ public class Filter implements Command {
     }
 
     /**
-     *
+     * Calls the doFiltering method of the strategy received as a parameter, after which it will
+     * filter the list of movies.
      */
     @Override
     public void execute() {
         ArrayList<MovieInput> currML = new ArrayList<>();
-        NotBannedMovies.get(currML);
-
+        NotBannedMovies.notBannedMovies(currML);
         strategy.doFiltering(currML);
     }
 }

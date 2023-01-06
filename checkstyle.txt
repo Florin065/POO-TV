@@ -1,16 +1,14 @@
 Starting audit...
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:55:46: 'tokensCount' hides a field. [HiddenField]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:64:55: 'numFreePremiumMovies' hides a field. [HiddenField]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:73:68: 'purchasedMovies' hides a field. [HiddenField]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:82:66: 'watchedMovies' hides a field. [HiddenField]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:91:64: 'likedMovies' hides a field. [HiddenField]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:100:64: 'ratedMovies' hides a field. [HiddenField]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:109:69: 'notifications' hides a field. [HiddenField]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:118:65: 'subscribedGenres' hides a field. [HiddenField]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:127:57: 'rating' hides a field. [HiddenField]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:59:68: 'purchasedMovies' hides a field. [HiddenField]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:68:66: 'watchedMovies' hides a field. [HiddenField]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:77:64: 'likedMovies' hides a field. [HiddenField]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:86:64: 'ratedMovies' hides a field. [HiddenField]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:95:69: 'notifications' hides a field. [HiddenField]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:104:65: 'subscribedGenres' hides a field. [HiddenField]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/fileio/UserInput.java:113:57: 'rating' hides a field. [HiddenField]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/Test.java:9:28: Using the '.*' form of import should be avoided - java.util.concurrent.*. [AvoidStarImport]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/Menu.java:5:14: Using the '.*' form of import should be avoided - fileio.*. [AvoidStarImport]
-[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/Menu.java:14:46: Using the '.*' form of import should be avoided - pootv.command.authenticated.seeDetails.*. [AvoidStarImport]
+[ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/Menu.java:13:46: Using the '.*' form of import should be avoided - pootv.command.authenticated.seeDetails.*. [AvoidStarImport]
 [ERROR] /home/florin/Facultate/an 2/POO/POO-TV2/./src/pootv/recommendation/Recommendation.java:11:17: Using the '.*' form of import should be avoided - java.util.*. [AvoidStarImport]
 Audit done.
-Checkstyle ends with 13 errors.
+Checkstyle ends with 11 errors.

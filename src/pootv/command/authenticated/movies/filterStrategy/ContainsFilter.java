@@ -8,13 +8,12 @@ import java.util.ArrayList;
 
 public class ContainsFilter implements FilterStrategy {
     /**
-     *
+     * Finds all movies available in the user's country by actors, genre or both.
      * @param currML
      */
     @Override
     public void doFiltering(final ArrayList<MovieInput> currML) {
         Actions actions = Menu.getActions();
-
         ArrayList<MovieInput> newML = new ArrayList<>();
         actions.setFilter(new ArrayList<>());
 
@@ -46,7 +45,6 @@ public class ContainsFilter implements FilterStrategy {
                 }
             }
         }
-
         actions.setFilter(newML);
     }
 }

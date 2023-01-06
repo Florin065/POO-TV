@@ -6,7 +6,7 @@ import fileio.Notifications;
 import fileio.UserInput;
 import pootv.Menu;
 import pootv.command.NotBannedMovies;
-import pootv.command.authenticated.seeDetails.CommandOutput;
+import pootv.CommandOutput;
 
 import java.util.*;
 
@@ -43,7 +43,7 @@ public final class Recommendation {
                                    LinkedHashMap::new));
 
             ArrayList<MovieInput> notBanned = new ArrayList<>();
-            NotBannedMovies.get(notBanned);
+            NotBannedMovies.notBannedMovies(notBanned);
             ArrayList<MovieInput> notWatched = new ArrayList<>();
             for (MovieInput movieInput : notBanned) {
                 int ok = 0;

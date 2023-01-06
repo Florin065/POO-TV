@@ -1,6 +1,6 @@
 package pootv;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 
@@ -9,12 +9,11 @@ public final class Error {
     }
 
     /**
-     *
-     * @param output
+     * Error output.
      */
-    public static void doError(final ArrayNode output) {
-        output.addObject().put("error", "Error")
-                .putPOJO("currentMoviesList", new ArrayList<>())
-                .putPOJO("currentUser", null);
+    public static void doError() {
+        ObjectMapper mapper = new ObjectMapper();
+        Menu.getOutput().add(mapper.valueToTree(
+                new CommandOutput("Error", new ArrayList<>(), null)));
     }
 }

@@ -1,13 +1,9 @@
 package pootv.command.authenticated.upgrades;
 
-import fileio.UserInput;
-import pootv.DataBase;
 import pootv.Menu;
 import pootv.command.Command;
-import pootv.Error;
 
-import java.util.ArrayList;
-import java.util.List;
+import static pootv.Error.doError;
 
 public class BuyTokens implements Command {
     public BuyTokens() {
@@ -18,30 +14,16 @@ public class BuyTokens implements Command {
      */
     @Override
     public void execute() {
-        UserInput user = new UserInput(Menu.getCurrUser());
-        List<UserInput> userList =  new ArrayList<>(DataBase.getDataBase().getUsers());
-        int indexUser = 0;
-        for (UserInput userInput : userList) {
-            if (user.getCredentials().getName().equals(userInput.getCredentials().getName())) {
-                indexUser = userList.indexOf(userInput);
-            }
-        }
-
-        if (Integer.parseInt(user.getCredentials().getBalance())
+        if (Integer.parseInt(Menu.getCurrUser().getCredentials().getBalance())
                 < Integer.parseInt(Menu.getActions().getActionInput().getCount())
                 || (!Menu.getCurrPage().equals("upgrades"))) {
-            Error.doError(Menu.getOutput());
+            doError();
             return;
         }
-
-        user.getCredentials().setBalance(String.valueOf(
-                Integer.parseInt(user.getCredentials().getBalance())
+        Menu.getCurrUser().getCredentials().setBalance(String.valueOf(
+                Integer.parseInt(Menu.getCurrUser().getCredentials().getBalance())
                         - Integer.parseInt(Menu.getActions().getActionInput().getCount())));
-        user.setTokensCount(user.getTokensCount()
+        Menu.getCurrUser().setTokensCount(Menu.getCurrUser().getTokensCount()
                 + Integer.parseInt(Menu.getActions().getActionInput().getCount()));
-
-        Menu.setCurrUser(new UserInput(user));
-        userList.set(indexUser, user);
-        DataBase.getDataBase().setUsers(new ArrayList<>(userList));
     }
 }

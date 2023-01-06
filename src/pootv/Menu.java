@@ -6,7 +6,6 @@ import fileio.*;
 import lombok.Getter;
 import lombok.Setter;
 import pootv.command.Actions;
-import pootv.command.authenticated.movies.FilterOutput;
 import pootv.command.authenticated.movies.Filter;
 import pootv.command.authenticated.movies.Search;
 import pootv.command.authenticated.movies.filterStrategy.ContainsFilter;
@@ -14,21 +13,24 @@ import pootv.command.authenticated.movies.filterStrategy.SortFilter;
 import pootv.command.authenticated.seeDetails.*;
 import pootv.command.authenticated.upgrades.BuyPA;
 import pootv.command.authenticated.upgrades.BuyTokens;
-import pootv.command.changePage.Back;
-import pootv.command.changePage.ChangePage;
 import pootv.command.database.Add;
 import pootv.command.database.Delete;
-import pootv.command.unauthenticated.login.Login;
-import pootv.command.unauthenticated.register.Register;
+import pootv.command.unAuthenticated.login.Login;
+import pootv.command.unAuthenticated.register.Register;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static pootv.Error.doError;
+import static pootv.command.authenticated.movies.FilterOutput.doOutput;
+import static pootv.command.changePage.Back.goBack;
+import static pootv.command.changePage.ChangePage.doChangePage;
 
 public class Menu {
     @Getter @Setter
     private static ArrayNode output;
     @Getter @Setter
-    private static Input input;
+    private Input input;
     @Getter @Setter
     private static Actions actions;
     @Getter @Setter
@@ -47,27 +49,28 @@ public class Menu {
     private static int userIndex;
 
     public Menu(final Input input, final ArrayNode output) {
-        Menu.input = input;
+        this.input = input;
         Menu.output = output;
         currUser = new UserInput(new Credentials(), 0, 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1,
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>());
         movieDetailsName = null;
         lastAction = null;
-        currMovie = null;
         lastPages = new ArrayList<>();
         currPage = "homepage unauth";
-        DataBase.getDataBase().setUsers(new ArrayList<>(input.getUsers()));
-        DataBase.getDataBase().setMovies(new ArrayList<>(input.getMovies()));
+        DataBase.getDataBase().setUsers(new ArrayList<>(this.input.getUsers()));
+        DataBase.getDataBase().setMovies(new ArrayList<>(this.input.getMovies()));
     }
 
     /**
-     *
+     * Action caller. Firstly it finds action type, and if it has a feature, then it calls
+     * that command
      */
-    public void actionsPOOTV() {
+    public void actionsPooTv() {
+        DataBase data = DataBase.getDataBase();
         for (ActionsInput actionInput : input.getActions()) {
             switch (actionInput.getType()) {
-                case "change page" -> ChangePage.doChangePage(actionInput, output);
+                case "change page" -> doChangePage(actionInput);
                 case "on page" -> {
                     actions = new Actions(actionInput);
                     setLastAction(actions.getActionInput().getFeature());
@@ -76,13 +79,13 @@ public class Menu {
                         case "register" -> actions.doAction(new Register());
                         case "search" -> actions.doAction(new Search());
                         case "filter" -> {
-                            if (!Menu.getCurrPage().equals("movies")) {
-                                Error.doError(Menu.getOutput());
+                            if (!currPage.equals("movies")) {
+                                doError();
                                 break;
                             }
                             actions.doAction(new Filter(new ContainsFilter()));
                             actions.doAction(new Filter(new SortFilter()));
-                            FilterOutput.doOutput(Menu.getOutput(), actions);
+                            doOutput();
                         }
                         case "purchase" -> actions.doAction(new Purchase());
                         case "watch" -> actions.doAction(new Watch());
@@ -106,7 +109,7 @@ public class Menu {
                         }
                     }
                 }
-                case "back" -> Back.goBack(output);
+                case "back" -> goBack();
                 default -> {
                     return;
                 }

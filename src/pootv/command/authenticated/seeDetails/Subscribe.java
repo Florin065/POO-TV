@@ -1,14 +1,13 @@
 package pootv.command.authenticated.seeDetails;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
-import fileio.UserInput;
-import pootv.Error;
 import pootv.Menu;
 import pootv.command.Command;
-import pootv.command.NotBannedMovies;
 
 import java.util.ArrayList;
+
+import static pootv.Error.doError;
+import static pootv.command.NotBannedMovies.notBannedMovies;
 
 public class Subscribe implements Command {
     public Subscribe() {
@@ -19,31 +18,25 @@ public class Subscribe implements Command {
      */
     @Override
     public void execute() {
-        ArrayNode output = Menu.getOutput();
-
         if (!Menu.getCurrPage().equals("see details")) {
-            Error.doError(output);
+            doError();
             return;
         }
 
         ArrayList<MovieInput> currML = new ArrayList<>();
-        NotBannedMovies.get(currML);
-
-        UserInput user = new UserInput(Menu.getCurrUser());
+        notBannedMovies(currML);
 
         for (MovieInput movie : currML) {
-            if (movie.getName().equals(Menu.getCurrMovie())) {
+            if (movie.getName().equals(Menu.getMovieDetailsName())) {
                 for (String genre : movie.getGenres()) {
                     if (genre.equals(Menu.getActions().getActionInput().getSubscribedGenre())
-                            && (!user.getSubscribedGenres().contains(genre))) {
-                        user.getSubscribedGenres().add(genre);
-                        Menu.setCurrUser(new UserInput(user));
+                            && (!Menu.getCurrUser().getSubscribedGenres().contains(genre))) {
+                        Menu.getCurrUser().getSubscribedGenres().add(genre);
                         return;
                     }
                 }
             }
         }
-
-        Error.doError(output);
+        doError();
     }
 }

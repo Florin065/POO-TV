@@ -1,9 +1,8 @@
-package pootv.command.unauthenticated;
+package pootv.command.unAuthenticated;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import pootv.Menu;
-import pootv.command.authenticated.seeDetails.CommandOutput;
+import pootv.CommandOutput;
 
 import java.util.ArrayList;
 
@@ -13,11 +12,10 @@ public final class UnauthOutput {
 
     /**
      *
-     * @param output
      */
-    public static void doOutput(final ArrayNode output) {
+    public static void doOutput() {
         ObjectMapper mapper = new ObjectMapper();
-        output.add(mapper.valueToTree(
+        Menu.getOutput().add(mapper.valueToTree(
                 new CommandOutput(null, new ArrayList<>(), Menu.getCurrUser())));
     }
 }

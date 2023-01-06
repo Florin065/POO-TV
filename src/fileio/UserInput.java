@@ -34,8 +34,8 @@ public class UserInput {
 
     public static class Builder {
         private final Credentials credentials;
-        private int tokensCount = 0;
-        private int numFreePremiumMovies = 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1;
+        private final int tokensCount;
+        private final int numFreePremiumMovies;
         private ArrayList<MovieInput> purchasedMovies = new ArrayList<>();
         private ArrayList<MovieInput> watchedMovies = new ArrayList<>();
         private ArrayList<MovieInput> likedMovies = new ArrayList<>();
@@ -44,29 +44,15 @@ public class UserInput {
         private ArrayList<String> subscribedGenres = new ArrayList<>();
         private Map<String, Double> rating = new HashMap<>();
 
-        public Builder(final Credentials credentials) {
+        public Builder(final Credentials credentials,
+                       final int tokensCount,
+                       final int numFreePremiumMovies) {
             this.credentials = credentials;
-        }
-        /**
-         *
-         * @param tokensCount
-         * @return
-         */
-        public Builder tokensCount(final int tokensCount) {
             this.tokensCount = tokensCount;
-            return this;
-        }
-        /**
-         *
-         * @param numFreePremiumMovies
-         * @return
-         */
-        public Builder numFreePremiumMovies(final int numFreePremiumMovies) {
             this.numFreePremiumMovies = numFreePremiumMovies;
-            return this;
         }
         /**
-         *
+         * used for adding purchasedMovies data in Menu.currUser at login
          * @param purchasedMovies
          * @return
          */
@@ -75,7 +61,7 @@ public class UserInput {
             return this;
         }
         /**
-         *
+         * used for adding watchedMovies data in Menu.currUser at login
          * @param watchedMovies
          * @return
          */
@@ -84,7 +70,7 @@ public class UserInput {
             return this;
         }
         /**
-         *
+         * used for adding likedMovies data in Menu.currUser at login
          * @param likedMovies
          * @return
          */
@@ -93,7 +79,7 @@ public class UserInput {
             return this;
         }
         /**
-         *
+         * used for adding ratedMovies data in Menu.currUser at login
          * @param ratedMovies
          * @return
          */
@@ -102,7 +88,7 @@ public class UserInput {
             return this;
         }
         /**
-         *
+         * used for adding notifications data in Menu.currUser at login
          * @param notifications
          * @return
          */
@@ -111,7 +97,7 @@ public class UserInput {
             return this;
         }
         /**
-         *
+         * used for adding subscribedGenres data in Menu.currUser at login
          * @param subscribedGenres
          * @return
          */
@@ -120,7 +106,7 @@ public class UserInput {
             return this;
         }
         /**
-         *
+         * used for adding rating data in Menu.currUser at login
          * @param rating
          * @return
          */
@@ -129,7 +115,8 @@ public class UserInput {
             return this;
         }
         /**
-         *
+         * build user with mandatory criteria (credentials, tokensCount and numFreePremiumMovies)
+         * at login
          * @return
          */
         public UserInput build() {

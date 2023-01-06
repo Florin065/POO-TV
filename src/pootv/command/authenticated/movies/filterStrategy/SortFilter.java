@@ -9,7 +9,9 @@ import java.util.Comparator;
 
 public class SortFilter implements FilterStrategy {
     /**
-     *
+     * Sort the movies by duration, rating, or both.
+     * If the user has used the contains filter before, then we will sort that list of movies.
+     * Otherwise, it sorts all movies available in the user's country.
      * @param currML
      */
     @Override

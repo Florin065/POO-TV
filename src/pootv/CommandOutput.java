@@ -1,4 +1,4 @@
-package pootv.command.authenticated.seeDetails;
+package pootv;
 
 import fileio.MovieInput;
 import fileio.UserInput;

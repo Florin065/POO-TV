@@ -1,21 +1,19 @@
 package pootv.command.authenticated.movies;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import pootv.Menu;
-import pootv.command.Actions;
+import pootv.CommandOutput;
 
 public final class FilterOutput {
     private FilterOutput() {
     }
 
     /**
-     *
-     * @param output
-     * @param actions
+     * Generate output for Filter action.
      */
-    public static void doOutput(final ArrayNode output, final Actions actions) {
-        output.addObject().put("error", (String) null)
-                .putPOJO("currentMoviesList", actions.getFilter())
-                .putPOJO("currentUser", Menu.getCurrUser());
+    public static void doOutput() {
+        ObjectMapper mapper = new ObjectMapper();
+        Menu.getOutput().add(mapper.valueToTree(
+                new CommandOutput(null, Menu.getActions().getFilter(), Menu.getCurrUser())));
     }
 }

@@ -3,12 +3,13 @@ package pootv.command.authenticated.seeDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
-import fileio.UserInput;
+import pootv.CommandOutput;
 import pootv.Menu;
 import pootv.command.Command;
-import pootv.Error;
 
 import java.util.ArrayList;
+
+import static pootv.Error.doError;
 
 public class Watch implements Command {
     public Watch() {
@@ -22,23 +23,20 @@ public class Watch implements Command {
         ArrayNode output = Menu.getOutput();
 
         if (!Menu.getCurrPage().equals("see details")) {
-            Error.doError(output);
+            doError();
             return;
         }
 
         ArrayList<MovieInput> movieOutput = new ArrayList<>();
-        UserInput user = new UserInput(Menu.getCurrUser());
 
-        if (user.getPurchasedMovies().isEmpty()) {
-            Error.doError(output);
+        if (Menu.getCurrUser().getPurchasedMovies().isEmpty()) {
+            doError();
             return;
         }
 
-        for (MovieInput iterator : user.getPurchasedMovies()) {
+        for (MovieInput iterator : Menu.getCurrUser().getPurchasedMovies()) {
             if (iterator.getName().equals(Menu.getMovieDetailsName())) {
-                user.getWatchedMovies().add(iterator);
                 movieOutput.add(iterator);
-
                 for (MovieInput movie : Menu.getCurrUser().getWatchedMovies()) {
                     if (movie.getName().equals(Menu.getMovieDetailsName())) {
                         ObjectMapper mapper = new ObjectMapper();
@@ -47,15 +45,14 @@ public class Watch implements Command {
                         return;
                     }
                 }
-
+                Menu.getCurrUser().getWatchedMovies().add(iterator);
                 ObjectMapper mapper = new ObjectMapper();
-                output.add(mapper.valueToTree(new CommandOutput(null, movieOutput, user)));
+                output.add(mapper.valueToTree(
+                        new CommandOutput(null, movieOutput, Menu.getCurrUser())));
 
-                Menu.setCurrUser(new UserInput(user));
                 return;
             }
         }
-
-        Error.doError(output);
+        doError();
     }
 }

@@ -1,15 +1,13 @@
-package pootv.command.unauthenticated.register;
+package pootv.command.unAuthenticated.register;
 
 import fileio.Credentials;
 import fileio.UserInput;
 import pootv.DataBase;
 import pootv.Menu;
-import pootv.command.unauthenticated.UnauthOutput;
 import pootv.command.Command;
-import pootv.Error;
 
-import java.util.ArrayList;
-import java.util.List;
+import static pootv.Error.doError;
+import static pootv.command.unAuthenticated.UnauthOutput.doOutput;
 
 public class Register implements Command {
     public Register() {
@@ -21,28 +19,25 @@ public class Register implements Command {
     @Override
     public void execute() {
         if (!Menu.getCurrPage().equals("register")) {
-            Error.doError(Menu.getOutput());
+            doError();
             return;
         }
 
         Credentials credentials = Menu.getActions().getActionInput().getCredentials();
-
         for (UserInput iterator : DataBase.getDataBase().getUsers()) {
             if (iterator.getCredentials().getName().equals(credentials.getName())) {
-                Error.doError(Menu.getOutput());
+                doError();
                 return;
             }
         }
 
         Menu.getCurrUser().setCredentials(credentials);
-        List<UserInput> list = new ArrayList<>(DataBase.getDataBase().getUsers());
-        list.add(Menu.getCurrUser());
+        DataBase.getDataBase().getUsers().add(Menu.getCurrUser());
 
         if (Menu.getCurrUser().getCredentials().getName() != null) {
             Menu.setCurrPage("homepage auth");
-            DataBase.getDataBase().setUsers(new ArrayList<>(list));
             Menu.setUserIndex(DataBase.getDataBase().getUsers().size() - 1);
-            UnauthOutput.doOutput(Menu.getOutput());
+            doOutput();
         } else {
             Menu.setCurrPage("homepage unauth");
         }

@@ -14,7 +14,7 @@ public final class NotBannedMovies {
      *
      * @param currML
      */
-    public static void get(final ArrayList<MovieInput> currML) {
+    public static void notBannedMovies(final ArrayList<MovieInput> currML) {
         for (MovieInput iterator : DataBase.getDataBase().getMovies()) {
             if (!iterator.getCountriesBanned().contains(
                     Menu.getCurrUser().getCredentials().getCountry())) {

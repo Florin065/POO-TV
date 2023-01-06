@@ -1,10 +1,9 @@
 package pootv.command.changePage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
-import fileio.UserInput;
-import pootv.command.authenticated.seeDetails.CommandOutput;
+import pootv.Menu;
+import pootv.CommandOutput;
 
 import java.util.ArrayList;
 
@@ -15,12 +14,10 @@ public final class ChangePageToMovies {
     /**
      *
      * @param currML
-     * @param currUser
-     * @param output
      */
-    public static void changePageToMovies(final ArrayList<MovieInput> currML,
-                                          final UserInput currUser, final ArrayNode output) {
+    public static void changePageToMovies(final ArrayList<MovieInput> currML) {
         ObjectMapper mapper = new ObjectMapper();
-        output.add(mapper.valueToTree(new CommandOutput(null, currML, currUser)));
+        Menu.getOutput().add(mapper.valueToTree(
+                new CommandOutput(null, currML, Menu.getCurrUser())));
     }
 }

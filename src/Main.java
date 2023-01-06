@@ -24,12 +24,13 @@ public final class Main {
     public static void main(final String[] args) throws IOException {
         String inputFilePath = args[0];
         String outputFilePath = args[1];
+
         ObjectMapper objectMapper = new ObjectMapper();
         Input inputData = objectMapper.readValue(new File(inputFilePath), Input.class);
         ArrayNode output = objectMapper.createArrayNode();
 
         Menu menu = new Menu(inputData, output);
-        menu.actionsPOOTV();
+        menu.actionsPooTv();
         Recommendation.recommendation();
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
