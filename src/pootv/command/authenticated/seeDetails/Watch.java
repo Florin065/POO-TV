@@ -1,7 +1,6 @@
 package pootv.command.authenticated.seeDetails;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.MovieInput;
 import pootv.CommandOutput;
 import pootv.Menu;
@@ -16,19 +15,14 @@ public class Watch implements Command {
     }
 
     /**
-     *
+     * If the user is on the page of a purchased movie, then he can watch it.
      */
     @Override
     public void execute() {
-        ArrayNode output = Menu.getOutput();
-
         if (!Menu.getCurrPage().equals("see details")) {
             doError();
             return;
         }
-
-        ArrayList<MovieInput> movieOutput = new ArrayList<>();
-
         if (Menu.getCurrUser().getPurchasedMovies().isEmpty()) {
             doError();
             return;
@@ -36,20 +30,20 @@ public class Watch implements Command {
 
         for (MovieInput iterator : Menu.getCurrUser().getPurchasedMovies()) {
             if (iterator.getName().equals(Menu.getMovieDetailsName())) {
+                ArrayList<MovieInput> movieOutput = new ArrayList<>();
                 movieOutput.add(iterator);
                 for (MovieInput movie : Menu.getCurrUser().getWatchedMovies()) {
                     if (movie.getName().equals(Menu.getMovieDetailsName())) {
                         ObjectMapper mapper = new ObjectMapper();
-                        output.add(mapper.valueToTree(
+                        Menu.getOutput().add(mapper.valueToTree(
                                 new CommandOutput(null, movieOutput, Menu.getCurrUser())));
                         return;
                     }
                 }
                 Menu.getCurrUser().getWatchedMovies().add(iterator);
                 ObjectMapper mapper = new ObjectMapper();
-                output.add(mapper.valueToTree(
+                Menu.getOutput().add(mapper.valueToTree(
                         new CommandOutput(null, movieOutput, Menu.getCurrUser())));
-
                 return;
             }
         }

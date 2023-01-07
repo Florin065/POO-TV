@@ -16,7 +16,7 @@ public class Rate implements Command {
     }
 
     /**
-     *
+     * If the user has seen the movie, he can give a grade between 1 and 5 to the movie.
      */
     @Override
     public void execute() {
@@ -54,10 +54,10 @@ public class Rate implements Command {
                 }
                 movieOutput.add(iterator);
                 ObjectMapper mapper = new ObjectMapper();
-                Menu.getOutput().add(mapper.valueToTree(
-                        new CommandOutput(null, movieOutput, Menu.getCurrUser())));
                 Menu.getCurrUser().getRating().put(Menu.getMovieDetailsName(),
                         actions.getActionInput().getRate());
+                Menu.getOutput().add(mapper.valueToTree(
+                        new CommandOutput(null, movieOutput, Menu.getCurrUser())));
 
                 return;
             }

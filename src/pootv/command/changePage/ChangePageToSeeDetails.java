@@ -14,7 +14,7 @@ public final class ChangePageToSeeDetails {
     }
 
     /**
-     *
+     * We display the movie on the page we are on.
      * @param currML
      * @param movieName
      * @param copy
@@ -23,9 +23,10 @@ public final class ChangePageToSeeDetails {
                                  final String movieName, final String copy) {
         for (MovieInput iterator : currML) {
             if (iterator.getName().equals(movieName)) {
+                Menu.setMovieDetailsName(movieName);
+
                 ArrayList<MovieInput> movieOutput = new ArrayList<>();
                 movieOutput.add(iterator);
-                Menu.setMovieDetailsName(movieName);
                 ObjectMapper mapper = new ObjectMapper();
                 Menu.getOutput().add(mapper.valueToTree(
                         new CommandOutput(null, movieOutput, Menu.getCurrUser())));

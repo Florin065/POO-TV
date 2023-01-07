@@ -13,7 +13,10 @@ public class Add implements Command {
     }
 
     /**
-     *
+     * The action of adding a movie to the database by an administrator, if it does not
+     * already exist.
+     * All users who are subscribed to a genre of the added movie and are not in any country where
+     * the movie is banned will receive a notification that a new movie has been added and its name
      */
     @Override
     public void execute() {
@@ -24,6 +27,7 @@ public class Add implements Command {
                 return;
             }
         }
+
         DataBase.getDataBase().getMovies().add(addedMovie);
         if ((!addedMovie.getCountriesBanned().contains(
                 Menu.getCurrUser().getCredentials().getCountry()))

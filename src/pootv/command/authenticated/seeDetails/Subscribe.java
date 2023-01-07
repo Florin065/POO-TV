@@ -14,7 +14,7 @@ public class Subscribe implements Command {
     }
 
     /**
-     *
+     * When the user is on a movie page, he can subscribe to a genre of that movie.
      */
     @Override
     public void execute() {

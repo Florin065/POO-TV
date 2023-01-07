@@ -14,7 +14,10 @@ public class Register implements Command {
     }
 
     /**
-     *
+     * In order to be able to register on the site, the account must not exist in the database.
+     * Therefore, the account name must not exist in the database.
+     * If a user has successfully registered, they will be sent to the auth homepage.
+     * Otherwise, on homepage unauth.
      */
     @Override
     public void execute() {

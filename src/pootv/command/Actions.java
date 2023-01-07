@@ -22,7 +22,7 @@ public class Actions {
     }
 
     /**
-     *
+     * Uses invoker to do an action.
      * @param command
      */
     public void doAction(final Command command) {

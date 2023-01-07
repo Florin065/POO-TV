@@ -15,7 +15,11 @@ public class Login implements Command {
     }
 
     /**
-     *
+     * Login action.
+     * At login, user data is updated using the Builder class from UserInput, which is implemented
+     * using the Builder Pattern.
+     * If he has successfully logged in, he will be sent to the homepage auth.
+     * Otherwise, on homepage unauth.
      */
     @Override
     public void execute() {

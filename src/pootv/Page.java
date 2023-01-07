@@ -9,7 +9,7 @@ public final class Page {
     }
 
     /**
-     *
+     * Creating the page hierarchy.
      * @return
      */
     public static Map<String, ArrayList<String>> createPageHierarchy() {

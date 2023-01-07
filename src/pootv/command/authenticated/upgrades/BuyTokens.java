@@ -10,7 +10,9 @@ public class BuyTokens implements Command {
     }
 
     /**
-     *
+     * Any operation on the platform is done in tokens. The equivalence relationship between
+     * balance and tokens is 1 to 1. Basically, when tokens are bought, 1 balance = 1 token.
+     * Any operation on the platform is done in tokens.
      */
     @Override
     public void execute() {

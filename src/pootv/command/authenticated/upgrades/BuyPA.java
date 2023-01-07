@@ -10,12 +10,13 @@ public class BuyPA implements Command {
     }
 
     /**
-     *
+     * If the user wants to upgrade his account to premium, he will pay 10 tokens for the upgrade.
      */
     @Override
     public void execute() {
         if (Menu.getCurrUser().getTokensCount() < 2 + 2 + 2 + 2 + 2
-                || (!Menu.getCurrPage().equals("upgrades"))) {
+                || (!Menu.getCurrPage().equals("upgrades"))
+                || Menu.getCurrUser().getCredentials().getAccountType().equals("premium")) {
             doError();
             return;
         }

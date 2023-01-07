@@ -8,13 +8,19 @@ import java.util.ArrayList;
 
 import static pootv.Error.doError;
 import static pootv.command.NotBannedMovies.notBannedMovies;
+import static pootv.command.authenticated.seeDetails.FreePurchase.free;
+import static pootv.command.authenticated.seeDetails.TokensPurchase.tokens;
 
 public class Purchase implements Command {
     public Purchase() {
     }
 
     /**
-     *
+     * We search through the list of movies available in the user's country and if the movie
+     * is found, then it can be purchased.
+     * If the user is premium and still has free movies available, then numFreePremiumMovies - 1;
+     * otherwise, it will pay 2 tokens.
+     * If the user is standard it will pay 2 tokens.
      */
     @Override
     public void execute() {
@@ -22,7 +28,6 @@ public class Purchase implements Command {
             doError();
             return;
         }
-
         if (!Menu.getCurrUser().getPurchasedMovies().isEmpty()) {
             for (MovieInput iterator : Menu.getCurrUser().getPurchasedMovies()) {
                 if (iterator.getName().equals(Menu.getMovieDetailsName())) {
@@ -33,75 +38,19 @@ public class Purchase implements Command {
         }
 
         ArrayList<MovieInput> currML = new ArrayList<>();
-        ArrayList<MovieInput> movieOutput = new ArrayList<>();
         notBannedMovies(currML);
-
         if (Menu.getCurrUser().getCredentials().getAccountType().equals("premium")) {
             if (Menu.getCurrUser().getNumFreePremiumMovies() <= 0) {
-                if (Menu.getCurrUser().getTokensCount() < 2) {
-                    doError();
-                    return;
-                }
-
-                if (Menu.getActions().getFilter() != null) {
-                    for (MovieInput iterator : Menu.getActions().getFilter()) {
-                        if (iterator.getName().equals(
-                                Menu.getActions().getActionInput().getMovie())) {
-                            TokensPurchase.tokens(iterator, movieOutput);
-
-                            return;
-                        }
-                    }
-                }
-                for (MovieInput iterator : currML) {
-                    if (iterator.getName().equals(Menu.getMovieDetailsName())) {
-                        TokensPurchase.tokens(iterator, movieOutput);
-
-                        return;
-                    }
-                }
+                tokens(currML);
+                return;
             }
-
-            if (Menu.getActions().getFilter() != null) {
-                for (MovieInput iterator : Menu.getActions().getFilter()) {
-                    if (iterator.getName().equals(Menu.getActions().getActionInput().getMovie())) {
-                        FreePurchase.free(iterator, movieOutput);
-
-                        return;
-                    }
-                }
-            }
-            for (MovieInput iterator : currML) {
-                if (iterator.getName().equals(Menu.getMovieDetailsName())) {
-                    FreePurchase.free(iterator, movieOutput);
-
-                    return;
-                }
-            }
+            free(currML);
+            return;
         }
-
         if (Menu.getCurrUser().getTokensCount() < 2) {
             doError();
             return;
         }
-
-        if (Menu.getActions().getFilter() != null) {
-            for (MovieInput iterator : Menu.getActions().getFilter()) {
-                if (iterator.getName().equals(Menu.getActions().getActionInput().getMovie())) {
-                    TokensPurchase.tokens(iterator, movieOutput);
-
-                    return;
-                }
-            }
-        }
-
-        for (MovieInput iterator : currML) {
-            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
-                TokensPurchase.tokens(iterator, movieOutput);
-
-                return;
-            }
-        }
-        doError();
+        tokens(currML);
     }
 }

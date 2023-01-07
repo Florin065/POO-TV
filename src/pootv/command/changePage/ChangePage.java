@@ -20,7 +20,17 @@ public final class ChangePage {
     }
 
     /**
-     *
+     * Change page action.
+     * Firstly, we copy currentPage.
+     * Then, we go through the page hierarchy, and if the page we want to go to is directly
+     * ascending from the current page, then we update currPage.
+     * If the action completed successfully, we add the copied page (the value that currPage had at
+     * the beginning) to the lastPages list, which we use in the back action.
+     * After which, if currPage is one of the values: logout, movies or see details, we do the
+     * necessary action for this page. At logout, the user exits the account, at movies we show the
+     * current list of movies (filtered (if the previous action was filter) or unfiltered), and at
+     * see details we search the page of a given movie in the current list of movies
+     * (filtered or unfiltered).
      * @param actionsInput
      */
     public static void doChangePage(final ActionsInput actionsInput) {
@@ -29,7 +39,6 @@ public final class ChangePage {
             doError();
             return;
         }
-
         if (actionsInput.getPage().equals("see details")) {
             ArrayList<MovieInput> cornerCase = new ArrayList<>();
             for (MovieInput iterator : DataBase.getDataBase().getMovies()) {

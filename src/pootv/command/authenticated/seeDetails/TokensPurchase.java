@@ -12,17 +12,22 @@ public final class TokensPurchase {
     }
 
     /**
-     *
-     * @param movie
-     * @param movieOutput
+     * Utility method used when a standard/premium (if numFreePremiumMovies = 0)
+     * user wants to purchase a movie.
+     * @param currML
      */
-    public static void tokens(final MovieInput movie, final ArrayList<MovieInput> movieOutput) {
-        Menu.getCurrUser().setTokensCount(Menu.getCurrUser().getTokensCount() - 2);
-        Menu.getCurrUser().getPurchasedMovies().add(movie);
-        movieOutput.add(movie);
+    public static void tokens(final ArrayList<MovieInput> currML) {
+        for (MovieInput iterator : currML) {
+            if (iterator.getName().equals(Menu.getMovieDetailsName())) {
+                Menu.getCurrUser().setTokensCount(Menu.getCurrUser().getTokensCount() - 2);
+                Menu.getCurrUser().getPurchasedMovies().add(iterator);
 
-        ObjectMapper mapper = new ObjectMapper();
-        Menu.getOutput().add(mapper.valueToTree(
-                new CommandOutput(null, movieOutput, Menu.getCurrUser())));
+                ArrayList<MovieInput> movieOutput = new ArrayList<>();
+                movieOutput.add(iterator);
+                ObjectMapper mapper = new ObjectMapper();
+                Menu.getOutput().add(mapper.valueToTree(
+                        new CommandOutput(null, movieOutput, Menu.getCurrUser())));
+            }
+        }
     }
 }

@@ -19,7 +19,7 @@ public final class DataBase {
     }
 
     /**
-     *
+     * Get the database instance.
      * @return
      */
     public static DataBase getDataBase() {

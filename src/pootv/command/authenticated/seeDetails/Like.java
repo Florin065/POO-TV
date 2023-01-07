@@ -15,7 +15,7 @@ public class Like implements Command {
     }
 
     /**
-     *
+     * If the user has seen the movie, he can give a like to the movie.
      */
     @Override
     public void execute() {
@@ -31,8 +31,6 @@ public class Like implements Command {
             }
         }
 
-        ArrayList<MovieInput> movieOutput = new ArrayList<>();
-
         if (Menu.getCurrUser().getWatchedMovies().isEmpty()) {
             doError();
             return;
@@ -42,11 +40,12 @@ public class Like implements Command {
             if (iterator.getName().equals(Menu.getMovieDetailsName())) {
                 iterator.setNumLikes(iterator.getNumLikes() + 1);
                 Menu.getCurrUser().getLikedMovies().add(iterator);
+
+                ArrayList<MovieInput> movieOutput = new ArrayList<>();
                 movieOutput.add(iterator);
                 ObjectMapper mapper = new ObjectMapper();
                 Menu.getOutput().add(mapper.valueToTree(
                         new CommandOutput(null, movieOutput, Menu.getCurrUser())));
-
                 return;
             }
         }

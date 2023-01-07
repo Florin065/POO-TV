@@ -34,6 +34,7 @@ public class Search implements Command {
                 searchML.add(iterator);
             }
         }
+
         ObjectMapper mapper = new ObjectMapper();
         Menu.getOutput().add(mapper.valueToTree(
                 new CommandOutput(null, searchML, Menu.getCurrUser())));

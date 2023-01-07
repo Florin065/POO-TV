@@ -17,7 +17,9 @@ public class Delete implements Command {
     }
 
     /**
-     *
+     * The action of deleting a movie from the database by an administrator.
+     * Users who purchased that movie will be notified and their resources will be refunded.
+     * Premium users will receive a free movie, and standard users 2 tokens.
      */
     @Override
     public void execute() {

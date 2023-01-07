@@ -11,7 +11,7 @@ public final class UnauthOutput {
     }
 
     /**
-     *
+     * Login / Register output.
      */
     public static void doOutput() {
         ObjectMapper mapper = new ObjectMapper();
