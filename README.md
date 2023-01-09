@@ -37,13 +37,12 @@
           * FilterOutput.java -> provides the output for the filtering action
           * Search.java -> searching for a movie which starts with a given String
         * seeDetails/ -> package for all commands that can be used on see details page
-          * CommandOutput.java -> utility class called a command generate an output
           * FreePurchase.java -> utility class called when a premium user wants to purchase a movie
           * Like.java -> like action | can be used only one time only if the user watched the movie
           * Purchase.java -> you can only purchase the movie if you are on its page
-          * Rate.java -> rate action (rate the movie from 1 to 5)
-          * Subscribe.java ->
-                         can be used only one time only if the user watched the movie
+          * Rate.java -> rate action (rate the movie from 1 to 5) can be used only one time only
+                         if the user watched the movie
+          * Subscribe.java -> user's can subscribe a movie genre and receive notifications
           * TokensPurchase.java -> utility class called when a standard user or a premium user that
                                    used all of his free premium movies, wants to purchase a movie
                                    (2 tokens)
@@ -71,6 +70,7 @@
           * Login.java -> allows the connection of a user who already registered on the platform
         * register/ -> register page
           * Register.java -> allows the user to register on the platform
+        * UnauthOutput.java -> generate Login / Register output
       * Actions.java -> request class | receives the command as a parameter after which it calls
                                         the invoker, and it executes the command
       * Command.java -> interface that acts as a command
@@ -81,12 +81,22 @@
       * Recommendation.java -> utility classs used at the end of the action string, the connected
                                premium user will receive a movie recommendation based on the movie
                                genres they like the most.
+    * CommandOutput.java -> utility class called a command generate an output
     * DataBase.java -> implemented as a Singleton, this database contains all users and movies
     * Error.java -> provides the basic Error
     * Menu.java -> the platform's menu
     * Page.java -> page hierarchy were stored in a HashMap
   * Main.java -> the entry point to this project. It runs the checker that tests your implentation
   * Test.java -> the actual main from the initial skel structure
+
+## Design Patterns
+
+In my implementation I used 4 design patterns namely:
+
+* Builder Pattern -> src/fileio/UserInput.java
+* Command Pattern -> src/pootv/command/
+* Strategy Pattern -> src/pootv/command/authenticated/movies/filterStrategy/
+* Singleton Pattern -> src/pootv/Database.java
 
 ## Tests
 
@@ -100,12 +110,3 @@
  8. basic_8  - 6p
  9. basic_9  - 6p
 10. basic_10 - 6p
-
-## Design Patterns
-
-In my implementation I used 4 design patterns namely:
-
-* Builder Pattern -> src/fileio/UserInput.java
-* Command Pattern -> src/pootv/command/
-* Strategy Pattern -> src/pootv/command/authenticated/movies/filterStrategy/
-* Singleton Pattern -> src/pootv/Database.java
