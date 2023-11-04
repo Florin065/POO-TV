@@ -27,33 +27,22 @@ import static pootv.command.changePage.Back.goBack;
 import static pootv.command.changePage.ChangePage.doChangePage;
 
 public class Menu {
-    @Getter @Setter
-    private static ArrayNode output;
-    @Getter @Setter
-    private Input input;
-    @Getter @Setter
-    private static Actions actions;
-    @Getter @Setter
-    private static String currPage;
-    @Getter @Setter
-    private static UserInput currUser;
-    @Getter @Setter
-    private static String movieDetailsName;
-    @Getter @Setter
-    private static String lastAction;
-    @Getter @Setter
-    private static ArrayList<String> lastPages;
-    @Getter @Setter
-    private static String currMovie;
-    @Getter @Setter
-    private static int userIndex;
+                    private  final Input input;
+    @Getter         private static ArrayNode output;
+    @Getter         private static Actions actions;
+    @Getter @Setter private static String currPage;
+    @Getter @Setter private static UserInput currUser;
+    @Getter @Setter private static String movieDetailsName;
+    @Getter         private static String lastAction;
+    @Getter @Setter private static ArrayList<String> lastPages;
+    @Getter @Setter private static Integer userIndex;
 
     public Menu(final Input input, final ArrayNode output) {
         this.input = input;
         Menu.output = output;
-        currUser = new UserInput(new Credentials(), 0, 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1,
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
-                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>());
+        currUser = new UserInput(new Credentials(), 0, 15,
+                                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+                                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new HashMap<>());
         movieDetailsName = null;
         lastAction = null;
         lastPages = new ArrayList<>();
@@ -67,13 +56,13 @@ public class Menu {
      * that command
      */
     public void actionsPooTv() {
-        DataBase data = DataBase.getDataBase();
-        for (ActionsInput actionInput : input.getActions()) {
+        for (ActionsInput actionInput : this.input.getActions()) {
             switch (actionInput.getType()) {
                 case "change page" -> doChangePage(actionInput);
                 case "on page" -> {
                     actions = new Actions(actionInput);
-                    setLastAction(actions.getActionInput().getFeature());
+                    lastAction = actions.getActionInput().getFeature();
+
                     switch (actionInput.getFeature()) {
                         case "login" -> actions.doAction(new Login());
                         case "register" -> actions.doAction(new Register());

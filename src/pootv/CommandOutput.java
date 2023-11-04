@@ -7,12 +7,10 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
+@Getter @Setter
 public class CommandOutput {
-    @Getter @Setter
     private String error;
-    @Getter @Setter
     private ArrayList<MovieInput> currentMoviesList;
-    @Getter @Setter
     private UserInput currentUser;
 
     public CommandOutput() {

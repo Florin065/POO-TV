@@ -1,5 +1,7 @@
 import checker.Checkstyle;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.*;
 
+@Getter @Setter
 class Config {
     private String homework;
     private String description;
@@ -15,75 +18,12 @@ class Config {
     private Integer homeworkDesignScore;
     private Integer readmeScore;
     private List<TestType> testTypes;
-
-    public String getHomework() {
-        return homework;
-    }
-
-    public void setHomework(final String homework) {
-        this.homework = homework;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(final String description) {
-        this.description = description;
-    }
-
-    public Integer getCheckstyleScore() {
-        return checkstyleScore;
-    }
-
-    public void setCheckstyleScore(final Integer checkstyleScore) {
-        this.checkstyleScore = checkstyleScore;
-    }
-
-    public Integer getHomeworkDesignScore() {
-        return homeworkDesignScore;
-    }
-
-    public void setHomeworkDesignScore(final Integer homeworkDesignScore) {
-        this.homeworkDesignScore = homeworkDesignScore;
-    }
-
-    public Integer getReadmeScore() {
-        return readmeScore;
-    }
-
-    public void setReadmeScore(final Integer readmeScore) {
-        this.readmeScore = readmeScore;
-    }
-
-    public List<TestType> getTestTypes() {
-        return testTypes;
-    }
-
-    public void setTestTypes(final List<TestType> testTypes) {
-        this.testTypes = testTypes;
-    }
 }
 
+@Getter @Setter
 class TestType {
     private Integer score;
     private String type;
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(final Integer score) {
-        this.score = score;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(final String type) {
-        this.type = type;
-    }
 }
 
 public final class Test {

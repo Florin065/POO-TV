@@ -31,7 +31,6 @@ public final class ChangePage {
      * current list of movies (filtered (if the previous action was filter) or unfiltered), and at
      * see details we search the page of a given movie in the current list of movies
      * (filtered or unfiltered).
-     * @param actionsInput
      */
     public static void doChangePage(final ActionsInput actionsInput) {
         if ((actionsInput.getPage().equals("login") || actionsInput.getPage().equals("register"))

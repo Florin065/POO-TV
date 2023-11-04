@@ -12,7 +12,6 @@ public final class NotBannedMovies {
 
     /**
      * Utility class that finds all movies available in the user's country.
-     * @param currML
      */
     public static void notBannedMovies(final ArrayList<MovieInput> currML) {
         for (MovieInput iterator : DataBase.getDataBase().getMovies()) {

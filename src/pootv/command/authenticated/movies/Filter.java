@@ -8,8 +8,8 @@ import pootv.command.authenticated.movies.filterStrategy.FilterStrategy;
 
 import java.util.ArrayList;
 
+@Getter @Setter
 public class Filter implements Command {
-    @Getter @Setter
     private FilterStrategy strategy;
 
     public Filter(final FilterStrategy strategy) {

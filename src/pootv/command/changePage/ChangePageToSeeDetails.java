@@ -15,9 +15,6 @@ public final class ChangePageToSeeDetails {
 
     /**
      * We display the movie on the page we are on.
-     * @param currML
-     * @param movieName
-     * @param copy
      */
     public static void findMovie(final ArrayList<MovieInput> currML,
                                  final String movieName, final String copy) {

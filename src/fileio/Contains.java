@@ -6,11 +6,9 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 
-@ToString
+@Getter @Setter @ToString
 public class Contains {
-    @Getter @Setter
     private ArrayList<String> actors;
-    @Getter @Setter
     private ArrayList<String> genre;
 
     public Contains() {

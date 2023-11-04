@@ -8,10 +8,9 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter @Setter
 public final class DataBase {
-    @Getter @Setter
     private List<UserInput> users = new ArrayList<>();
-    @Getter @Setter
     private List<MovieInput> movies = new ArrayList<>();
     private static DataBase dataBase = null;
 
@@ -20,7 +19,6 @@ public final class DataBase {
 
     /**
      * Get the database instance.
-     * @return
      */
     public static DataBase getDataBase() {
         if (dataBase == null) {

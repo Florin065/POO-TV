@@ -29,7 +29,7 @@ public class Rate implements Command {
         Actions actions = Menu.getActions();
 
         if (Menu.getCurrUser().getWatchedMovies().isEmpty()
-                || actions.getActionInput().getRate() > 2 + 2 + 1
+                || actions.getActionInput().getRate() > 5
                 || actions.getActionInput().getRate() < 0) {
             doError();
             return;

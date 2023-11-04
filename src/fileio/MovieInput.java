@@ -6,25 +6,16 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 
-@ToString
+@Getter @Setter @ToString
 public class MovieInput {
-    @Getter @Setter
     private String name;
-    @Getter @Setter
     private String year;
-    @Getter @Setter
     private int duration;
-    @Getter @Setter
     private ArrayList<String> genres;
-    @Getter @Setter
     private ArrayList<String> actors;
-    @Getter @Setter
     private ArrayList<String> countriesBanned;
-    @Getter @Setter
     private int numLikes = 0;
-    @Getter @Setter
     private double rating = 0;
-    @Getter @Setter
     private int numRatings = 0;
 
     public MovieInput(final MovieInput moviesInput) {

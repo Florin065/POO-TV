@@ -14,14 +14,13 @@ public class BuyPA implements Command {
      */
     @Override
     public void execute() {
-        if (Menu.getCurrUser().getTokensCount() < 2 + 2 + 2 + 2 + 2
+        if (Menu.getCurrUser().getTokensCount() < 10
                 || (!Menu.getCurrPage().equals("upgrades"))
                 || Menu.getCurrUser().getCredentials().getAccountType().equals("premium")) {
             doError();
             return;
         }
-        Menu.getCurrUser().setTokensCount(
-                Menu.getCurrUser().getTokensCount() - (2 + 2 + 2 + 2 + 2));
+        Menu.getCurrUser().setTokensCount(Menu.getCurrUser().getTokensCount() - 10);
         Menu.getCurrUser().getCredentials().setAccountType("premium");
     }
 }

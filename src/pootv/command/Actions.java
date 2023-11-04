@@ -7,12 +7,10 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
+@Getter @Setter
 public class Actions {
-    @Getter @Setter
     private Invoker invoker;
-    @Getter @Setter
     private ActionsInput actionInput;
-    @Getter @Setter
     private ArrayList<MovieInput> filter;
 
     public Actions(final ActionsInput actionInput) {
@@ -23,7 +21,6 @@ public class Actions {
 
     /**
      * Uses invoker to do an action.
-     * @param command
      */
     public void doAction(final Command command) {
         invoker.execute(command);

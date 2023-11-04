@@ -9,28 +9,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-@ToString
+@Getter @Setter @ToString
 public class UserInput {
-    @Getter @Setter
     private Credentials credentials;
-    @Getter @Setter
     private int tokensCount = 0;
-    @Getter @Setter
-    private int numFreePremiumMovies = 2 + 2 + 2 + 2 + 2 + 2 + 2 + 1;
-    @Getter @Setter
+    private int numFreePremiumMovies = 15;
     private ArrayList<MovieInput> purchasedMovies = new ArrayList<>();
-    @Getter @Setter
     private ArrayList<MovieInput> watchedMovies = new ArrayList<>();
-    @Getter @Setter
     private ArrayList<MovieInput> likedMovies = new ArrayList<>();
-    @Getter @Setter
     private ArrayList<MovieInput> ratedMovies = new ArrayList<>();
-    @Getter @Setter
     private ArrayList<Notifications> notifications = new ArrayList<>();
-    @Getter @Setter @JsonIgnore
-    private ArrayList<String> subscribedGenres = new ArrayList<>();
-    @Getter @Setter @JsonIgnore
-    private Map<String, Double> rating = new HashMap<>();
+    @JsonIgnore private ArrayList<String> subscribedGenres = new ArrayList<>();
+    @JsonIgnore private Map<String, Double> rating = new HashMap<>();
 
     public static class Builder {
         private final Credentials credentials;
@@ -53,8 +43,6 @@ public class UserInput {
         }
         /**
          * used for adding purchasedMovies data in Menu.currUser at login
-         * @param purchasedMovies
-         * @return
          */
         public Builder purchasedMovies(final ArrayList<MovieInput> purchasedMovies) {
             this.purchasedMovies = purchasedMovies;
@@ -62,8 +50,6 @@ public class UserInput {
         }
         /**
          * used for adding watchedMovies data in Menu.currUser at login
-         * @param watchedMovies
-         * @return
          */
         public Builder watchedMovies(final ArrayList<MovieInput> watchedMovies) {
             this.watchedMovies = watchedMovies;
@@ -71,8 +57,6 @@ public class UserInput {
         }
         /**
          * used for adding likedMovies data in Menu.currUser at login
-         * @param likedMovies
-         * @return
          */
         public Builder likedMovies(final ArrayList<MovieInput> likedMovies) {
             this.likedMovies = likedMovies;
@@ -80,8 +64,6 @@ public class UserInput {
         }
         /**
          * used for adding ratedMovies data in Menu.currUser at login
-         * @param ratedMovies
-         * @return
          */
         public Builder ratedMovies(final ArrayList<MovieInput> ratedMovies) {
             this.ratedMovies = ratedMovies;
@@ -89,8 +71,6 @@ public class UserInput {
         }
         /**
          * used for adding notifications data in Menu.currUser at login
-         * @param notifications
-         * @return
          */
         public Builder notifications(final ArrayList<Notifications> notifications) {
             this.notifications = notifications;
@@ -98,8 +78,6 @@ public class UserInput {
         }
         /**
          * used for adding subscribedGenres data in Menu.currUser at login
-         * @param subscribedGenres
-         * @return
          */
         public Builder subscribedGenres(final ArrayList<String> subscribedGenres) {
             this.subscribedGenres = subscribedGenres;
@@ -107,8 +85,6 @@ public class UserInput {
         }
         /**
          * used for adding rating data in Menu.currUser at login
-         * @param rating
-         * @return
          */
         public Builder rating(final Map<String, Double> rating) {
             this.rating = rating;
@@ -117,7 +93,6 @@ public class UserInput {
         /**
          * build user with mandatory criteria (credentials, tokensCount and numFreePremiumMovies)
          * at login
-         * @return
          */
         public UserInput build() {
             return new UserInput(this);

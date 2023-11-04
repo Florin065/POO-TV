@@ -13,7 +13,6 @@ public final class ChangePageToMovies {
 
     /**
      * We display the current list of movies.
-     * @param currML
      */
     public static void changePageToMovies(final ArrayList<MovieInput> currML) {
         ObjectMapper mapper = new ObjectMapper();
