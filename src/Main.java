@@ -32,9 +32,21 @@ public final class Main {
 
         Menu menu = new Menu(inputData, output);
         menu.actionsPooTv();
+
+        /*
+         * Input inputDataTest = objectMapper.readValue(new File("checker/resources/in/basic_" + 1 + ".json"), Input.class);
+         * ArrayNode outputTest = objectMapper.createArrayNode();
+         * Menu menuTest = new Menu(inputDataTest, outputTest);
+         * menuTest.actionsPooTv();
+         *
+         * used for testing a single input file
+         */
+
         Recommendation.recommendation();
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(outputFilePath), output);
+
+        // objectWriter.writeValue(new File("out.txt"), outputTest); // used for testing a single input file
     }
 }
